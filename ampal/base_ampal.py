@@ -5,8 +5,8 @@ import itertools
 
 import numpy
 
-import data
-from geometry import distance, Quaternion, centre_of_mass, rmsd
+from .data import ELEMENT_DATA, PDB_ATOM_COLUMNS
+from .geometry import distance, Quaternion, centre_of_mass, rmsd
 
 
 def cap(v, l):
@@ -77,7 +77,7 @@ def write_pdb(residues, chain_id=' ', alt_states=False, strip_states=False):
     pdb_str : str
         String of the PDB file.
     """
-    pdb_atom_col_dict = data.PDB_ATOM_COLUMNS
+    pdb_atom_col_dict = PDB_ATOM_COLUMNS
     out_pdb = []
     if len(str(chain_id)) > 1:
         poly_id = ' '
@@ -161,7 +161,7 @@ class BaseAmpal(object):
             3D coordinate for the centre of mass.
         """
         elts = set([x.element for x in self.get_atoms()])
-        masses_dict = {e: data.ELEMENT_DATA[e]['atomic mass'] for e in elts}
+        masses_dict = {e: ELEMENT_DATA[e]['atomic mass'] for e in elts}
         points = [x._vector for x in self.get_atoms()]
         masses = [masses_dict[x.element] for x in self.get_atoms()]
         return centre_of_mass(points=points, masses=masses)
@@ -691,7 +691,7 @@ class Atom(object):
 
     def __repr__(self):
         return "<{} Atom{}. Coordinates: ({:.3f}, {:.3f}, {:.3f})>".format(
-            data.ELEMENT_DATA[self.element.title()]['name'],
+            ELEMENT_DATA[self.element.title()]['name'],
             '' if not self.res_label else ' ({})'.format(self.res_label),
             self.x, self.y, self.z)
 
