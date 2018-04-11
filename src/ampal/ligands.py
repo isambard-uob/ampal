@@ -13,17 +13,17 @@ class LigandGroup(Polymer):
     polymer_id : str, optional
         An ID that the user can use to identify the `Polymer`. This is
         used when generating a pdb file using `Polymer().pdb`.
-    ampal_parent : ampal.Assembly, optional
+    parent : ampal.Assembly, optional
         Reference to `Assembly` containing the `Polymer`.
     sl : int, optional
         The default smoothing level used when calculating the
         backbone primitive.
     """
 
-    def __init__(self, monomers=None, polymer_id=' ', ampal_parent=None, sl=2):
+    def __init__(self, monomers=None, polymer_id=' ', parent=None, sl=2):
         super().__init__(
             monomers=monomers, polymer_id=polymer_id, molecule_type='ligands',
-            ampal_parent=ampal_parent, sl=sl)
+            parent=parent, sl=sl)
 
     def __repr__(self):
         return '<Ligands chain containing {} {}>'.format(
@@ -71,7 +71,7 @@ class Ligand(Monomer):
         state available for the `Ligand`.
     id : str
         String used to identify the residue.
-    ampal_parent : Polymer or None
+    parent : Polymer or None
         A reference to the `LigandGroup` containing this `Ligand`.
     tags : dict
         A dictionary containing information about this AMPAL object.
@@ -81,9 +81,9 @@ class Ligand(Monomer):
     """
 
     def __init__(self, mol_code, atoms=None, monomer_id=' ', insertion_code=' ',
-                 is_hetero=False, ampal_parent=None):
+                 is_hetero=False, parent=None):
         super(Ligand, self).__init__(
-            atoms, monomer_id, ampal_parent=ampal_parent)
+            atoms, monomer_id, parent=parent)
         self.mol_code = mol_code
         self.insertion_code = insertion_code
         self.is_hetero = is_hetero

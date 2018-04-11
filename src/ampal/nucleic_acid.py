@@ -14,7 +14,7 @@ class Polynucleotide(Polymer):
     polymer_id : str, optional
         An ID that the user can use to identify the `Polynucleotide`. This is
         used when generating a pdb file using `Polynucleotide().pdb`.
-    ampal_parent : ampal.Assembly, optional
+    parent : ampal.Assembly, optional
         Reference to `Assembly` containing the `Polynucleotide`.
     sl : int, optional
         The default smoothing level used when calculating the
@@ -24,7 +24,7 @@ class Polynucleotide(Polymer):
     ----------
     id : str
         `Polynucleotide` ID
-    ampal_parent : ampal.Assembly or None
+    parent : ampal.Assembly or None
         Reference to `Assembly` containing the `Polynucleotide`
     molecule_type : str
         A description of the type of `Polymer` i.e. Protein, DNA etc.
@@ -47,10 +47,10 @@ class Polynucleotide(Polymer):
         a `Monomer`.
     """
 
-    def __init__(self, monomers=None, polymer_id=' ', ampal_parent=None, sl=2):
+    def __init__(self, monomers=None, polymer_id=' ', parent=None, sl=2):
         super().__init__(
             monomers=monomers, polymer_id=polymer_id,
-            molecule_type='nucleic_acid', ampal_parent=ampal_parent, sl=sl)
+            molecule_type='nucleic_acid', parent=parent, sl=sl)
 
     @property
     def sequence(self):
@@ -82,7 +82,7 @@ class Nucleotide(Monomer):
         Insertion code of `Nucleotide`, used if reading from pdb.
     is_hetero : bool, optional
         True if is a hetero atom in pdb. Helps with PDB formatting.
-    ampal_parent : ampal.Polynucleotide, optional
+    parent : ampal.Polynucleotide, optional
         Reference to `Polynucleotide` containing the `Nucleotide`.
 
     Attributes
@@ -102,7 +102,7 @@ class Nucleotide(Monomer):
         The key that corresponds to the reference `Atom`. This is used
         by various functions, for example backbone primitives are
         calculated using the `Atom` defined using this key.
-    ampal_parent : Polynucleotide or None
+    parent : Polynucleotide or None
         A reference to the `Polynucleotide` containing this `Nucleotide`.
     tags : dict
         A dictionary containing information about this AMPAL object.
@@ -118,8 +118,8 @@ class Nucleotide(Monomer):
 
     def __init__(
             self, atoms=None, mol_code='UNK', monomer_id=' ',
-            insertion_code=' ', is_hetero=False, ampal_parent=None):
-        super().__init__(atoms, monomer_id, ampal_parent=ampal_parent)
+            insertion_code=' ', is_hetero=False, parent=None):
+        super().__init__(atoms, monomer_id, parent=parent)
         self.mol_code = mol_code
         self.mol_letter = mol_code[-1]
         self.insertion_code = insertion_code
