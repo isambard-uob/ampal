@@ -22,5 +22,5 @@ installed.
 
 ## Getting Started
 
-For an overview of the functionality in AMPAL, take a look at [this tutorial]().
-If you want to dig a bit deeper, have a look at the [docs]().
+The [docs](https://isambard-uob.github.io/ampal/) contain a range of information
+on installation and usage.
