@@ -29,6 +29,7 @@ setup(name='AMPAL',
       ],
       packages=find_packages('src'),
       package_dir={'': 'src'},
+      include_package_data=True,
       # This code automatically builds the Cython extensions.
       ext_modules=cythonize(
           [Extension(
