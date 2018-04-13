@@ -1,8 +1,4 @@
-"""Cythonised versions of basic geometric operations that ISAMBARD requires.
-
-If Cython is not detected the geometry module falls back to the Python
-implementation. As a result, all functions that are available to the user MUST
-return the same type the Python version of the code.
+"""Basic geometric operations that AMPAL requires.
 
 Functions that have names preceded by an underscore indicate that they are not
 to be used by users. However, all of these functions will generally be defined

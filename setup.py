@@ -39,7 +39,9 @@ setup(name='AMPAL',
       ),
       install_requires=[
           'Cython',
-          'numpy'
+          'networkx',
+          'numpy',
+          'requests'
       ],
       zip_safe=False,
       )
