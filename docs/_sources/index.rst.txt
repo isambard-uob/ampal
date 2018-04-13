@@ -18,6 +18,7 @@ Pythonic framework for representing biomolecular structure.
    Installation <installation>
    Introduction to AMPAL <AMPAL_Introduction_and_Selections>
    Advanced Selections <Advanced_Selections_and_Analysis>
+   API Reference <modules>
 
 
 

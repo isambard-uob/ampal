@@ -277,7 +277,7 @@ Now the ``list`` of mol codes can be used to make a ``Counter`` object:
 
 As you can see, there are 447 water molecules and 2 zinc ions.
 
-5. Distance Analysis
+3. Distance Analysis
 --------------------
 
 Now we can select all atoms in the protein and understand the structures
@@ -496,7 +496,7 @@ We can get all the residues using a for loop or a list comprehension:
 It looks like the zinc is coordinated by two cysteines, an aspartate and
 a histidine residue.
 
-6. Is Within
+4. Is Within
 ------------
 
 This kind of operation is very common when analysing proteins. So we
@@ -623,7 +623,7 @@ This returns all ``Monomers`` within a given cutoff value.
 
 
 
-7. Geometry in AMPAL
+5. Geometry in AMPAL
 --------------------
 
 There are a range of tools in AMPAL for performing geometric operations.
@@ -719,7 +719,7 @@ angles:
 Our simple analysis shows that the leucine residue is in the
 gauche-/trans conformation.
 
-7. Summary and activities
+6. Summary and activities
 -------------------------
 
 There are lots of tools for making complex selections in ampal. Combined

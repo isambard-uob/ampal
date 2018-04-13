@@ -20,7 +20,35 @@ AMPAL uses Cython, so if you're installing from source make sure you have it
 installed.
 
 
-## Getting Started
+## Super Quick Start
 
-The [docs](https://isambard-uob.github.io/ampal/) contain a range of information
-on installation and usage.
+Load a PDB file into AMPAL:
+
+```Python
+my_structure = ampal.load_pdb('3qy1.pdb')
+print(my_structure)
+# OUT: <Assembly (3qy1) containing 2 Polypeptides, 449 Ligands>
+```
+
+Select regions of the structure in an intuitive manner:
+
+```Python
+my_atom = my_structure['A']['56']['CA']
+print(my_structure['A']['56']['CA'])
+# OUT: <Carbon Atom (CA). Coordinates: (6.102, -4.287, -29.607)>
+```
+
+Then climb all the way back up the hierachy:
+
+```Python
+print(my_atom.parent)
+# OUT: <Residue containing 9 Atoms. Residue code: GLU>
+print(my_atom.parent.parent)
+# OUT: <Polypeptide containing 215 Residues. Sequence: DIDTLISNNALW...>
+print(my_atom.parent.parent.parent)
+# OUT: <Assembly (3qy1) containing 2 Polypeptides, 449 Ligands>
+```
+
+This is just a quick introduction, AMPAL contain tonnes of tools for making
+complex selections and performing analysis. Take a look at the
+[docs](https://isambard-uob.github.io/ampal/) to find out more.
