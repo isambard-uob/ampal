@@ -3,16 +3,25 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to AMPAL's documentation!
-=================================
+AMPAL Documentation
+===================
+
+Welcome to the documentation for the AMPAL module. AMPAL stands for Atom,
+Monomer, Polymer, Assembly and Ligand and is a simple, intuitive and
+Pythonic framework for representing biomolecular structure.
+
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   
+   Installation <installation>
+   Introduction to AMPAL <AMPAL_Introduction_and_Selections>
+   Advanced Selections <Advanced_Selections_and_Analysis>
 
 
 
-Indices and tables
+Indices and Search
 ==================
 
 * :ref:`genindex`
