@@ -5,6 +5,7 @@ jobs:
       - image: python:3.6
     steps:
       - checkout
+      - run: pip install Cython
       - run: pip install pytest
       - run: python setup.py install
       - run: pytest
