@@ -1,0 +1,374 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ampal.interactions &#8212; AMPAL 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for ampal.interactions</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Contains code for analysing chemical interactions in AMPAL objects.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">networkx</span>
+
+<span class="kn">from</span> <span class="nn">.data</span> <span class="k">import</span> <span class="n">ELEMENT_DATA</span>
+<span class="kn">from</span> <span class="nn">.geometry</span> <span class="k">import</span> <span class="n">distance</span><span class="p">,</span> <span class="n">gen_sectors</span>
+
+<span class="n">core_components</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;ALA&#39;</span><span class="p">,</span> <span class="s1">&#39;ARG&#39;</span><span class="p">,</span> <span class="s1">&#39;ASN&#39;</span><span class="p">,</span> <span class="s1">&#39;ASP&#39;</span><span class="p">,</span> <span class="s1">&#39;CYS&#39;</span><span class="p">,</span> <span class="s1">&#39;GLN&#39;</span><span class="p">,</span> <span class="s1">&#39;GLU&#39;</span><span class="p">,</span> <span class="s1">&#39;GLY&#39;</span><span class="p">,</span> <span class="s1">&#39;HIS&#39;</span><span class="p">,</span> <span class="s1">&#39;ILE&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;LEU&#39;</span><span class="p">,</span> <span class="s1">&#39;LYS&#39;</span><span class="p">,</span> <span class="s1">&#39;MET&#39;</span><span class="p">,</span> <span class="s1">&#39;PHE&#39;</span><span class="p">,</span> <span class="s1">&#39;PRO&#39;</span><span class="p">,</span> <span class="s1">&#39;SER&#39;</span><span class="p">,</span> <span class="s1">&#39;THR&#39;</span><span class="p">,</span> <span class="s1">&#39;TRP&#39;</span><span class="p">,</span> <span class="s1">&#39;TYR&#39;</span><span class="p">,</span> <span class="s1">&#39;VAL&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HOH&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="Interaction"><a class="viewcode-back" href="../../ampal.html#ampal.interactions.Interaction">[docs]</a><span class="k">class</span> <span class="nc">Interaction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A container for all types of interaction with donor and acceptor.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    a : ampal.Atom</span>
+<span class="sd">        A member of a pairwise interaction.</span>
+<span class="sd">    b : ampal.Atom</span>
+<span class="sd">        A member of a pairwise interaction.</span>
+<span class="sd">    dist : float</span>
+<span class="sd">        The distance between `a` and `b`.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    a : ampal.Atom</span>
+<span class="sd">        A member of a pairwise interaction.</span>
+<span class="sd">    b : ampal.Atom</span>
+<span class="sd">        A member of a pairwise interaction.</span>
+<span class="sd">    dist : float</span>
+<span class="sd">        The distance between `Atom` `a` and `b`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dist</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_a</span> <span class="o">=</span> <span class="n">a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_b</span> <span class="o">=</span> <span class="n">b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dist</span> <span class="o">=</span> <span class="n">dist</span>
+
+    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">),</span> <span class="n">other</span><span class="o">.</span><span class="n">_a</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">_b</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">am</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_a</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">ac</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">bm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">bc</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">return</span> <span class="s1">&#39;&lt;Interaction between </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}{}</span><span class="s1"> and </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}{}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_a</span><span class="o">.</span><span class="n">res_label</span><span class="p">,</span> <span class="n">am</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">ac</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b</span><span class="o">.</span><span class="n">res_label</span><span class="p">,</span> <span class="n">bm</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">bc</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="CovalentBond"><a class="viewcode-back" href="../../ampal.html#ampal.interactions.CovalentBond">[docs]</a><span class="k">class</span> <span class="nc">CovalentBond</span><span class="p">(</span><span class="n">Interaction</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Defines a covalent bond.&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">a</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;One `Atom` involved in the covalent bond.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_a</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">b</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;One `Atom` involved in the covalent bond.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">am</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_a</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">ac</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">bm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">bc</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">return</span> <span class="s1">&#39;&lt;Covalent bond between </span><span class="si">{}{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> --- </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}{}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">ac</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">am</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">am</span><span class="o">.</span><span class="n">mol_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_a</span><span class="o">.</span><span class="n">res_label</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b</span><span class="o">.</span><span class="n">res_label</span><span class="p">,</span></div>
+            <span class="n">bm</span><span class="o">.</span><span class="n">mol_code</span><span class="p">,</span> <span class="n">bc</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">bm</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="NonCovalentInteraction"><a class="viewcode-back" href="../../ampal.html#ampal.interactions.NonCovalentInteraction">[docs]</a><span class="k">class</span> <span class="nc">NonCovalentInteraction</span><span class="p">(</span><span class="n">Interaction</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A container for all non-covalent interaction.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    donor : ampal.Atom</span>
+<span class="sd">        The donor `Atom` in the interaction.</span>
+<span class="sd">    acceptor : ampal.Atom</span>
+<span class="sd">        The acceptor atom in the interaction.</span>
+<span class="sd">    dist : float</span>
+<span class="sd">        The distance between `Atom` `a` and `b`.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    donor : ampal.Atom</span>
+<span class="sd">        The donor `Atom` in the interaction.</span>
+<span class="sd">    acceptor : ampal.Atom</span>
+<span class="sd">        The acceptor atom in the interaction.</span>
+<span class="sd">    dist : float</span>
+<span class="sd">        The distance between `Atom` `a` and `b`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">donor</span><span class="p">,</span> <span class="n">acceptor</span><span class="p">,</span> <span class="n">dist</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">donor</span><span class="p">,</span> <span class="n">acceptor</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">donor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The donor `Atom` in the interaction.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_a</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">acceptor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The acceptor in the interaction.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;&lt;Interaction between </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}{}</span><span class="s1"> (donor) &#39;</span>
+                <span class="s1">&#39;and </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}{}</span><span class="s1"> (acceptor)&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">donor</span><span class="o">.</span><span class="n">mol_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">donor</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">donor</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">acceptor</span><span class="o">.</span><span class="n">mol_code</span><span class="p">,</span></div>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">acceptor</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">acceptor</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="HydrogenBond"><a class="viewcode-back" href="../../ampal.html#ampal.interactions.HydrogenBond">[docs]</a><span class="k">class</span> <span class="nc">HydrogenBond</span><span class="p">(</span><span class="n">NonCovalentInteraction</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Defines a hydrogen bond in terms of a donor and an acceptor.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    donor : ampal.Atom</span>
+<span class="sd">        The donor `Atom` in the interaction.</span>
+<span class="sd">    acceptor : ampal.Atom</span>
+<span class="sd">        The acceptor atom in the interaction.</span>
+<span class="sd">    dist : float</span>
+<span class="sd">        The distance between `Atom` `a` and `b`.</span>
+<span class="sd">    ang_a : float</span>
+<span class="sd">        Angle between the acceptor and the interaction vector.</span>
+<span class="sd">    ang_d : float</span>
+<span class="sd">        Angle between the donor and the interaction vector.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    donor : ampal.Atom</span>
+<span class="sd">        The donor `Atom` in the interaction.</span>
+<span class="sd">    acceptor : ampal.Atom</span>
+<span class="sd">        The acceptor atom in the interaction.</span>
+<span class="sd">    dist : float</span>
+<span class="sd">        The distance between `Atom` `a` and `b`.</span>
+<span class="sd">    ang_a : float</span>
+<span class="sd">        Angle between the acceptor and the interaction vector.</span>
+<span class="sd">    ang_d : float</span>
+<span class="sd">        Angle between the donor and the interaction vector.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">donor</span><span class="p">,</span> <span class="n">acceptor</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">ang_d</span><span class="p">,</span> <span class="n">ang_a</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">donor</span><span class="p">,</span> <span class="n">acceptor</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ang_d</span> <span class="o">=</span> <span class="n">ang_d</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ang_a</span> <span class="o">=</span> <span class="n">ang_a</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">donor_monomer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The donor `Monomer` in the interaction.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_a</span><span class="o">.</span><span class="n">parent</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">acceptor_monomer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The acceptor `Monomer` in the interaction.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_b</span><span class="o">.</span><span class="n">parent</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">donor</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">dc</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">am</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acceptor</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">ac</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">return</span> <span class="s1">&#39;&lt;Hydrogen Bond between (</span><span class="si">{}{}</span><span class="s1">) </span><span class="si">{}</span><span class="s1">-</span><span class="si">{}</span><span class="s1"> ||||| </span><span class="si">{}</span><span class="s1">-</span><span class="si">{}</span><span class="s1"> (</span><span class="si">{}{}</span><span class="s1">)&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">dm</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">dm</span><span class="o">.</span><span class="n">mol_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">donor</span><span class="o">.</span><span class="n">res_label</span><span class="p">,</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">acceptor</span><span class="o">.</span><span class="n">res_label</span><span class="p">,</span> <span class="n">am</span><span class="o">.</span><span class="n">mol_code</span><span class="p">,</span> <span class="n">am</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">ac</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="covalent_bonds"><a class="viewcode-back" href="../../ampal.html#ampal.interactions.covalent_bonds">[docs]</a><span class="k">def</span> <span class="nf">covalent_bonds</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">1.1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns all the covalent bonds in a list of `Atom` pairs.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Uses information `ELEMENT_DATA`, which can be accessed directly</span>
+<span class="sd">    through this module i.e. `isambard.ampal.interactions.ELEMENT_DATA`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    atoms : [(`Atom`, `Atom`)]</span>
+<span class="sd">        List of pairs of `Atoms`.</span>
+<span class="sd">    threshold : float, optional</span>
+<span class="sd">        Allows deviation from ideal covalent bond distance to be included.</span>
+<span class="sd">        For example, a value of 1.1 would allow interactions up to 10% further</span>
+<span class="sd">        from the ideal distance to be included.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bonds</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">atoms</span><span class="p">:</span>
+        <span class="n">bond_distance</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">ELEMENT_DATA</span><span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">element</span><span class="o">.</span><span class="n">title</span><span class="p">()][</span><span class="s1">&#39;atomic radius&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">ELEMENT_DATA</span><span class="p">[</span>
+                <span class="n">b</span><span class="o">.</span><span class="n">element</span><span class="o">.</span><span class="n">title</span><span class="p">()][</span><span class="s1">&#39;atomic radius&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="mi">100</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">distance</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">_vector</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">_vector</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dist</span> <span class="o">&lt;=</span> <span class="n">bond_distance</span> <span class="o">*</span> <span class="n">threshold</span><span class="p">:</span>
+            <span class="n">bonds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CovalentBond</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dist</span><span class="p">))</span></div>
+    <span class="k">return</span> <span class="n">bonds</span>
+
+
+<div class="viewcode-block" id="find_covalent_bonds"><a class="viewcode-back" href="../../ampal.html#ampal.interactions.find_covalent_bonds">[docs]</a><span class="k">def</span> <span class="nf">find_covalent_bonds</span><span class="p">(</span><span class="n">ampal</span><span class="p">,</span> <span class="n">max_range</span><span class="o">=</span><span class="mf">2.2</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Finds all covalent bonds in the AMPAL object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ampal : AMPAL Object</span>
+<span class="sd">        Any AMPAL object with a `get_atoms` method.</span>
+<span class="sd">    max_range : float, optional</span>
+<span class="sd">        Used to define the sector size, so interactions at longer ranges</span>
+<span class="sd">        will not be found.</span>
+<span class="sd">    threshold : float, optional</span>
+<span class="sd">        Allows deviation from ideal covalent bond distance to be included.</span>
+<span class="sd">        For example, a value of 1.1 would allow interactions up to 10% further</span>
+<span class="sd">        from the ideal distance to be included.</span>
+<span class="sd">    tag : bool, optional</span>
+<span class="sd">        If `True`, will add the covalent bond to the tags dictionary of</span>
+<span class="sd">        each `Atom` involved in the interaction under the `covalent_bonds`</span>
+<span class="sd">        key.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sectors</span> <span class="o">=</span> <span class="n">gen_sectors</span><span class="p">(</span><span class="n">ampal</span><span class="o">.</span><span class="n">get_atoms</span><span class="p">(),</span> <span class="n">max_range</span> <span class="o">*</span> <span class="mf">1.1</span><span class="p">)</span>
+    <span class="n">bonds</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">sector</span> <span class="ow">in</span> <span class="n">sectors</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">atoms</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">sector</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">bonds</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">covalent_bonds</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">))</span>
+    <span class="n">bond_set</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">bonds</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">tag</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">bond</span> <span class="ow">in</span> <span class="n">bond_set</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">bond</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">bond</span><span class="o">.</span><span class="n">b</span>
+            <span class="k">if</span> <span class="s1">&#39;covalent_bonds&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">tags</span><span class="p">:</span>
+                <span class="n">a</span><span class="o">.</span><span class="n">tags</span><span class="p">[</span><span class="s1">&#39;covalent_bonds&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">a</span><span class="o">.</span><span class="n">tags</span><span class="p">[</span><span class="s1">&#39;covalent_bonds&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;covalent_bonds&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">b</span><span class="o">.</span><span class="n">tags</span><span class="p">:</span>
+                <span class="n">b</span><span class="o">.</span><span class="n">tags</span><span class="p">[</span><span class="s1">&#39;covalent_bonds&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">b</span><span class="o">.</span><span class="n">tags</span><span class="p">[</span><span class="s1">&#39;covalent_bonds&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">bond_set</span>
+
+
+<div class="viewcode-block" id="generate_covalent_bond_graph"><a class="viewcode-back" href="../../ampal.html#ampal.interactions.generate_covalent_bond_graph">[docs]</a><span class="k">def</span> <span class="nf">generate_covalent_bond_graph</span><span class="p">(</span><span class="n">covalent_bonds</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generates a graph of the covalent bond network described by the interactions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    covalent_bonds: [CovalentBond]</span>
+<span class="sd">        List of `CovalentBond`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bond_graph: networkx.Graph</span>
+<span class="sd">        A graph of the covalent bond network.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bond_graph</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">inter</span> <span class="ow">in</span> <span class="n">covalent_bonds</span><span class="p">:</span>
+        <span class="n">bond_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">inter</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">inter</span><span class="o">.</span><span class="n">b</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">bond_graph</span>
+
+
+<div class="viewcode-block" id="generate_bond_subgraphs_from_break"><a class="viewcode-back" href="../../ampal.html#ampal.interactions.generate_bond_subgraphs_from_break">[docs]</a><span class="k">def</span> <span class="nf">generate_bond_subgraphs_from_break</span><span class="p">(</span><span class="n">bond_graph</span><span class="p">,</span> <span class="n">atom1</span><span class="p">,</span> <span class="n">atom2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Splits the bond graph between two atoms to producing subgraphs.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This will not work if there are cycles in the bond graph.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bond_graph: networkx.Graph</span>
+<span class="sd">        Graph of covalent bond network</span>
+<span class="sd">    atom1: isambard.ampal.Atom</span>
+<span class="sd">        First atom in the bond.</span>
+<span class="sd">    atom2: isambard.ampal.Atom</span>
+<span class="sd">        Second atom in the bond.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    subgraphs: [networkx.Graph]</span>
+<span class="sd">        A list of subgraphs generated when a bond is broken in the covalent</span>
+<span class="sd">        bond network.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bond_graph</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">atom1</span><span class="p">,</span> <span class="n">atom2</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">subgraphs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">networkx</span><span class="o">.</span><span class="n">connected_component_subgraphs</span><span class="p">(</span>
+            <span class="n">bond_graph</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="c1"># Add edge</span>
+        <span class="n">bond_graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">atom1</span><span class="p">,</span> <span class="n">atom2</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">subgraphs</span>
+
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Kieran L. Hudson, Christopher W. Wood, Gail J. Bartlett&#39;</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Woolfson Group, UoB.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

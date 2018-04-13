@@ -1,0 +1,208 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ampal.nucleic_acid &#8212; AMPAL 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for ampal.nucleic_acid</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Contains AMPAL objects representing nucleic acids.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">ampal.base_ampal</span> <span class="k">import</span> <span class="n">Polymer</span><span class="p">,</span> <span class="n">Monomer</span>
+
+
+<div class="viewcode-block" id="Polynucleotide"><a class="viewcode-back" href="../../ampal.html#ampal.nucleic_acid.Polynucleotide">[docs]</a><span class="k">class</span> <span class="nc">Polynucleotide</span><span class="p">(</span><span class="n">Polymer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;`Polymer` type object that represents a `Polynucleotide`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    monomers : Nucleotide or [Nucleotide], optional</span>
+<span class="sd">        `Nucleotide` or list containing `Nucleotide` objects to form the</span>
+<span class="sd">        `Polynucleotide`.</span>
+<span class="sd">    polymer_id : str, optional</span>
+<span class="sd">        An ID that the user can use to identify the `Polynucleotide`. This is</span>
+<span class="sd">        used when generating a pdb file using `Polynucleotide().pdb`.</span>
+<span class="sd">    parent : ampal.Assembly, optional</span>
+<span class="sd">        Reference to `Assembly` containing the `Polynucleotide`.</span>
+<span class="sd">    sl : int, optional</span>
+<span class="sd">        The default smoothing level used when calculating the</span>
+<span class="sd">        backbone primitive.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    id : str</span>
+<span class="sd">        `Polynucleotide` ID</span>
+<span class="sd">    parent : ampal.Assembly or None</span>
+<span class="sd">        Reference to `Assembly` containing the `Polynucleotide`</span>
+<span class="sd">    molecule_type : str</span>
+<span class="sd">        A description of the type of `Polymer` i.e. Protein, DNA etc.</span>
+<span class="sd">    ligands : ampal.LigandGroup</span>
+<span class="sd">        A `LigandGroup` containing all the `Ligands` associated with this</span>
+<span class="sd">        `Polynucleotide` chain.</span>
+<span class="sd">    tags : dict</span>
+<span class="sd">        A dictionary containing information about this AMPAL object.</span>
+<span class="sd">        The tags dictionary is used by AMPAL to cache information</span>
+<span class="sd">        about this object, but is also intended to be used by users</span>
+<span class="sd">        to store any relevant information they have.</span>
+<span class="sd">    sl : int</span>
+<span class="sd">        The default smoothing level used when calculating the</span>
+<span class="sd">        backbone primitive.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    TypeError</span>
+<span class="sd">        `Polymer` type objects can only be initialised empty or using</span>
+<span class="sd">        a `Monomer`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">monomers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">polymer_id</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sl</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">monomers</span><span class="o">=</span><span class="n">monomers</span><span class="p">,</span> <span class="n">polymer_id</span><span class="o">=</span><span class="n">polymer_id</span><span class="p">,</span>
+            <span class="n">molecule_type</span><span class="o">=</span><span class="s1">&#39;nucleic_acid&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">sl</span><span class="o">=</span><span class="n">sl</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the sequence of the `Polynucleotide` as a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sequence : str</span>
+<span class="sd">            String of the monomer sequence of the `Polynucleotide`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">mol_code</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_monomers</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Nucleotide"><a class="viewcode-back" href="../../ampal.html#ampal.nucleic_acid.Nucleotide">[docs]</a><span class="k">class</span> <span class="nc">Nucleotide</span><span class="p">(</span><span class="n">Monomer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Represents a nucleotide base.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    atoms : OrderedDict, optional</span>
+<span class="sd">        OrderedDict containing Atoms for the `Nucleotide`. OrderedDict</span>
+<span class="sd">        is used to maintain the order items were added to the</span>
+<span class="sd">        dictionary.</span>
+<span class="sd">    mol_code : str, optional</span>
+<span class="sd">        One or three letter code that represents the `Nucleotide`.</span>
+<span class="sd">    monomer_id : str, optional</span>
+<span class="sd">        String used to identify the `Nucleotide`.</span>
+<span class="sd">    insertion_code : str, optional</span>
+<span class="sd">        Insertion code of `Nucleotide`, used if reading from pdb.</span>
+<span class="sd">    is_hetero : bool, optional</span>
+<span class="sd">        True if is a hetero atom in pdb. Helps with PDB formatting.</span>
+<span class="sd">    parent : ampal.Polynucleotide, optional</span>
+<span class="sd">        Reference to `Polynucleotide` containing the `Nucleotide`.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mol_code : str</span>
+<span class="sd">        PDB molecule code that represents the `Nucleotide`.</span>
+<span class="sd">    insertion_code : str</span>
+<span class="sd">        Insertion code of `Nucleotide`, used if reading from pdb.</span>
+<span class="sd">    is_hetero : bool</span>
+<span class="sd">        True if is a hetero atom in pdb. Helps with PDB formatting.</span>
+<span class="sd">    states : dict</span>
+<span class="sd">        Contains an `OrderedDicts` containing atom information for each</span>
+<span class="sd">        state available for the `Nucleotide`.</span>
+<span class="sd">    id : str</span>
+<span class="sd">        String used to identify the `Nucleotide`.</span>
+<span class="sd">    reference_atom : str</span>
+<span class="sd">        The key that corresponds to the reference `Atom`. This is used</span>
+<span class="sd">        by various functions, for example backbone primitives are</span>
+<span class="sd">        calculated using the `Atom` defined using this key.</span>
+<span class="sd">    parent : Polynucleotide or None</span>
+<span class="sd">        A reference to the `Polynucleotide` containing this `Nucleotide`.</span>
+<span class="sd">    tags : dict</span>
+<span class="sd">        A dictionary containing information about this AMPAL object.</span>
+<span class="sd">        The tags dictionary is used by AMPAL to cache information</span>
+<span class="sd">        about this object, but is also intended to be used by users</span>
+<span class="sd">        to store any relevant information they have.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        Raised if `mol_code` is not length 1 or 3.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mol_code</span><span class="o">=</span><span class="s1">&#39;UNK&#39;</span><span class="p">,</span> <span class="n">monomer_id</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
+            <span class="n">insertion_code</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">is_hetero</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">monomer_id</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mol_code</span> <span class="o">=</span> <span class="n">mol_code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mol_letter</span> <span class="o">=</span> <span class="n">mol_code</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">insertion_code</span> <span class="o">=</span> <span class="n">insertion_code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_hetero</span> <span class="o">=</span> <span class="n">is_hetero</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reference_atom</span> <span class="o">=</span> <span class="s1">&#39;P&#39;</span>
+
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Christopher W. Wood&quot;</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Woolfson Group, UoB.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
