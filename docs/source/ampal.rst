@@ -76,14 +76,6 @@ ampal.ligands module
     :undoc-members:
     :show-inheritance:
 
-ampal.non\_canonical module
----------------------------
-
-.. automodule:: ampal.non_canonical
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 ampal.nucleic\_acid module
 --------------------------
 

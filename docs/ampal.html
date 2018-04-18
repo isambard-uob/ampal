@@ -16,6 +16,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="ampal" href="modules.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -1774,10 +1775,7 @@ component Monoer objects.</td>
 </div>
 <div class="section" id="module-ampal.geometry">
 <span id="ampal-geometry-module"></span><h2>ampal.geometry module<a class="headerlink" href="#module-ampal.geometry" title="Permalink to this headline">¶</a></h2>
-<p>Cythonised versions of basic geometric operations that ISAMBARD requires.</p>
-<p>If Cython is not detected the geometry module falls back to the Python
-implementation. As a result, all functions that are available to the user MUST
-return the same type the Python version of the code.</p>
+<p>Basic geometric operations that AMPAL requires.</p>
 <p>Functions that have names preceded by an underscore indicate that they are not
 to be used by users. However, all of these functions will generally be defined
 using cdef and so will not be imported anyway.</p>
@@ -3234,66 +3232,6 @@ backbone primitive.</li>
 </dd></dl>
 
 </div>
-<div class="section" id="module-ampal.non_canonical">
-<span id="ampal-non-canonical-module"></span><h2>ampal.non_canonical module<a class="headerlink" href="#module-ampal.non_canonical" title="Permalink to this headline">¶</a></h2>
-<p>Contains tools for working with non-canonical animo acids.</p>
-<dl class="function">
-<dt id="ampal.non_canonical.align_nab">
-<code class="descclassname">ampal.non_canonical.</code><code class="descname">align_nab</code><span class="sig-paren">(</span><em>tar</em>, <em>ref</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/non_canonical.html#align_nab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.non_canonical.align_nab" title="Permalink to this definition">¶</a></dt>
-<dd><p>Aligns the N-CA and CA-CB vector of the target monomer.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>tar</strong> (<em>ampal.Residue</em>) – The residue that will be aligned to the reference.</li>
-<li><strong>ref</strong> (<em>ampal.Residue</em>) – The reference residue for the alignment.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="ampal.non_canonical.apply_trans_rot">
-<code class="descclassname">ampal.non_canonical.</code><code class="descname">apply_trans_rot</code><span class="sig-paren">(</span><em>ampal</em>, <em>translation</em>, <em>angle</em>, <em>axis</em>, <em>point</em>, <em>radians=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/non_canonical.html#apply_trans_rot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.non_canonical.apply_trans_rot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Applies a translation and rotation to an AMPAL object.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ampal.non_canonical.convert_pro_to_hyp">
-<code class="descclassname">ampal.non_canonical.</code><code class="descname">convert_pro_to_hyp</code><span class="sig-paren">(</span><em>pro</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/non_canonical.html#convert_pro_to_hyp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.non_canonical.convert_pro_to_hyp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts a pro residue to a hydroxypro residue.</p>
-<p>All metadata associated with the original pro will be lost i.e. tags.
-As a consequence, it is advisable to relabel all atoms in the structure
-in order to make them contiguous.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pro</strong> (<em>ampal.Residue</em>) – The proline residue to be mutated to hydroxyproline.</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<p>We can create a collagen model using isambard and convert every third
-residue to hydroxyproline:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">isambard</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">col</span> <span class="o">=</span> <span class="n">isambard</span><span class="o">.</span><span class="n">specifications</span><span class="o">.</span><span class="n">CoiledCoil</span><span class="o">.</span><span class="n">tropocollagen</span><span class="p">(</span><span class="n">aa</span><span class="o">=</span><span class="mi">21</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">col</span><span class="o">.</span><span class="n">pack_new_sequences</span><span class="p">([</span><span class="s1">&#39;GPPGPPGPPGPPGPPGPPGPP&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">to_convert</span> <span class="o">=</span> <span class="p">[</span>
-<span class="gp">... </span>    <span class="n">res</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">())</span>
-<span class="gp">... </span>    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">3</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">pro</span> <span class="ow">in</span> <span class="n">to_convert</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">isambard</span><span class="o">.</span><span class="n">ampal</span><span class="o">.</span><span class="n">non_canonical</span><span class="o">.</span><span class="n">convert_pro_to_hyp</span><span class="p">(</span><span class="n">pro</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">col</span><span class="o">.</span><span class="n">sequences</span>
-<span class="go">[&#39;GPXGPXGPXGPXGPXGPXGPX&#39;, &#39;GPXGPXGPXGPXGPXGPXGPX&#39;, &#39;GPXGPXGPXGPXGPXGPXGPX&#39;]</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</div>
 <div class="section" id="module-ampal.nucleic_acid">
 <span id="ampal-nucleic-acid-module"></span><h2>ampal.nucleic_acid module<a class="headerlink" href="#module-ampal.nucleic_acid" title="Permalink to this headline">¶</a></h2>
 <p>Contains AMPAL objects representing nucleic acids.</p>
@@ -4726,7 +4664,6 @@ to store any relevant information they have.</p>
 <li><a class="reference internal" href="#module-ampal.geometry">ampal.geometry module</a></li>
 <li><a class="reference internal" href="#module-ampal.interactions">ampal.interactions module</a></li>
 <li><a class="reference internal" href="#module-ampal.ligands">ampal.ligands module</a></li>
-<li><a class="reference internal" href="#module-ampal.non_canonical">ampal.non_canonical module</a></li>
 <li><a class="reference internal" href="#module-ampal.nucleic_acid">ampal.nucleic_acid module</a></li>
 <li><a class="reference internal" href="#module-ampal.pdb_parser">ampal.pdb_parser module</a></li>
 <li><a class="reference internal" href="#module-ampal.protein">ampal.protein module</a></li>
@@ -4739,6 +4676,9 @@ to store any relevant information they have.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">ampal</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">ampal</a></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
