@@ -518,12 +518,12 @@ class Monomer(BaseAmpal):
     """
 
     def __init__(self, atoms=None, monomer_id=' ', parent=None):
-        if isinstance(atoms, dict):
-            self.states = atoms
-            self._active_state = sorted(self.states.keys())[0]
-        elif isinstance(atoms, OrderedDict):
+        if isinstance(atoms, OrderedDict):
             self.states = dict(A=atoms)
             self._active_state = 'A'
+        elif isinstance(atoms, dict):
+            self.states = atoms
+            self._active_state = sorted(self.states.keys())[0]
         else:
             # Sets up dummy states which should be filled later
             self.states = {'A': OrderedDict()}
