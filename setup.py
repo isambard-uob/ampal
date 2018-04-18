@@ -12,7 +12,7 @@ def readme():
 
 
 setup(name='AMPAL',
-      version='1.0.0',
+      version='1.0.1',
       description='A simple framework for representing biomolecular structure.',
       long_description=readme(),
       long_description_content_type='text/markdown; charset=UTF-8; variant=GFM',
