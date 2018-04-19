@@ -508,4 +508,54 @@ class AxisTestCase(unittest.TestCase):
         self.assertTrue(at)
 
 
+class HelicalCurveTestCase(unittest.TestCase):
+    """Tests for HelicalCurve"""
+
+    def setUp(self):
+        n = 100
+        self.alphas = random_angles(n=n, min_val=0, max_val=90)
+        self.radii = [random.random() * 100 for _ in range(n)]
+        self.pitches = [random.random() * 1000 for _ in range(n)]
+        self.curves = [geometry.HelicalCurve.alpha_and_pitch(
+            alpha=a, pitch=p) for a, p in zip(self.alphas, self.pitches)]
+        return
+
+    def test_instantiation_pitch_and_radius(self):
+        helical_curves = [geometry.HelicalCurve.pitch_and_radius(
+            pitch=p, radius=r) for p, r in zip(self.pitches, self.radii)]
+        a1 = numpy.allclose([h.pitch for h in helical_curves], self.pitches)
+        a2 = numpy.allclose([h.radius for h in helical_curves], self.radii)
+        self.assertTrue(a1 and a2)
+
+    def test_instantiation_alpha_and_radius(self):
+        helical_curves = [geometry.HelicalCurve.alpha_and_radius(
+            alpha=a, radius=r) for a, r in zip(self.alphas, self.radii)]
+        a1 = numpy.allclose([h.alpha for h in helical_curves], self.alphas)
+        a2 = numpy.allclose([h.radius for h in helical_curves], self.radii)
+        self.assertTrue(a1 and a2)
+
+    def test_instantiation_alpha_and_pitch(self):
+        helical_curves = [geometry.HelicalCurve.alpha_and_pitch(
+            alpha=a, pitch=p) for a, p in zip(self.alphas, self.pitches)]
+        a1 = numpy.allclose([h.alpha for h in helical_curves], self.alphas)
+        a2 = numpy.allclose([h.pitch for h in helical_curves], self.pitches)
+        self.assertTrue(a1 and a2)
+
+    def test_t_from_arc_length(self):
+        """t_from_arc_length and arc_length should be inverses of each other."""
+        t_values = [random.random() * random.choice(range(-1000, 1000))
+                    for _ in range(len(self.alphas))]
+        calculated_t_values = [hc.t_from_arc_length(hc.arc_length(x))
+                               for hc, x in zip(self.curves, t_values)]
+        at = numpy.allclose(t_values, calculated_t_values)
+        self.assertTrue(at)
+
+    def test_get_coords_n_points(self):
+        n_point_vals = [random.randint(1, 100) for _ in range(100)]
+        len_coords = [len(hc.get_coords(n_points=x))
+                      for hc, x in zip(self.curves, n_point_vals)]
+        at = numpy.allclose(n_point_vals, len_coords)
+        self.assertTrue(at)
+
+
 __author__ = 'Christopher W. Wood, Jack W. Heal'
