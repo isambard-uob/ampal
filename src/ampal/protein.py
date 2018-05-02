@@ -909,11 +909,11 @@ class Residue(Monomer):
 
         Notes
         -----
-        Uses the definition of the centroid from Huang *et al* [1]_ .
+        Uses the definition of the centroid from Huang *et al* [2]_.
 
         References
         ----------
-        .. [1] Huang ES, Subbiah S and Levitt M (1995) Recognizing Native
+        .. [2] Huang ES, Subbiah S and Levitt M (1995) Recognizing Native
            Folds by the Arrangement of Hydrophobic and Polar Residues, J. Mol.
            Biol return., **252**, 709-720.
         """

@@ -4156,6 +4156,35 @@ atoms (N, CA, C, O).</td>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="ampal.protein.Residue.centroid">
+<code class="descname">centroid</code><a class="headerlink" href="#ampal.protein.Residue.centroid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the centroid of the residue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>centroid</strong> – Returns a 3D coordinate for the residue unless a CB
+atom is not available, in which case <cite>None</cite> is
+returned.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy.array or None</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Uses the definition of the centroid from Huang <em>et al</em> <a class="footnote-reference" href="#id4" id="id3">[2]</a>.</p>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td>Huang ES, Subbiah S and Levitt M (1995) Recognizing Native
+Folds by the Arrangement of Hydrophobic and Polar Residues, J. Mol.
+Biol return., <strong>252</strong>, 709-720.</td></tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="ampal.protein.Residue.side_chain">
 <code class="descname">side_chain</code><a class="headerlink" href="#ampal.protein.Residue.side_chain" title="Permalink to this definition">¶</a></dt>
 <dd><p>List of the side-chain atoms (R-group).</p>
@@ -4183,7 +4212,7 @@ If each polymer in an assembly has a distinct id, it will uniquely
 identify each monomer within the assembly.</p>
 <p>The hetero-flag is defined as in Biopython as a string that is
 either a single whitespace in the case of a non-hetero atom,
-or ‘<a href="#id3"><span class="problematic" id="id4">H_</span></a>’ plus the name of the hetero-residue (e.g. ‘H_GLC’ in
+or ‘<a href="#id5"><span class="problematic" id="id6">H_</span></a>’ plus the name of the hetero-residue (e.g. ‘H_GLC’ in
 the case of a glucose molecule), or ‘W’ in the case of a water
 molecule.</p>
 <p>For more information, see the Biopython documentation or this
