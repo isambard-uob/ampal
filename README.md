@@ -2,7 +2,7 @@
 A simple, intuitive and Pythonic framework for representing biomolecular structure.
 
 [![CircleCI](https://circleci.com/gh/isambard-uob/ampal/tree/master.svg?style=shield)](https://circleci.com/gh/isambard-uob/ampal/tree/master)
-[![Python Version](https://img.shields.io/badge/python-3.5%2C%203.6-lightgrey.svg)]()
+[![Python Version](https://img.shields.io/badge/python-3.6-lightgrey.svg)]()
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/isambard-uob/ampal/blob/master/LICENSE)
 
 ## Installation
@@ -18,7 +18,6 @@ and typing:
 
 AMPAL uses Cython, so if you're installing from source make sure you have it
 installed.
-
 
 ## Super Quick Start
 
@@ -52,3 +51,20 @@ print(my_atom.parent.parent.parent)
 This is just a quick introduction, AMPAL contain tonnes of tools for making
 complex selections and performing analysis. Take a look at the
 [docs](https://isambard-uob.github.io/ampal/) to find out more.
+
+## Release Notes
+
+### v1.2.0
+
+* **Adds an interface for DSSP.** If you have DSSP on your computer and have the
+  `mkdssp` command available on your path, you can use the `ampal.tag_dssp_data`
+  function to add secondary structure information to the tags dictionary of the
+  residues in your structure.
+* **Adds the `ampal.align` module.** Contains a simple class for aligning two
+  `Polypeptides` using MMC. The simplest interface is the `align_backbones`
+  function.
+  * This is currently super inefficient and will be reimplemented.
+
+### v1.1.0
+
+* **Adds the centroid property to residues.**

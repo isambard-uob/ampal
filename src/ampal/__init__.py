@@ -7,3 +7,6 @@ from .assembly import Assembly, AmpalContainer
 from .pdb_parser import load_pdb
 from .pseudo_atoms import PseudoGroup, PseudoMonomer, PseudoAtom, Primitive
 from .dssp import tag_dssp_data
+
+
+__version__ = "1.2.0"
