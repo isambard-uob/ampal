@@ -1,0 +1,232 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ampal.align &#8212; AMPAL 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for ampal.align</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;A module containing classes for aligning structure.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="kn">from</span> <span class="nn">.geometry</span> <span class="k">import</span> <span class="n">unit_vector</span>
+<span class="kn">from</span> <span class="nn">.protein</span> <span class="k">import</span> <span class="n">Polypeptide</span>
+
+
+<div class="viewcode-block" id="align_backbones"><a class="viewcode-back" href="../../ampal.html#ampal.align.align_backbones">[docs]</a><span class="k">def</span> <span class="nf">align_backbones</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">mobile</span><span class="p">,</span> <span class="n">stop_when</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">mobile</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">mobile</span><span class="p">)</span>
+    <span class="n">initial_trans</span> <span class="o">=</span> <span class="n">reference</span><span class="o">.</span><span class="n">centre_of_mass</span> <span class="o">-</span> <span class="n">mobile</span><span class="o">.</span><span class="n">centre_of_mass</span>
+    <span class="n">mobile</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">initial_trans</span><span class="p">)</span>
+    <span class="n">fitter</span> <span class="o">=</span> <span class="n">MMCAlign</span><span class="p">(</span><span class="n">_align_eval</span><span class="p">,</span> <span class="p">[</span><span class="n">reference</span><span class="p">],</span> <span class="n">mobile</span><span class="p">)</span>
+    <span class="n">fitter</span><span class="o">.</span><span class="n">start_optimisation</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">temp</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">stop_when</span><span class="o">=</span><span class="n">stop_when</span><span class="p">,</span>
+                              <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">fitter</span><span class="o">.</span><span class="n">best_energy</span>
+
+
+<span class="k">def</span> <span class="nf">_align_eval</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="n">reference</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">loop</span><span class="o">.</span><span class="n">rmsd</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">backbone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MMCAlign"><a class="viewcode-back" href="../../ampal.html#ampal.align.MMCAlign">[docs]</a><span class="k">class</span> <span class="nc">MMCAlign</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A alignment protocol that uses Metropolis Monte Carlo.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    THIS IS CURRENTLY SUPER INEFFICIENT DUE TO THE DEEPCOPIES.</span>
+<span class="sd">    I plan to improve this by aligning arrays of atoms and only</span>
+<span class="sd">    recording the rotation and translation that led to that alignment.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    eval_fn : Polypeptide -&gt; float</span>
+<span class="sd">        A function to evaluate the quality of your fit.</span>
+<span class="sd">    eval_args : list</span>
+<span class="sd">        A list of static args to be used in the `eval_fn`, these will</span>
+<span class="sd">        be unpacked into the evaluation function _i.e._</span>
+<span class="sd">        `eval_fn(polypeptide, *eval_args).</span>
+<span class="sd">    polypeptide : Polypeptide</span>
+<span class="sd">        An ampal polypeptide containing the model to be aligned.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eval_fn</span><span class="p">,</span> <span class="n">eval_args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">],</span>
+                 <span class="n">polypeptide</span><span class="p">:</span> <span class="n">Polypeptide</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_fn</span> <span class="o">=</span> <span class="n">eval_fn</span>
+        <span class="k">if</span> <span class="n">eval_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eval_args</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eval_args</span> <span class="o">=</span> <span class="n">eval_args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_energy</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_energy</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_model</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">polypeptide</span> <span class="o">=</span> <span class="n">polypeptide</span>
+
+<div class="viewcode-block" id="MMCAlign.start_optimisation"><a class="viewcode-back" href="../../ampal.html#ampal.align.MMCAlign.start_optimisation">[docs]</a>    <span class="k">def</span> <span class="nf">start_optimisation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rounds</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">max_angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                           <span class="n">max_distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">temp</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">298.15</span><span class="p">,</span>
+                           <span class="n">stop_when</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Starts the loop fitting protocol.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        rounds : int</span>
+<span class="sd">            The number of Monte Carlo moves to be evaluated.</span>
+<span class="sd">        max_angle : float</span>
+<span class="sd">            The maximum variation in rotation that can moved per</span>
+<span class="sd">            step.</span>
+<span class="sd">        max_distance : float</span>
+<span class="sd">            The maximum distance the can be moved per step.</span>
+<span class="sd">        temp : float, optional</span>
+<span class="sd">            Temperature used during fitting process.</span>
+<span class="sd">        stop_when : float, optional</span>
+<span class="sd">            Stops fitting when energy is less than or equal to this value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_generate_initial_score</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mmc_loop</span><span class="p">(</span><span class="n">rounds</span><span class="p">,</span> <span class="n">max_angle</span><span class="p">,</span> <span class="n">max_distance</span><span class="p">,</span> <span class="n">temp</span><span class="o">=</span><span class="n">temp</span><span class="p">,</span>
+                       <span class="n">stop_when</span><span class="o">=</span><span class="n">stop_when</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span></div>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">_generate_initial_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs the evaluation function for the initial pose.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_fn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">polypeptide</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_args</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_energy</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_energy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_model</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">polypeptide</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">_mmc_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rounds</span><span class="p">,</span> <span class="n">max_angle</span><span class="p">,</span> <span class="n">max_distance</span><span class="p">,</span>
+                  <span class="n">temp</span><span class="o">=</span><span class="mf">298.15</span><span class="p">,</span> <span class="n">stop_when</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The main Metropolis Monte Carlo loop.&quot;&quot;&quot;</span>
+        <span class="n">current_round</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">current_round</span> <span class="o">&lt;</span> <span class="n">rounds</span><span class="p">:</span>
+            <span class="n">working_model</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">polypeptide</span><span class="p">)</span>
+            <span class="n">random_vector</span> <span class="o">=</span> <span class="n">unit_vector</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;rotate&#39;</span><span class="p">,</span> <span class="s1">&#39;rotate&#39;</span><span class="p">,</span> <span class="s1">&#39;rotate&#39;</span><span class="p">,</span> <span class="s1">&#39;translate&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;rotate&#39;</span><span class="p">:</span>
+                <span class="n">random_angle</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">*</span> <span class="n">max_angle</span>
+                <span class="n">working_model</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">random_angle</span><span class="p">,</span> <span class="n">random_vector</span><span class="p">,</span>
+                                     <span class="n">working_model</span><span class="o">.</span><span class="n">centre_of_mass</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">random_translation</span> <span class="o">=</span> <span class="n">random_vector</span> <span class="o">*</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">*</span>
+                                                      <span class="n">max_distance</span><span class="p">)</span>
+                <span class="n">working_model</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">random_translation</span><span class="p">)</span>
+            <span class="n">proposed_energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_fn</span><span class="p">(</span><span class="n">working_model</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_args</span><span class="p">)</span>
+            <span class="n">move_accepted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_move</span><span class="p">(</span><span class="n">proposed_energy</span><span class="p">,</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">current_energy</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">temp</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">move_accepted</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_energy</span> <span class="o">=</span> <span class="n">proposed_energy</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_energy</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_energy</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">polypeptide</span> <span class="o">=</span> <span class="n">working_model</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">best_energy</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_energy</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">best_model</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">working_model</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">Round: </span><span class="si">{}</span><span class="s1">, Current RMSD: </span><span class="si">{}</span><span class="s1">, Proposed RMSD: </span><span class="si">{}</span><span class="s1"> &#39;</span>
+                    <span class="s1">&#39;(best </span><span class="si">{}</span><span class="s1">), </span><span class="si">{}</span><span class="s1">.       &#39;</span>
+                    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current_round</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">float_f</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_energy</span><span class="p">),</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">float_f</span><span class="p">(</span><span class="n">proposed_energy</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">float_f</span><span class="p">(</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">best_energy</span><span class="p">),</span>
+                            <span class="s2">&quot;ACCEPTED&quot;</span> <span class="k">if</span> <span class="n">move_accepted</span> <span class="k">else</span> <span class="s2">&quot;DECLINED&quot;</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+            <span class="n">current_round</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">stop_when</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_energy</span> <span class="o">&lt;=</span> <span class="n">stop_when</span><span class="p">:</span>
+                    <span class="k">break</span>
+        <span class="k">return</span>
+
+<div class="viewcode-block" id="MMCAlign.float_f"><a class="viewcode-back" href="../../ampal.html#ampal.align.MMCAlign.float_f">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">float_f</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Formats a float for printing to std out.&quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MMCAlign.check_move"><a class="viewcode-back" href="../../ampal.html#ampal.align.MMCAlign.check_move">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">check_move</span><span class="p">(</span><span class="n">new</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Determines if a model will be accepted.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">K_BOLTZ</span> <span class="o">=</span> <span class="mf">1.9872041E-003</span>  <span class="c1"># kcal/mol.K</span>
+        <span class="k">if</span> <span class="n">new</span> <span class="o">&lt;</span> <span class="n">old</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">move_prob</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">new</span> <span class="o">-</span> <span class="n">old</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">K_BOLTZ</span> <span class="o">*</span> <span class="n">t</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">move_prob</span> <span class="o">&gt;</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span></div></div>
+        <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Christopher W. Wood&#39;</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Woolfson Group, UoB.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

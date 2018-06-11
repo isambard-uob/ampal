@@ -4,6 +4,14 @@ ampal package
 Submodules
 ----------
 
+ampal.align module
+-------------------------
+
+.. automodule:: ampal.align
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 ampal.amino\_acids module
 -------------------------
 
@@ -48,6 +56,14 @@ ampal.data module
 -----------------
 
 .. automodule:: ampal.data
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ampal.dssp module
+-----------------
+
+.. automodule:: ampal.dssp
     :members:
     :undoc-members:
     :show-inheritance:

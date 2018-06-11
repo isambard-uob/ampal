@@ -36,6 +36,75 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="module-ampal.align">
+<span id="ampal-align-module"></span><h2>ampal.align module<a class="headerlink" href="#module-ampal.align" title="Permalink to this headline">¶</a></h2>
+<p>A module containing classes for aligning structure.</p>
+<dl class="class">
+<dt id="ampal.align.MMCAlign">
+<em class="property">class </em><code class="descclassname">ampal.align.</code><code class="descname">MMCAlign</code><span class="sig-paren">(</span><em>eval_fn, eval_args: Union[list, NoneType], polypeptide: ampal.protein.Polypeptide</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/ampal/align.html#MMCAlign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.align.MMCAlign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A alignment protocol that uses Metropolis Monte Carlo.</p>
+<p class="rubric">Notes</p>
+<p>THIS IS CURRENTLY SUPER INEFFICIENT DUE TO THE DEEPCOPIES.
+I plan to improve this by aligning arrays of atoms and only
+recording the rotation and translation that led to that alignment.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>eval_fn</strong> (<em>Polypeptide -&gt; float</em>) – A function to evaluate the quality of your fit.</li>
+<li><strong>eval_args</strong> (<em>list</em>) – A list of static args to be used in the <cite>eval_fn</cite>, these will
+be unpacked into the evaluation function _i.e._
+<a href="#id1"><span class="problematic" id="id2">`</span></a>eval_fn(polypeptide, <a href="#id3"><span class="problematic" id="id4">*</span></a>eval_args).</li>
+<li><strong>polypeptide</strong> (<a class="reference internal" href="#ampal.protein.Polypeptide" title="ampal.protein.Polypeptide"><em>Polypeptide</em></a>) – An ampal polypeptide containing the model to be aligned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="staticmethod">
+<dt id="ampal.align.MMCAlign.check_move">
+<em class="property">static </em><code class="descname">check_move</code><span class="sig-paren">(</span><em>old</em>, <em>t</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/align.html#MMCAlign.check_move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.align.MMCAlign.check_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if a model will be accepted.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="ampal.align.MMCAlign.float_f">
+<em class="property">static </em><code class="descname">float_f</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/align.html#MMCAlign.float_f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.align.MMCAlign.float_f" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a float for printing to std out.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ampal.align.MMCAlign.start_optimisation">
+<code class="descname">start_optimisation</code><span class="sig-paren">(</span><em>rounds: int</em>, <em>max_angle: float</em>, <em>max_distance: float</em>, <em>temp: float = 298.15</em>, <em>stop_when=None</em>, <em>verbose=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/align.html#MMCAlign.start_optimisation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.align.MMCAlign.start_optimisation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the loop fitting protocol.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rounds</strong> (<em>int</em>) – The number of Monte Carlo moves to be evaluated.</li>
+<li><strong>max_angle</strong> (<em>float</em>) – The maximum variation in rotation that can moved per
+step.</li>
+<li><strong>max_distance</strong> (<em>float</em>) – The maximum distance the can be moved per step.</li>
+<li><strong>temp</strong> (<em>float</em><em>, </em><em>optional</em>) – Temperature used during fitting process.</li>
+<li><strong>stop_when</strong> (<em>float</em><em>, </em><em>optional</em>) – Stops fitting when energy is less than or equal to this value.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ampal.align.align_backbones">
+<code class="descclassname">ampal.align.</code><code class="descname">align_backbones</code><span class="sig-paren">(</span><em>reference</em>, <em>mobile</em>, <em>stop_when=None</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/align.html#align_backbones"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.align.align_backbones" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 <div class="section" id="module-ampal.amino_acids">
 <span id="ampal-amino-acids-module"></span><h2>ampal.amino_acids module<a class="headerlink" href="#module-ampal.amino_acids" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -1772,6 +1841,141 @@ component Monoer objects.</td>
 <div class="section" id="module-ampal.data">
 <span id="ampal-data-module"></span><h2>ampal.data module<a class="headerlink" href="#module-ampal.data" title="Permalink to this headline">¶</a></h2>
 <p>Loads data required for running ISAMBARD.</p>
+</div>
+<div class="section" id="module-ampal.dssp">
+<span id="ampal-dssp-module"></span><h2>ampal.dssp module<a class="headerlink" href="#module-ampal.dssp" title="Permalink to this headline">¶</a></h2>
+<p>This module provides an interface to the program DSSP.</p>
+<p>For more information on DSSP see <a class="footnote-reference" href="#id6" id="id5">[4]</a>.</p>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[4]</a></td><td>Kabsch W, Sander C (1983) “Dictionary of protein
+secondary structure: pattern recognition of hydrogen-bonded
+and geometrical features”, Biopolymers, 22, 2577-637.</td></tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="ampal.dssp.dssp_available">
+<code class="descclassname">ampal.dssp.</code><code class="descname">dssp_available</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/dssp.html#dssp_available"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.dssp.dssp_available" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if mkdssp is available on the path.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ampal.dssp.extract_all_ss_dssp">
+<code class="descclassname">ampal.dssp.</code><code class="descname">extract_all_ss_dssp</code><span class="sig-paren">(</span><em>in_dssp</em>, <em>path=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/dssp.html#extract_all_ss_dssp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.dssp.extract_all_ss_dssp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses DSSP to extract secondary structure information on every residue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>in_dssp</strong> (<em>str</em>) – Path to DSSP file.</li>
+<li><strong>path</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicates if pdb is a path or a string.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>dssp_residues</strong> –</p>
+<dl class="docutils">
+<dt>Each internal list contains:</dt>
+<dd><p class="first last">[0] int Residue number
+[1] str Secondary structure type
+[2] str Chain identifier
+[3] str Residue type
+[4] float Phi torsion angle
+[5] float Psi torsion angle
+[6] int dssp solvent accessibility</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">[tuple]</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ampal.dssp.find_ss_regions">
+<code class="descclassname">ampal.dssp.</code><code class="descname">find_ss_regions</code><span class="sig-paren">(</span><em>dssp_residues</em>, <em>loop_assignments=(' '</em>, <em>'B'</em>, <em>'S'</em>, <em>'T')</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/dssp.html#find_ss_regions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.dssp.find_ss_regions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Separates parsed DSSP data into groups of secondary structure.</p>
+<p class="rubric">Notes</p>
+<p>Example: all residues in a single helix/loop/strand will be gathered
+into a list, then the next secondary structure element will be
+gathered into a separate list, and so on.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dssp_residues</strong> (<em>[</em><em>tuple</em><em>]</em>) – <dl class="docutils">
+<dt>Each internal list contains:</dt>
+<dd>[0] int Residue number
+[1] str Secondary structure type
+[2] str Chain identifier
+[3] str Residue type
+[4] float Phi torsion angle
+[5] float Psi torsion angle
+[6] int dssp solvent accessibility</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>fragments</strong> – Lists grouped in continuous regions of secondary structure.
+Innermost list has the same format as above.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">[[list]]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ampal.dssp.run_dssp">
+<code class="descclassname">ampal.dssp.</code><code class="descname">run_dssp</code><span class="sig-paren">(</span><em>pdb</em>, <em>path=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/dssp.html#run_dssp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.dssp.run_dssp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses DSSP to find helices and extracts helices from a pdb file or string.
+:param pdb: Path to pdb file or string.
+:type pdb: str
+:param path: Indicates if pdb is a path or a string.
+:type path: bool, optional</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>dssp_out</strong> – Std out from DSSP.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ampal.dssp.tag_dssp_data">
+<code class="descclassname">ampal.dssp.</code><code class="descname">tag_dssp_data</code><span class="sig-paren">(</span><em>assembly</em>, <em>loop_assignments=(' '</em>, <em>'B'</em>, <em>'S'</em>, <em>'T')</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/dssp.html#tag_dssp_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.dssp.tag_dssp_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds output data from DSSP to an Assembly.</p>
+<p>A dictionary will be added to the <cite>tags</cite> dictionary of each
+residue called <cite>dssp_data</cite>, which contains the secondary
+structure definition, solvent accessibility phi and psi values
+from DSSP. A list of regions of continuous secondary assignments
+will also be added to each <cite>Polypeptide</cite>.</p>
+<p>The tags are added in place, so nothing is returned from this
+function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>assembly</strong> (<em>ampal.Assembly</em>) – An Assembly containing some protein.</li>
+<li><strong>loop_assignments</strong> (<em>tuple</em><em> or </em><em>list</em>) – A tuple containing the DSSP secondary structure identifiers to
+that are classed as loop regions.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="module-ampal.geometry">
 <span id="ampal-geometry-module"></span><h2>ampal.geometry module<a class="headerlink" href="#module-ampal.geometry" title="Permalink to this headline">¶</a></h2>
@@ -4005,7 +4209,7 @@ already tagged.</td>
 <p class="rubric">Notes</p>
 <p>Ideal bond angles taken from [1].</p>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id1" rules="none">
+<table class="docutils footnote" frame="void" id="id7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td>Schulz, G. E, and R. Heiner Schirmer. Principles Of
@@ -4030,7 +4234,7 @@ away from ideal backbone bond angles.</td>
 <p class="rubric">Notes</p>
 <p>Ideal bond lengths taken from [1].</p>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id2" rules="none">
+<table class="docutils footnote" frame="void" id="id8" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[1]</td><td>Schulz, G. E, and R. Heiner Schirmer. Principles Of
@@ -4172,12 +4376,12 @@ returned.</td>
 </tbody>
 </table>
 <p class="rubric">Notes</p>
-<p>Uses the definition of the centroid from Huang <em>et al</em> <a class="footnote-reference" href="#id4" id="id3">[2]</a>.</p>
+<p>Uses the definition of the centroid from Huang <em>et al</em> <a class="footnote-reference" href="#id10" id="id9">[2]</a>.</p>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id4" rules="none">
+<table class="docutils footnote" frame="void" id="id10" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td>Huang ES, Subbiah S and Levitt M (1995) Recognizing Native
+<tr><td class="label"><a class="fn-backref" href="#id9">[2]</a></td><td>Huang ES, Subbiah S and Levitt M (1995) Recognizing Native
 Folds by the Arrangement of Hydrophobic and Polar Residues, J. Mol.
 Biol return., <strong>252</strong>, 709-720.</td></tr>
 </tbody>
@@ -4212,7 +4416,7 @@ If each polymer in an assembly has a distinct id, it will uniquely
 identify each monomer within the assembly.</p>
 <p>The hetero-flag is defined as in Biopython as a string that is
 either a single whitespace in the case of a non-hetero atom,
-or ‘<a href="#id5"><span class="problematic" id="id6">H_</span></a>’ plus the name of the hetero-residue (e.g. ‘H_GLC’ in
+or ‘<a href="#id11"><span class="problematic" id="id12">H_</span></a>’ plus the name of the hetero-residue (e.g. ‘H_GLC’ in
 the case of a glucose molecule), or ‘W’ in the case of a water
 molecule.</p>
 <p>For more information, see the Biopython documentation or this
@@ -4684,12 +4888,14 @@ to store any relevant information they have.</p>
   <ul>
 <li><a class="reference internal" href="#">ampal package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-ampal.align">ampal.align module</a></li>
 <li><a class="reference internal" href="#module-ampal.amino_acids">ampal.amino_acids module</a></li>
 <li><a class="reference internal" href="#module-ampal.ampal_warnings">ampal.ampal_warnings module</a></li>
 <li><a class="reference internal" href="#module-ampal.analyse_protein">ampal.analyse_protein module</a></li>
 <li><a class="reference internal" href="#module-ampal.assembly">ampal.assembly module</a></li>
 <li><a class="reference internal" href="#module-ampal.base_ampal">ampal.base_ampal module</a></li>
 <li><a class="reference internal" href="#module-ampal.data">ampal.data module</a></li>
+<li><a class="reference internal" href="#module-ampal.dssp">ampal.dssp module</a></li>
 <li><a class="reference internal" href="#module-ampal.geometry">ampal.geometry module</a></li>
 <li><a class="reference internal" href="#module-ampal.interactions">ampal.interactions module</a></li>
 <li><a class="reference internal" href="#module-ampal.ligands">ampal.ligands module</a></li>
