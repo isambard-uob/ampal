@@ -29,6 +29,12 @@ def _align_eval(loop, reference):
 class MMCAlign:
     """A alignment protocol that uses Metropolis Monte Carlo.
 
+    Notes
+    -----
+    THIS IS CURRENTLY SUPER INEFFICIENT DUE TO THE DEEPCOPIES.
+    I plan to improve this by aligning arrays of atoms and only
+    recording the rotation and translation that led to that alignment.
+
     Parameters
     ----------
     eval_fn : Polypeptide -> float
