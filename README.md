@@ -54,6 +54,11 @@ complex selections and performing analysis. Take a look at the
 
 ## Release Notes
 
+## v1.3.0
+
+* **Adds an interface for NACCESS.** Functions for using NACCESS to calculate
+  solvent accessibility.
+
 ### v1.2.0
 
 * **Adds an interface for DSSP.** If you have DSSP on your computer and have the
