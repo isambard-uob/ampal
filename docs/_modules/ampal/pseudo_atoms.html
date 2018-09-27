@@ -6,14 +6,14 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>ampal.pseudo_atoms &#8212; AMPAL 1.0.0 documentation</title>
+    <title>ampal.pseudo_atoms &#8212; AMPAL 1.4.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -28,6 +28,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <h1>Source code for ampal.pseudo_atoms</h1><div class="highlight"><pre>
@@ -90,8 +92,8 @@
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;PseudoGroup chain containing </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_monomers</span><span class="p">),</span></div>
-            <span class="s1">&#39;PseudoMonomer&#39;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_monomers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;PseudoMonomers&#39;</span><span class="p">)</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_monomers</span><span class="p">),</span>
+            <span class="s1">&#39;PseudoMonomer&#39;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_monomers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;PseudoMonomers&#39;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PseudoMonomer"><a class="viewcode-back" href="../../ampal.html#ampal.pseudo_atoms.PseudoMonomer">[docs]</a><span class="k">class</span> <span class="nc">PseudoMonomer</span><span class="p">(</span><span class="n">Monomer</span><span class="p">):</span>
@@ -162,8 +164,8 @@
     <span class="k">def</span> <span class="nf">pdb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a PDB string for the `PseudoMonomer`.&quot;&quot;&quot;</span>
         <span class="n">pdb_str</span> <span class="o">=</span> <span class="n">write_pdb</span><span class="p">(</span>
-            <span class="p">[</span><span class="bp">self</span><span class="p">],</span> <span class="s1">&#39; &#39;</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="p">[</span><span class="s1">&#39;chain_id&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="p">[</span><span class="s1">&#39;chain_id&#39;</span><span class="p">])</span></div>
-        <span class="k">return</span> <span class="n">pdb_str</span>
+            <span class="p">[</span><span class="bp">self</span><span class="p">],</span> <span class="s1">&#39; &#39;</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="p">[</span><span class="s1">&#39;chain_id&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="p">[</span><span class="s1">&#39;chain_id&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">pdb_str</span></div>
 
 
 <div class="viewcode-block" id="PseudoAtom"><a class="viewcode-back" href="../../ampal.html#ampal.pseudo_atoms.PseudoAtom">[docs]</a><span class="k">class</span> <span class="nc">PseudoAtom</span><span class="p">(</span><span class="n">Atom</span><span class="p">):</span>
@@ -223,8 +225,8 @@
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;&lt;PseudoAtom. Name: </span><span class="si">{}</span><span class="s2">. Coordinates: &quot;</span>
-                <span class="s2">&quot;(</span><span class="si">{:.3f}</span><span class="s2">, </span><span class="si">{:.3f}</span><span class="s2">, </span><span class="si">{:.3f}</span><span class="s2">)&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span></div>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">))</span>
+                <span class="s2">&quot;(</span><span class="si">{:.3f}</span><span class="s2">, </span><span class="si">{:.3f}</span><span class="s2">, </span><span class="si">{:.3f}</span><span class="s2">)&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="Primitive"><a class="viewcode-back" href="../../ampal.html#ampal.pseudo_atoms.Primitive">[docs]</a><span class="k">class</span> <span class="nc">Primitive</span><span class="p">(</span><span class="n">PseudoGroup</span><span class="p">):</span>
@@ -297,8 +299,8 @@
             <span class="n">pa</span> <span class="o">=</span> <span class="n">PseudoAtom</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">pm</span><span class="p">)</span>
             <span class="n">pm</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="s1">&#39;CA&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="p">)])</span>
             <span class="n">prim</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pm</span><span class="p">)</span>
-        <span class="n">prim</span><span class="o">.</span><span class="n">relabel_all</span><span class="p">()</span></div>
-        <span class="k">return</span> <span class="n">prim</span>
+        <span class="n">prim</span><span class="o">.</span><span class="n">relabel_all</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">prim</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -317,8 +319,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">rprs</span> <span class="o">=</span> <span class="p">[</span><span class="n">distance</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;CA&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="s1">&#39;CA&#39;</span><span class="p">])</span>
                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
-        <span class="n">rprs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">rprs</span>
+        <span class="n">rprs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rprs</span></div>
 
 <div class="viewcode-block" id="Primitive.radii_of_curvature"><a class="viewcode-back" href="../../ampal.html#ampal.pseudo_atoms.Primitive.radii_of_curvature">[docs]</a>    <span class="k">def</span> <span class="nf">radii_of_curvature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The radius of curvature at each point on the Polymer primitive.</span>
@@ -336,18 +338,38 @@
                 <span class="n">rocs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">radius_of_circumcircle</span><span class="p">(</span>
                     <span class="bp">self</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="s1">&#39;CA&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;CA&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="s1">&#39;CA&#39;</span><span class="p">]))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">rocs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div></div>
-        <span class="k">return</span> <span class="n">rocs</span>
+                <span class="n">rocs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rocs</span></div></div>
 
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Jack W. Heal&#39;</span>
 </pre></div>
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">AMPAL</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../AMPAL_Introduction_and_Selections.html">Introduction to AMPAL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Advanced_Selections_and_Analysis.html">Advanced Selections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
@@ -376,8 +398,8 @@
       &copy;2018, Woolfson Group, UoB.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
     </div>
 

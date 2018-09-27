@@ -6,14 +6,14 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>ampal package &#8212; AMPAL 1.0.0 documentation</title>
+    <title>ampal package &#8212; AMPAL 1.4.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="ampal" href="modules.html" />
@@ -29,6 +29,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="ampal-package">
@@ -41,7 +43,7 @@
 <p>A module containing classes for aligning structure.</p>
 <dl class="class">
 <dt id="ampal.align.MMCAlign">
-<em class="property">class </em><code class="descclassname">ampal.align.</code><code class="descname">MMCAlign</code><span class="sig-paren">(</span><em>eval_fn, eval_args: Union[list, NoneType], polypeptide: ampal.protein.Polypeptide</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/ampal/align.html#MMCAlign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.align.MMCAlign" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">ampal.align.</code><code class="descname">MMCAlign</code><span class="sig-paren">(</span><em>eval_fn, eval_args: Optional[list], polypeptide: ampal.protein.Polypeptide</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/align.html#MMCAlign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.align.MMCAlign" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A alignment protocol that uses Metropolis Monte Carlo.</p>
 <p class="rubric">Notes</p>
@@ -65,13 +67,13 @@ be unpacked into the evaluation function _i.e._
 </table>
 <dl class="staticmethod">
 <dt id="ampal.align.MMCAlign.check_move">
-<em class="property">static </em><code class="descname">check_move</code><span class="sig-paren">(</span><em>old</em>, <em>t</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/align.html#MMCAlign.check_move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.align.MMCAlign.check_move" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">check_move</code><span class="sig-paren">(</span><em>new</em>, <em>old</em>, <em>t</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/align.html#MMCAlign.check_move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.align.MMCAlign.check_move" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if a model will be accepted.</p>
 </dd></dl>
 
 <dl class="staticmethod">
 <dt id="ampal.align.MMCAlign.float_f">
-<em class="property">static </em><code class="descname">float_f</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/align.html#MMCAlign.float_f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.align.MMCAlign.float_f" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">float_f</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/align.html#MMCAlign.float_f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.align.MMCAlign.float_f" title="Permalink to this definition">¶</a></dt>
 <dd><p>Formats a float for printing to std out.</p>
 </dd></dl>
 
@@ -773,7 +775,15 @@ or <cite>Monomer</cite>.</li>
 <dl class="attribute">
 <dt id="ampal.assembly.AmpalContainer.id">
 <code class="descname">id</code><a class="headerlink" href="#ampal.assembly.AmpalContainer.id" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Identifier for the AMPAL container.</p>
+<dd><p>Identifier for the AMPAL container.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -1199,38 +1209,77 @@ number of conformations.</li>
 <dl class="attribute">
 <dt id="ampal.base_ampal.Atom.id">
 <code class="descname">id</code><a class="headerlink" href="#ampal.base_ampal.Atom.id" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Identifier for <cite>Atom</cite>, usually a number.</p>
+<dd><p>Identifier for <cite>Atom</cite>, usually a number.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.base_ampal.Atom.res_label">
 <code class="descname">res_label</code><a class="headerlink" href="#ampal.base_ampal.Atom.res_label" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Label used in <cite>Monomer</cite> to refer to the <cite>Atom</cite> type i.e. “CA” or “OD1”.</p>
+<dd><p>Label used in <cite>Monomer</cite> to refer to the <cite>Atom</cite> type i.e. “CA” or “OD1”.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.base_ampal.Atom.element">
 <code class="descname">element</code><a class="headerlink" href="#ampal.base_ampal.Atom.element" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Element of <cite>Atom</cite>.</p>
+<dd><p>Element of <cite>Atom</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.base_ampal.Atom.parent">
 <code class="descname">parent</code><a class="headerlink" href="#ampal.base_ampal.Atom.parent" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.Monomer</em> –</p>
-<dl class="docutils">
+<dd><dl class="docutils">
 <dt>A reference to the <cite>Monomer</cite> containing this <cite>Atom</cite>.</dt>
 <dd>number of conformations.</dd>
 </dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.Monomer</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.base_ampal.Atom.tags">
 <code class="descname">tags</code><a class="headerlink" href="#ampal.base_ampal.Atom.tags" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – A dictionary containing information about this AMPAL object.
+<dd><p>A dictionary containing information about this AMPAL object.
 The tags dictionary is used by AMPAL to cache information
 about this object, but is also intended to be used by users
 to store any relevant information they have.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -1457,29 +1506,61 @@ is used to maintain the order items were added to the dictionary.</li>
 <dl class="attribute">
 <dt id="ampal.base_ampal.Monomer.states">
 <code class="descname">states</code><a class="headerlink" href="#ampal.base_ampal.Monomer.states" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – Contains an <cite>OrderedDicts</cite> containing atom information for each
+<dd><p>Contains an <cite>OrderedDicts</cite> containing atom information for each
 state available for the <cite>Monomer</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.base_ampal.Monomer.id">
 <code class="descname">id</code><a class="headerlink" href="#ampal.base_ampal.Monomer.id" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – String used to identify the residue.</p>
+<dd><p>String used to identify the residue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.base_ampal.Monomer.parent">
 <code class="descname">parent</code><a class="headerlink" href="#ampal.base_ampal.Monomer.parent" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>Polymer or None</em> – A reference to the <cite>Polymer</cite> containing this <cite>Monomer</cite>.</p>
+<dd><p>A reference to the <cite>Polymer</cite> containing this <cite>Monomer</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#ampal.base_ampal.Polymer" title="ampal.base_ampal.Polymer">Polymer</a> or None</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.base_ampal.Monomer.tags">
 <code class="descname">tags</code><a class="headerlink" href="#ampal.base_ampal.Monomer.tags" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – A dictionary containing information about this AMPAL object.
+<dd><p>A dictionary containing information about this AMPAL object.
 The tags dictionary is used by AMPAL to cache information
 about this object, but is also intended to be used by users
 to store any relevant information they have.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -1577,42 +1658,90 @@ backbone primitive.</li>
 <dl class="attribute">
 <dt id="ampal.base_ampal.Polymer.id">
 <code class="descname">id</code><a class="headerlink" href="#ampal.base_ampal.Polymer.id" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Polymer ID</p>
+<dd><p>Polymer ID</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.base_ampal.Polymer.parent">
 <code class="descname">parent</code><a class="headerlink" href="#ampal.base_ampal.Polymer.parent" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.Assembly or None</em> – Reference to <cite>Assembly</cite> containing the <cite>Polymer</cite>.</p>
+<dd><p>Reference to <cite>Assembly</cite> containing the <cite>Polymer</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.Assembly or None</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.base_ampal.Polymer.molecule_type">
 <code class="descname">molecule_type</code><a class="headerlink" href="#ampal.base_ampal.Polymer.molecule_type" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – A description of the type of <cite>Polymer</cite> i.e. Protein, DNA etc.</p>
+<dd><p>A description of the type of <cite>Polymer</cite> i.e. Protein, DNA etc.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.base_ampal.Polymer.ligands">
 <code class="descname">ligands</code><a class="headerlink" href="#ampal.base_ampal.Polymer.ligands" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.LigandGroup</em> – A <cite>LigandGroup</cite> containing all the <cite>Ligands</cite> associated with this
+<dd><p>A <cite>LigandGroup</cite> containing all the <cite>Ligands</cite> associated with this
 <cite>Polymer</cite> chain.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.LigandGroup</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.base_ampal.Polymer.tags">
 <code class="descname">tags</code><a class="headerlink" href="#ampal.base_ampal.Polymer.tags" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – A dictionary containing information about this AMPAL object.
+<dd><p>A dictionary containing information about this AMPAL object.
 The tags dictionary is used by AMPAL to cache information
 about this object, but is also intended to be used by users
 to store any relevant information they have.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.base_ampal.Polymer.sl">
 <code class="descname">sl</code><a class="headerlink" href="#ampal.base_ampal.Polymer.sl" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – The default smoothing level used when calculating the
+<dd><p>The default smoothing level used when calculating the
 backbone primitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <table class="docutils field-list" frame="void" rules="none">
@@ -1925,6 +2054,33 @@ gathered into a separate list, and so on.</p>
 Innermost list has the same format as above.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">[[list]]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ampal.dssp.get_ss_regions">
+<code class="descclassname">ampal.dssp.</code><code class="descname">get_ss_regions</code><span class="sig-paren">(</span><em>assembly</em>, <em>ss_types</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/dssp.html#get_ss_regions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.dssp.get_ss_regions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an Assembly containing Polymers for each region of structure.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>assembly</strong> (<em>ampal.Assembly</em>) – <cite>Assembly</cite> object to be searched secondary structure regions.</li>
+<li><strong>ss_types</strong> (<em>list</em>) – List of secondary structure tags to be separate i.e. [‘H’]
+would return helices, [‘H’, ‘E’] would return helices
+and strands.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>fragments</strong> – <cite>Assembly</cite> containing a <cite>Polymer</cite> for each region of specified
+secondary structure.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#ampal.assembly.Assembly" title="ampal.assembly.Assembly">Assembly</a></p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -3104,31 +3260,71 @@ If azimuth = 0, then y is 0 regardless of zenith value.</p>
 <dl class="attribute">
 <dt id="ampal.interactions.HydrogenBond.donor">
 <code class="descname">donor</code><a class="headerlink" href="#ampal.interactions.HydrogenBond.donor" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.Atom</em> – The donor <cite>Atom</cite> in the interaction.</p>
+<dd><p>The donor <cite>Atom</cite> in the interaction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.Atom</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.interactions.HydrogenBond.acceptor">
 <code class="descname">acceptor</code><a class="headerlink" href="#ampal.interactions.HydrogenBond.acceptor" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.Atom</em> – The acceptor atom in the interaction.</p>
+<dd><p>The acceptor atom in the interaction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.Atom</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.interactions.HydrogenBond.dist">
 <code class="descname">dist</code><a class="headerlink" href="#ampal.interactions.HydrogenBond.dist" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>float</em> – The distance between <cite>Atom</cite> <cite>a</cite> and <cite>b</cite>.</p>
+<dd><p>The distance between <cite>Atom</cite> <cite>a</cite> and <cite>b</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.interactions.HydrogenBond.ang_a">
 <code class="descname">ang_a</code><a class="headerlink" href="#ampal.interactions.HydrogenBond.ang_a" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>float</em> – Angle between the acceptor and the interaction vector.</p>
+<dd><p>Angle between the acceptor and the interaction vector.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.interactions.HydrogenBond.ang_d">
 <code class="descname">ang_d</code><a class="headerlink" href="#ampal.interactions.HydrogenBond.ang_d" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>float</em> – Angle between the donor and the interaction vector.</p>
+<dd><p>Angle between the donor and the interaction vector.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -3166,19 +3362,43 @@ If azimuth = 0, then y is 0 regardless of zenith value.</p>
 <dl class="attribute">
 <dt id="ampal.interactions.Interaction.a">
 <code class="descname">a</code><a class="headerlink" href="#ampal.interactions.Interaction.a" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.Atom</em> – A member of a pairwise interaction.</p>
+<dd><p>A member of a pairwise interaction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.Atom</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.interactions.Interaction.b">
 <code class="descname">b</code><a class="headerlink" href="#ampal.interactions.Interaction.b" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.Atom</em> – A member of a pairwise interaction.</p>
+<dd><p>A member of a pairwise interaction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.Atom</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.interactions.Interaction.dist">
 <code class="descname">dist</code><a class="headerlink" href="#ampal.interactions.Interaction.dist" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>float</em> – The distance between <cite>Atom</cite> <cite>a</cite> and <cite>b</cite>.</p>
+<dd><p>The distance between <cite>Atom</cite> <cite>a</cite> and <cite>b</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -3204,19 +3424,43 @@ If azimuth = 0, then y is 0 regardless of zenith value.</p>
 <dl class="attribute">
 <dt id="ampal.interactions.NonCovalentInteraction.donor">
 <code class="descname">donor</code><a class="headerlink" href="#ampal.interactions.NonCovalentInteraction.donor" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.Atom</em> – The donor <cite>Atom</cite> in the interaction.</p>
+<dd><p>The donor <cite>Atom</cite> in the interaction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.Atom</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.interactions.NonCovalentInteraction.acceptor">
 <code class="descname">acceptor</code><a class="headerlink" href="#ampal.interactions.NonCovalentInteraction.acceptor" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.Atom</em> – The acceptor atom in the interaction.</p>
+<dd><p>The acceptor atom in the interaction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.Atom</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.interactions.NonCovalentInteraction.dist">
 <code class="descname">dist</code><a class="headerlink" href="#ampal.interactions.NonCovalentInteraction.dist" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>float</em> – The distance between <cite>Atom</cite> <cite>a</cite> and <cite>b</cite>.</p>
+<dd><p>The distance between <cite>Atom</cite> <cite>a</cite> and <cite>b</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -3359,55 +3603,119 @@ dictionary.</li>
 <dl class="attribute">
 <dt id="ampal.ligands.Ligand.atoms">
 <code class="descname">atoms</code><a class="headerlink" href="#ampal.ligands.Ligand.atoms" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>OrderedDict</em> – OrderedDict containing Atoms for the Monomer. OrderedDict
+<dd><p>OrderedDict containing Atoms for the Monomer. OrderedDict
 is used to maintain the order items were added to the
 dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">OrderedDict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.ligands.Ligand.mol_code">
 <code class="descname">mol_code</code><a class="headerlink" href="#ampal.ligands.Ligand.mol_code" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – PDB molecule code that represents the <cite>Ligand</cite>.</p>
+<dd><p>PDB molecule code that represents the <cite>Ligand</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.ligands.Ligand.insertion_code">
 <code class="descname">insertion_code</code><a class="headerlink" href="#ampal.ligands.Ligand.insertion_code" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Insertion code of <cite>Ligand</cite>, used if reading from pdb.</p>
+<dd><p>Insertion code of <cite>Ligand</cite>, used if reading from pdb.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.ligands.Ligand.is_hetero">
 <code class="descname">is_hetero</code><a class="headerlink" href="#ampal.ligands.Ligand.is_hetero" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>bool</em> – True if is a hetero atom in pdb. Helps with PDB formatting.</p>
+<dd><p>True if is a hetero atom in pdb. Helps with PDB formatting.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.ligands.Ligand.self.states">
 <code class="descclassname">self.</code><code class="descname">states</code><a class="headerlink" href="#ampal.ligands.Ligand.self.states" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – Contains an <cite>OrderedDicts</cite> containing atom information for each
+<dd><p>Contains an <cite>OrderedDicts</cite> containing atom information for each
 state available for the <cite>Ligand</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.ligands.Ligand.id">
 <code class="descname">id</code><a class="headerlink" href="#ampal.ligands.Ligand.id" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – String used to identify the residue.</p>
+<dd><p>String used to identify the residue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.ligands.Ligand.parent">
 <code class="descname">parent</code><a class="headerlink" href="#ampal.ligands.Ligand.parent" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>Polymer or None</em> – A reference to the <cite>LigandGroup</cite> containing this <cite>Ligand</cite>.</p>
+<dd><p>A reference to the <cite>LigandGroup</cite> containing this <cite>Ligand</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#ampal.base_ampal.Polymer" title="ampal.base_ampal.Polymer">Polymer</a> or None</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.ligands.Ligand.tags">
 <code class="descname">tags</code><a class="headerlink" href="#ampal.ligands.Ligand.tags" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – A dictionary containing information about this AMPAL object.
+<dd><p>A dictionary containing information about this AMPAL object.
 The tags dictionary is used by AMPAL to cache information
 about this object, but is also intended to be used by users
 to store any relevant information they have.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -3465,55 +3773,119 @@ dictionary.</li>
 <dl class="attribute">
 <dt id="ampal.nucleic_acid.Nucleotide.mol_code">
 <code class="descname">mol_code</code><a class="headerlink" href="#ampal.nucleic_acid.Nucleotide.mol_code" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – PDB molecule code that represents the <cite>Nucleotide</cite>.</p>
+<dd><p>PDB molecule code that represents the <cite>Nucleotide</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.nucleic_acid.Nucleotide.insertion_code">
 <code class="descname">insertion_code</code><a class="headerlink" href="#ampal.nucleic_acid.Nucleotide.insertion_code" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Insertion code of <cite>Nucleotide</cite>, used if reading from pdb.</p>
+<dd><p>Insertion code of <cite>Nucleotide</cite>, used if reading from pdb.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.nucleic_acid.Nucleotide.is_hetero">
 <code class="descname">is_hetero</code><a class="headerlink" href="#ampal.nucleic_acid.Nucleotide.is_hetero" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>bool</em> – True if is a hetero atom in pdb. Helps with PDB formatting.</p>
+<dd><p>True if is a hetero atom in pdb. Helps with PDB formatting.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.nucleic_acid.Nucleotide.states">
 <code class="descname">states</code><a class="headerlink" href="#ampal.nucleic_acid.Nucleotide.states" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – Contains an <cite>OrderedDicts</cite> containing atom information for each
+<dd><p>Contains an <cite>OrderedDicts</cite> containing atom information for each
 state available for the <cite>Nucleotide</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.nucleic_acid.Nucleotide.id">
 <code class="descname">id</code><a class="headerlink" href="#ampal.nucleic_acid.Nucleotide.id" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – String used to identify the <cite>Nucleotide</cite>.</p>
+<dd><p>String used to identify the <cite>Nucleotide</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.nucleic_acid.Nucleotide.reference_atom">
 <code class="descname">reference_atom</code><a class="headerlink" href="#ampal.nucleic_acid.Nucleotide.reference_atom" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – The key that corresponds to the reference <cite>Atom</cite>. This is used
+<dd><p>The key that corresponds to the reference <cite>Atom</cite>. This is used
 by various functions, for example backbone primitives are
 calculated using the <cite>Atom</cite> defined using this key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.nucleic_acid.Nucleotide.parent">
 <code class="descname">parent</code><a class="headerlink" href="#ampal.nucleic_acid.Nucleotide.parent" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>Polynucleotide or None</em> – A reference to the <cite>Polynucleotide</cite> containing this <cite>Nucleotide</cite>.</p>
+<dd><p>A reference to the <cite>Polynucleotide</cite> containing this <cite>Nucleotide</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#ampal.nucleic_acid.Polynucleotide" title="ampal.nucleic_acid.Polynucleotide">Polynucleotide</a> or None</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.nucleic_acid.Nucleotide.tags">
 <code class="descname">tags</code><a class="headerlink" href="#ampal.nucleic_acid.Nucleotide.tags" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – A dictionary containing information about this AMPAL object.
+<dd><p>A dictionary containing information about this AMPAL object.
 The tags dictionary is used by AMPAL to cache information
 about this object, but is also intended to be used by users
 to store any relevant information they have.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <table class="docutils field-list" frame="void" rules="none">
@@ -3551,42 +3923,90 @@ backbone primitive.</li>
 <dl class="attribute">
 <dt id="ampal.nucleic_acid.Polynucleotide.id">
 <code class="descname">id</code><a class="headerlink" href="#ampal.nucleic_acid.Polynucleotide.id" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – <cite>Polynucleotide</cite> ID</p>
+<dd><p><cite>Polynucleotide</cite> ID</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.nucleic_acid.Polynucleotide.parent">
 <code class="descname">parent</code><a class="headerlink" href="#ampal.nucleic_acid.Polynucleotide.parent" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.Assembly or None</em> – Reference to <cite>Assembly</cite> containing the <cite>Polynucleotide</cite></p>
+<dd><p>Reference to <cite>Assembly</cite> containing the <cite>Polynucleotide</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.Assembly or None</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.nucleic_acid.Polynucleotide.molecule_type">
 <code class="descname">molecule_type</code><a class="headerlink" href="#ampal.nucleic_acid.Polynucleotide.molecule_type" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – A description of the type of <cite>Polymer</cite> i.e. Protein, DNA etc.</p>
+<dd><p>A description of the type of <cite>Polymer</cite> i.e. Protein, DNA etc.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.nucleic_acid.Polynucleotide.ligands">
 <code class="descname">ligands</code><a class="headerlink" href="#ampal.nucleic_acid.Polynucleotide.ligands" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.LigandGroup</em> – A <cite>LigandGroup</cite> containing all the <cite>Ligands</cite> associated with this
+<dd><p>A <cite>LigandGroup</cite> containing all the <cite>Ligands</cite> associated with this
 <cite>Polynucleotide</cite> chain.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.LigandGroup</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.nucleic_acid.Polynucleotide.tags">
 <code class="descname">tags</code><a class="headerlink" href="#ampal.nucleic_acid.Polynucleotide.tags" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – A dictionary containing information about this AMPAL object.
+<dd><p>A dictionary containing information about this AMPAL object.
 The tags dictionary is used by AMPAL to cache information
 about this object, but is also intended to be used by users
 to store any relevant information they have.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.nucleic_acid.Polynucleotide.sl">
 <code class="descname">sl</code><a class="headerlink" href="#ampal.nucleic_acid.Polynucleotide.sl" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – The default smoothing level used when calculating the
+<dd><p>The default smoothing level used when calculating the
 backbone primitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <table class="docutils field-list" frame="void" rules="none">
@@ -3644,55 +4064,119 @@ record is encountered.</li>
 <dl class="attribute">
 <dt id="ampal.pdb_parser.PdbParser.proc_functions">
 <code class="descname">proc_functions</code><a class="headerlink" href="#ampal.pdb_parser.PdbParser.proc_functions" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – Keys are PDB labels i.e. “ATOM” or “END”, values are the
+<dd><p>Keys are PDB labels i.e. “ATOM” or “END”, values are the
 function that processes that specific line.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pdb_parser.PdbParser.id">
 <code class="descname">id</code><a class="headerlink" href="#ampal.pdb_parser.PdbParser.id" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Identifier for the <cite>Assembly</cite>.</p>
+<dd><p>Identifier for the <cite>Assembly</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pdb_parser.PdbParser.pdb_lines">
 <code class="descname">pdb_lines</code><a class="headerlink" href="#ampal.pdb_parser.PdbParser.pdb_lines" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>[str]</em> – Input PDB split into line.</p>
+<dd><p>Input PDB split into line.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">[str]</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pdb_parser.PdbParser.new_labels">
 <code class="descname">new_labels</code><a class="headerlink" href="#ampal.pdb_parser.PdbParser.new_labels" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>bool</em> – Indicates if new atom or residue labels have been found while
+<dd><p>Indicates if new atom or residue labels have been found while
 parsing the PDB file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pdb_parser.PdbParser.state">
 <code class="descname">state</code><a class="headerlink" href="#ampal.pdb_parser.PdbParser.state" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – Current state being appended to. This is used on multi-state
+<dd><p>Current state being appended to. This is used on multi-state
 files like NMR structures.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pdb_parser.PdbParser.pdb_parse_tree">
 <code class="descname">pdb_parse_tree</code><a class="headerlink" href="#ampal.pdb_parser.PdbParser.pdb_parse_tree" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – This dictionary represents the parse tree of the PDB file.
+<dd><p>This dictionary represents the parse tree of the PDB file.
 Each line of the structure is broken down into a key, the
 entry label, and a value, the data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pdb_parser.PdbParser.current_line">
 <code class="descname">current_line</code><a class="headerlink" href="#ampal.pdb_parser.PdbParser.current_line" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – The line that is currently being parsed.</p>
+<dd><p>The line that is currently being parsed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pdb_parser.PdbParser.ignore_end">
 <code class="descname">ignore_end</code><a class="headerlink" href="#ampal.pdb_parser.PdbParser.ignore_end" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>bool, optional</em> – If <cite>false</cite>, parsing of the file will stop when an “END”
+<dd><p>If <cite>false</cite>, parsing of the file will stop when an “END”
 record is encountered.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">bool, optional</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -3703,7 +4187,7 @@ record is encountered.</p>
 
 <dl class="staticmethod">
 <dt id="ampal.pdb_parser.PdbParser.check_for_non_canonical">
-<em class="property">static </em><code class="descname">check_for_non_canonical</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/pdb_parser.html#PdbParser.check_for_non_canonical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.pdb_parser.PdbParser.check_for_non_canonical" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">check_for_non_canonical</code><span class="sig-paren">(</span><em>residue</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ampal/pdb_parser.html#PdbParser.check_for_non_canonical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ampal.pdb_parser.PdbParser.check_for_non_canonical" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks to see if the residue is non-canonical.</p>
 </dd></dl>
 
@@ -3880,42 +4364,90 @@ backbone primitive.</li>
 <dl class="attribute">
 <dt id="ampal.protein.Polypeptide.id">
 <code class="descname">id</code><a class="headerlink" href="#ampal.protein.Polypeptide.id" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – <cite>Polypeptide</cite> ID</p>
+<dd><p><cite>Polypeptide</cite> ID</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.protein.Polypeptide.parent">
 <code class="descname">parent</code><a class="headerlink" href="#ampal.protein.Polypeptide.parent" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.Assembly or None</em> – Reference to <cite>Assembly</cite> containing the <cite>Polypeptide</cite></p>
+<dd><p>Reference to <cite>Assembly</cite> containing the <cite>Polypeptide</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.Assembly or None</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.protein.Polypeptide.molecule_type">
 <code class="descname">molecule_type</code><a class="headerlink" href="#ampal.protein.Polypeptide.molecule_type" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – A description of the type of <cite>Polymer</cite> i.e. Protein, DNA etc.</p>
+<dd><p>A description of the type of <cite>Polymer</cite> i.e. Protein, DNA etc.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.protein.Polypeptide.ligands">
 <code class="descname">ligands</code><a class="headerlink" href="#ampal.protein.Polypeptide.ligands" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.LigandGroup</em> – A <cite>LigandGroup</cite> containing all the <cite>Ligands</cite> associated with this
+<dd><p>A <cite>LigandGroup</cite> containing all the <cite>Ligands</cite> associated with this
 <cite>Polypeptide</cite> chain.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.LigandGroup</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.protein.Polypeptide.tags">
 <code class="descname">tags</code><a class="headerlink" href="#ampal.protein.Polypeptide.tags" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – A dictionary containing information about this AMPAL object.
+<dd><p>A dictionary containing information about this AMPAL object.
 The tags dictionary is used by AMPAL to cache information
 about this object, but is also intended to be used by users
 to store any relevant information they have.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.protein.Polypeptide.sl">
 <code class="descname">sl</code><a class="headerlink" href="#ampal.protein.Polypeptide.sl" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – The default smoothing level used when calculating the
+<dd><p>The default smoothing level used when calculating the
 backbone primitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <table class="docutils field-list" frame="void" rules="none">
@@ -4280,55 +4812,119 @@ dictionary.</li>
 <dl class="attribute">
 <dt id="ampal.protein.Residue.mol_code">
 <code class="descname">mol_code</code><a class="headerlink" href="#ampal.protein.Residue.mol_code" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – PDB molecule code that represents the <cite>Residue</cite>.</p>
+<dd><p>PDB molecule code that represents the <cite>Residue</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.protein.Residue.insertion_code">
 <code class="descname">insertion_code</code><a class="headerlink" href="#ampal.protein.Residue.insertion_code" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Insertion code of <cite>Residue</cite>, used if reading from pdb.</p>
+<dd><p>Insertion code of <cite>Residue</cite>, used if reading from pdb.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.protein.Residue.is_hetero">
 <code class="descname">is_hetero</code><a class="headerlink" href="#ampal.protein.Residue.is_hetero" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>bool</em> – True if is a hetero atom in pdb. Helps with PDB formatting.</p>
+<dd><p>True if is a hetero atom in pdb. Helps with PDB formatting.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.protein.Residue.states">
 <code class="descname">states</code><a class="headerlink" href="#ampal.protein.Residue.states" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – Contains an <cite>OrderedDicts</cite> containing atom information for each
+<dd><p>Contains an <cite>OrderedDicts</cite> containing atom information for each
 state available for the <cite>Residue</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.protein.Residue.id">
 <code class="descname">id</code><a class="headerlink" href="#ampal.protein.Residue.id" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – String used to identify the residue.</p>
+<dd><p>String used to identify the residue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.protein.Residue.reference_atom">
 <code class="descname">reference_atom</code><a class="headerlink" href="#ampal.protein.Residue.reference_atom" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – The key that corresponds to the reference atom. This is used
+<dd><p>The key that corresponds to the reference atom. This is used
 by various functions, for example backbone primitives are
 calculated using the atom defined using this key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.protein.Residue.parent">
 <code class="descname">parent</code><a class="headerlink" href="#ampal.protein.Residue.parent" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>Polypeptide or None</em> – A reference to the <cite>Polypeptide</cite> containing this <cite>Residue</cite>.</p>
+<dd><p>A reference to the <cite>Polypeptide</cite> containing this <cite>Residue</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#ampal.protein.Polypeptide" title="ampal.protein.Polypeptide">Polypeptide</a> or None</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.protein.Residue.tags">
 <code class="descname">tags</code><a class="headerlink" href="#ampal.protein.Residue.tags" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – A dictionary containing information about this AMPAL object.
+<dd><p>A dictionary containing information about this AMPAL object.
 The tags dictionary is used by AMPAL to cache information
 about this object, but is also intended to be used by users
 to store any relevant information they have.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <table class="docutils field-list" frame="void" rules="none">
@@ -4543,55 +5139,119 @@ dictionary.</li>
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.Primitive.mol_code">
 <code class="descname">mol_code</code><a class="headerlink" href="#ampal.pseudo_atoms.Primitive.mol_code" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – PDB molecule code that represents the <cite>Nucleotide</cite>.</p>
+<dd><p>PDB molecule code that represents the <cite>Nucleotide</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.Primitive.insertion_code">
 <code class="descname">insertion_code</code><a class="headerlink" href="#ampal.pseudo_atoms.Primitive.insertion_code" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Insertion code of <cite>Nucleotide</cite>, used if reading from pdb.</p>
+<dd><p>Insertion code of <cite>Nucleotide</cite>, used if reading from pdb.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.Primitive.is_hetero">
 <code class="descname">is_hetero</code><a class="headerlink" href="#ampal.pseudo_atoms.Primitive.is_hetero" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>bool</em> – True if is a hetero atom in pdb. Helps with PDB formatting.</p>
+<dd><p>True if is a hetero atom in pdb. Helps with PDB formatting.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.Primitive.states">
 <code class="descname">states</code><a class="headerlink" href="#ampal.pseudo_atoms.Primitive.states" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – Contains an <cite>OrderedDicts</cite> containing atom information for each
+<dd><p>Contains an <cite>OrderedDicts</cite> containing atom information for each
 state available for the <cite>Nucleotide</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.Primitive.id">
 <code class="descname">id</code><a class="headerlink" href="#ampal.pseudo_atoms.Primitive.id" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – String used to identify the <cite>Nucleotide</cite>.</p>
+<dd><p>String used to identify the <cite>Nucleotide</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.Primitive.reference_atom">
 <code class="descname">reference_atom</code><a class="headerlink" href="#ampal.pseudo_atoms.Primitive.reference_atom" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – The key that corresponds to the reference <cite>Atom</cite>. This is used
+<dd><p>The key that corresponds to the reference <cite>Atom</cite>. This is used
 by various functions, for example backbone primitives are
 calculated using the <cite>Atom</cite> defined using this key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.Primitive.parent">
 <code class="descname">parent</code><a class="headerlink" href="#ampal.pseudo_atoms.Primitive.parent" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>Polynucleotide or None</em> – A reference to the <cite>Polynucleotide</cite> containing this <cite>Nucleotide</cite>.</p>
+<dd><p>A reference to the <cite>Polynucleotide</cite> containing this <cite>Nucleotide</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#ampal.nucleic_acid.Polynucleotide" title="ampal.nucleic_acid.Polynucleotide">Polynucleotide</a> or None</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.Primitive.tags">
 <code class="descname">tags</code><a class="headerlink" href="#ampal.pseudo_atoms.Primitive.tags" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – A dictionary containing information about this AMPAL object.
+<dd><p>A dictionary containing information about this AMPAL object.
 The tags dictionary is used by AMPAL to cache information
 about this object, but is also intended to be used by users
 to store any relevant information they have.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <table class="docutils field-list" frame="void" rules="none">
@@ -4669,38 +5329,77 @@ with a number of conformations.</li>
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoAtom.id">
 <code class="descname">id</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoAtom.id" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Identifier for <cite>PseudoAtom</cite>, usually a number.</p>
+<dd><p>Identifier for <cite>PseudoAtom</cite>, usually a number.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoAtom.res_label">
 <code class="descname">res_label</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoAtom.res_label" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Label used in <cite>PseudoGroup</cite> to refer to the <cite>Atom</cite> type i.e. “CA” or “OD1”.</p>
+<dd><p>Label used in <cite>PseudoGroup</cite> to refer to the <cite>Atom</cite> type i.e. “CA” or “OD1”.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoAtom.element">
 <code class="descname">element</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoAtom.element" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Element of <cite>Atom</cite>.</p>
+<dd><p>Element of <cite>Atom</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoAtom.parent">
 <code class="descname">parent</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoAtom.parent" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.PseudoAtom</em> –</p>
-<dl class="docutils">
+<dd><dl class="docutils">
 <dt>A reference to the <cite>PseudoGroup</cite> containing this <cite>PseudoAtom</cite>.</dt>
 <dd>number of conformations.</dd>
 </dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.PseudoAtom</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoAtom.tags">
 <code class="descname">tags</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoAtom.tags" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – A dictionary containing information about this AMPAL object.
+<dd><p>A dictionary containing information about this AMPAL object.
 The tags dictionary is used by AMPAL to cache information
 about this object, but is also intended to be used by users
 to store any relevant information they have.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -4730,42 +5429,90 @@ backbone primitive.</li>
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoGroup.id">
 <code class="descname">id</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoGroup.id" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – <cite>PseudoGroup</cite> ID</p>
+<dd><p><cite>PseudoGroup</cite> ID</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoGroup.parent">
 <code class="descname">parent</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoGroup.parent" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.Assembly or None</em> – Reference to <cite>Assembly</cite> containing the <cite>PseudoGroup</cite></p>
+<dd><p>Reference to <cite>Assembly</cite> containing the <cite>PseudoGroup</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.Assembly or None</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoGroup.molecule_type">
 <code class="descname">molecule_type</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoGroup.molecule_type" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – A description of the type of <cite>Polymer</cite> i.e. Protein, DNA etc.</p>
+<dd><p>A description of the type of <cite>Polymer</cite> i.e. Protein, DNA etc.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoGroup.ligands">
 <code class="descname">ligands</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoGroup.ligands" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ampal.LigandGroup</em> – A <cite>LigandGroup</cite> containing all the <cite>Ligands</cite> associated with this
+<dd><p>A <cite>LigandGroup</cite> containing all the <cite>Ligands</cite> associated with this
 <cite>PseudoGroup</cite> chain.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ampal.LigandGroup</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoGroup.tags">
 <code class="descname">tags</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoGroup.tags" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – A dictionary containing information about this AMPAL object.
+<dd><p>A dictionary containing information about this AMPAL object.
 The tags dictionary is used by AMPAL to cache information
 about this object, but is also intended to be used by users
 to store any relevant information they have.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoGroup.sl">
 <code class="descname">sl</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoGroup.sl" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – The default smoothing level used when calculating the
+<dd><p>The default smoothing level used when calculating the
 backbone primitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <table class="docutils field-list" frame="void" rules="none">
@@ -4805,55 +5552,119 @@ dictionary.</li>
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoMonomer.mol_code">
 <code class="descname">mol_code</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoMonomer.mol_code" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – PDB molecule code that represents the <cite>Nucleotide</cite>.</p>
+<dd><p>PDB molecule code that represents the <cite>Nucleotide</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoMonomer.insertion_code">
 <code class="descname">insertion_code</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoMonomer.insertion_code" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Insertion code of <cite>Nucleotide</cite>, used if reading from pdb.</p>
+<dd><p>Insertion code of <cite>Nucleotide</cite>, used if reading from pdb.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoMonomer.is_hetero">
 <code class="descname">is_hetero</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoMonomer.is_hetero" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>bool</em> – True if is a hetero atom in pdb. Helps with PDB formatting.</p>
+<dd><p>True if is a hetero atom in pdb. Helps with PDB formatting.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoMonomer.states">
 <code class="descname">states</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoMonomer.states" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – Contains an <cite>OrderedDicts</cite> containing atom information for each
+<dd><p>Contains an <cite>OrderedDicts</cite> containing atom information for each
 state available for the <cite>Nucleotide</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoMonomer.id">
 <code class="descname">id</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoMonomer.id" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – String used to identify the <cite>Nucleotide</cite>.</p>
+<dd><p>String used to identify the <cite>Nucleotide</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoMonomer.reference_atom">
 <code class="descname">reference_atom</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoMonomer.reference_atom" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – The key that corresponds to the reference <cite>Atom</cite>. This is used
+<dd><p>The key that corresponds to the reference <cite>Atom</cite>. This is used
 by various functions, for example backbone primitives are
 calculated using the <cite>Atom</cite> defined using this key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoMonomer.parent">
 <code class="descname">parent</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoMonomer.parent" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>Polynucleotide or None</em> – A reference to the <cite>Polynucleotide</cite> containing this <cite>Nucleotide</cite>.</p>
+<dd><p>A reference to the <cite>Polynucleotide</cite> containing this <cite>Nucleotide</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#ampal.nucleic_acid.Polynucleotide" title="ampal.nucleic_acid.Polynucleotide">Polynucleotide</a> or None</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ampal.pseudo_atoms.PseudoMonomer.tags">
 <code class="descname">tags</code><a class="headerlink" href="#ampal.pseudo_atoms.PseudoMonomer.tags" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – A dictionary containing information about this AMPAL object.
+<dd><p>A dictionary containing information about this AMPAL object.
 The tags dictionary is used by AMPAL to cache information
 about this object, but is also intended to be used by users
 to store any relevant information they have.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <table class="docutils field-list" frame="void" rules="none">
@@ -4880,33 +5691,32 @@ to store any relevant information they have.</p>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">ampal package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-ampal.align">ampal.align module</a></li>
-<li><a class="reference internal" href="#module-ampal.amino_acids">ampal.amino_acids module</a></li>
-<li><a class="reference internal" href="#module-ampal.ampal_warnings">ampal.ampal_warnings module</a></li>
-<li><a class="reference internal" href="#module-ampal.analyse_protein">ampal.analyse_protein module</a></li>
-<li><a class="reference internal" href="#module-ampal.assembly">ampal.assembly module</a></li>
-<li><a class="reference internal" href="#module-ampal.base_ampal">ampal.base_ampal module</a></li>
-<li><a class="reference internal" href="#module-ampal.data">ampal.data module</a></li>
-<li><a class="reference internal" href="#module-ampal.dssp">ampal.dssp module</a></li>
-<li><a class="reference internal" href="#module-ampal.geometry">ampal.geometry module</a></li>
-<li><a class="reference internal" href="#module-ampal.interactions">ampal.interactions module</a></li>
-<li><a class="reference internal" href="#module-ampal.ligands">ampal.ligands module</a></li>
-<li><a class="reference internal" href="#module-ampal.nucleic_acid">ampal.nucleic_acid module</a></li>
-<li><a class="reference internal" href="#module-ampal.pdb_parser">ampal.pdb_parser module</a></li>
-<li><a class="reference internal" href="#module-ampal.protein">ampal.protein module</a></li>
-<li><a class="reference internal" href="#module-ampal.pseudo_atoms">ampal.pseudo_atoms module</a></li>
-<li><a class="reference internal" href="#module-ampal">Module contents</a></li>
+<h1 class="logo"><a href="index.html">AMPAL</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AMPAL_Introduction_and_Selections.html">Introduction to AMPAL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced_Selections_and_Analysis.html">Advanced Selections</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ampal package</a></li>
 </ul>
 </li>
 </ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -4917,13 +5727,6 @@ to store any relevant information they have.</p>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/ampal.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -4944,8 +5747,8 @@ to store any relevant information they have.</p>
       &copy;2018, Woolfson Group, UoB.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
       <a href="_sources/ampal.rst.txt"

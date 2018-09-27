@@ -6,14 +6,14 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Advanced Selections and Analysis &#8212; AMPAL 1.0.0 documentation</title>
+    <title>Advanced Selections and Analysis &#8212; AMPAL 1.4.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="ampal" href="modules.html" />
@@ -30,6 +30,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="advanced-selections-and-analysis">
@@ -462,8 +464,8 @@ Tagging tutorial for the proper, low-effort method!</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="mf">179.8002001034783</span> <span class="o">-</span><span class="mf">64.10861163046212</span> <span class="o">-</span><span class="mf">45.84373968479124</span>
 </pre></div>
 </div>
-<p>We can use it to calculate the <span class="math notranslate">\(\chi\)</span> torsion angles too. R2 is
-leucine, so we can calculate the <span class="math notranslate">\(\chi_1\)</span> and <span class="math notranslate">\(\chi_2\)</span>
+<p>We can use it to calculate the <span class="math notranslate nohighlight">\(\chi\)</span> torsion angles too. R2 is
+leucine, so we can calculate the <span class="math notranslate nohighlight">\(\chi_1\)</span> and <span class="math notranslate nohighlight">\(\chi_2\)</span>
 angles:</p>
 <div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">r2</span><span class="o">.</span><span class="n">atoms</span>
 </pre></div>
@@ -518,22 +520,37 @@ selections.</p>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Advanced Selections and Analysis</a><ul>
-<li><a class="reference internal" href="#selecting-all-residues-or-atoms">1. Selecting All Residues or Atoms</a></li>
-<li><a class="reference internal" href="#analysing-composition">2. Analysing Composition</a></li>
-<li><a class="reference internal" href="#distance-analysis">3. Distance Analysis</a></li>
-<li><a class="reference internal" href="#is-within">4. Is Within</a></li>
-<li><a class="reference internal" href="#geometry-in-ampal">5. Geometry in AMPAL</a></li>
-<li><a class="reference internal" href="#summary-and-activities">6. Summary and activities</a></li>
+<h1 class="logo"><a href="index.html">AMPAL</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AMPAL_Introduction_and_Selections.html">Introduction to AMPAL</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced Selections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#selecting-all-residues-or-atoms">1. Selecting All Residues or Atoms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analysing-composition">2. Analysing Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distance-analysis">3. Distance Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#is-within">4. Is Within</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#geometry-in-ampal">5. Geometry in AMPAL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary-and-activities">6. Summary and activities</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">API Reference</a></li>
 </ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -543,13 +560,6 @@ selections.</p>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/Advanced_Selections_and_Analysis.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -570,8 +580,8 @@ selections.</p>
       &copy;2018, Woolfson Group, UoB.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
       <a href="_sources/Advanced_Selections_and_Analysis.rst.txt"
