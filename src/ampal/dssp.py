@@ -137,27 +137,29 @@ def find_ss_regions(dssp_residues, loop_assignments=(' ', 'B', 'S', 'T')):
     """
 
     loops = loop_assignments
-    current_ele = None
+    previous_ele = None
     fragment = []
     fragments = []
-    first = True
     for ele in dssp_residues:
-        if first:
-            first = False
+        if previous_ele is None:
             fragment.append(ele)
-        elif current_ele in loops:
+        elif ele[2] != previous_ele[2]:
+            fragments.append(fragment)
+            fragment = [ele]
+        elif previous_ele[1] in loops:
             if ele[1] in loops:
                 fragment.append(ele)
             else:
                 fragments.append(fragment)
                 fragment = [ele]
         else:
-            if ele[1] == current_ele:
+            if ele[1] == previous_ele[1]:
                 fragment.append(ele)
             else:
                 fragments.append(fragment)
                 fragment = [ele]
-        current_ele = ele[1]
+        previous_ele = ele
+    fragments.append(fragment)
     return fragments
 
 
@@ -194,7 +196,7 @@ def tag_dssp_data(assembly, loop_assignments=(' ', 'B', 'S', 'T')):
     ss_regions = find_ss_regions(dssp_data, loop_assignments)
     for region in ss_regions:
         chain = region[0][2]
-        ss_type = region[0][1]
+        ss_type = ' ' if region[0][1] in loop_assignments else region[0][1]
         first_residue = str(region[0][0])
         last_residue = str(region[-1][0])
         if not 'ss_regions' in assembly[chain].tags:
