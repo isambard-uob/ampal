@@ -12,6 +12,8 @@ References
 import subprocess
 import tempfile
 
+from .assembly import Assembly
+
 
 def dssp_available():
     """True if mkdssp is available on the path."""
@@ -135,27 +137,29 @@ def find_ss_regions(dssp_residues, loop_assignments=(' ', 'B', 'S', 'T')):
     """
 
     loops = loop_assignments
-    current_ele = None
+    previous_ele = None
     fragment = []
     fragments = []
-    first = True
     for ele in dssp_residues:
-        if first:
-            first = False
+        if previous_ele is None:
             fragment.append(ele)
-        elif current_ele in loops:
+        elif ele[2] != previous_ele[2]:
+            fragments.append(fragment)
+            fragment = [ele]
+        elif previous_ele[1] in loops:
             if ele[1] in loops:
                 fragment.append(ele)
             else:
                 fragments.append(fragment)
                 fragment = [ele]
         else:
-            if ele[1] == current_ele:
+            if ele[1] == previous_ele[1]:
                 fragment.append(ele)
             else:
                 fragments.append(fragment)
                 fragment = [ele]
-        current_ele = ele[1]
+        previous_ele = ele
+    fragments.append(fragment)
     return fragments
 
 
@@ -192,7 +196,7 @@ def tag_dssp_data(assembly, loop_assignments=(' ', 'B', 'S', 'T')):
     ss_regions = find_ss_regions(dssp_data, loop_assignments)
     for region in ss_regions:
         chain = region[0][2]
-        ss_type = region[0][1]
+        ss_type = ' ' if region[0][1] in loop_assignments else region[0][1]
         first_residue = str(region[0][0])
         last_residue = str(region[-1][0])
         if not 'ss_regions' in assembly[chain].tags:
@@ -200,6 +204,42 @@ def tag_dssp_data(assembly, loop_assignments=(' ', 'B', 'S', 'T')):
         assembly[chain].tags['ss_regions'].append(
             (first_residue, last_residue, ss_type))
     return
+
+
+def get_ss_regions(assembly, ss_types):
+    """Returns an Assembly containing Polymers for each region of structure.
+
+    Parameters
+    ----------
+    assembly : ampal.Assembly
+        `Assembly` object to be searched secondary structure regions.
+    ss_types : list
+        List of secondary structure tags to be separate i.e. ['H']
+        would return helices, ['H', 'E'] would return helices
+        and strands.
+
+    Returns
+    -------
+    fragments : Assembly
+        `Assembly` containing a `Polymer` for each region of specified
+        secondary structure.
+    """
+    if not any(map(lambda x: 'ss_regions' in x.tags, assembly)):
+        raise ValueError(
+            'This assembly does not have any tagged secondary structure '
+            'regions. Use `ampal.dssp.tag_dssp_data` to add the tags.'
+        )
+    fragments = Assembly()
+    for polypeptide in assembly:
+        if 'ss_regions' in polypeptide.tags:
+            for start, end, ss_type in polypeptide.tags['ss_regions']:
+                if ss_type in ss_types:
+                    fragment = polypeptide.get_slice_from_res_id(start, end)
+                    fragments.append(fragment)
+    if not fragments:
+        raise ValueError('No regions matching that secondary structure type'
+                         ' have been found. Use standard DSSP labels.')
+    return fragments
 
 
 __author__ = "Christopher W. Wood, Gail J. Bartlett"

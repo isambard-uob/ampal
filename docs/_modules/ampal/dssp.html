@@ -6,14 +6,14 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>ampal.dssp &#8212; AMPAL 1.0.0 documentation</title>
+    <title>ampal.dssp &#8212; AMPAL 1.4.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -28,6 +28,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <h1>Source code for ampal.dssp</h1><div class="highlight"><pre>
@@ -45,6 +47,8 @@
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
 
+<span class="kn">from</span> <span class="nn">.assembly</span> <span class="k">import</span> <span class="n">Assembly</span>
+
 
 <div class="viewcode-block" id="dssp_available"><a class="viewcode-back" href="../../ampal.html#ampal.dssp.dssp_available">[docs]</a><span class="k">def</span> <span class="nf">dssp_available</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;True if mkdssp is available on the path.&quot;&quot;&quot;</span>
@@ -56,8 +60,8 @@
     <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DSSP has not been found on your path. If you have already &quot;</span>
               <span class="s2">&quot;installed DSSP but are unsure how to add it to your path, &quot;</span>
-              <span class="s2">&quot;check out this: https://stackoverflow.com/a/14638025&quot;</span><span class="p">)</span></div>
-    <span class="k">return</span> <span class="n">available</span>
+              <span class="s2">&quot;check out this: https://stackoverflow.com/a/14638025&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">available</span></div>
 
 
 <div class="viewcode-block" id="run_dssp"><a class="viewcode-back" href="../../ampal.html#ampal.dssp.run_dssp">[docs]</a><span class="k">def</span> <span class="nf">run_dssp</span><span class="p">(</span><span class="n">pdb</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
@@ -85,8 +89,8 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">dssp_out</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span>
             <span class="p">[</span><span class="s1">&#39;mkdssp&#39;</span><span class="p">,</span> <span class="n">pdb</span><span class="p">])</span>
-    <span class="n">dssp_out</span> <span class="o">=</span> <span class="n">dssp_out</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
-    <span class="k">return</span> <span class="n">dssp_out</span>
+    <span class="n">dssp_out</span> <span class="o">=</span> <span class="n">dssp_out</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">dssp_out</span></div>
 
 
 <div class="viewcode-block" id="extract_all_ss_dssp"><a class="viewcode-back" href="../../ampal.html#ampal.dssp.extract_all_ss_dssp">[docs]</a><span class="k">def</span> <span class="nf">extract_all_ss_dssp</span><span class="p">(</span><span class="n">in_dssp</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
@@ -135,8 +139,8 @@
                 <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
-                <span class="n">active</span> <span class="o">=</span> <span class="kc">True</span></div>
-    <span class="k">return</span> <span class="n">dssp_residues</span>
+                <span class="n">active</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">dssp_residues</span></div>
 
 
 <div class="viewcode-block" id="find_ss_regions"><a class="viewcode-back" href="../../ampal.html#ampal.dssp.find_ss_regions">[docs]</a><span class="k">def</span> <span class="nf">find_ss_regions</span><span class="p">(</span><span class="n">dssp_residues</span><span class="p">,</span> <span class="n">loop_assignments</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">)):</span>
@@ -168,28 +172,30 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">loops</span> <span class="o">=</span> <span class="n">loop_assignments</span>
-    <span class="n">current_ele</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">previous_ele</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">fragment</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">fragments</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">first</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">dssp_residues</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">first</span><span class="p">:</span>
-            <span class="n">first</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">previous_ele</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fragment</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ele</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">current_ele</span> <span class="ow">in</span> <span class="n">loops</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">ele</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="n">previous_ele</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="n">fragments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fragment</span><span class="p">)</span>
+            <span class="n">fragment</span> <span class="o">=</span> <span class="p">[</span><span class="n">ele</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">previous_ele</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">loops</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">ele</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">loops</span><span class="p">:</span>
                 <span class="n">fragment</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ele</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">fragments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fragment</span><span class="p">)</span>
                 <span class="n">fragment</span> <span class="o">=</span> <span class="p">[</span><span class="n">ele</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">ele</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">current_ele</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ele</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">previous_ele</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
                 <span class="n">fragment</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ele</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">fragments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fragment</span><span class="p">)</span>
                 <span class="n">fragment</span> <span class="o">=</span> <span class="p">[</span><span class="n">ele</span><span class="p">]</span>
-        <span class="n">current_ele</span> <span class="o">=</span> <span class="n">ele</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
-    <span class="k">return</span> <span class="n">fragments</span>
+        <span class="n">previous_ele</span> <span class="o">=</span> <span class="n">ele</span>
+    <span class="n">fragments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fragment</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fragments</span></div>
 
 
 <div class="viewcode-block" id="tag_dssp_data"><a class="viewcode-back" href="../../ampal.html#ampal.dssp.tag_dssp_data">[docs]</a><span class="k">def</span> <span class="nf">tag_dssp_data</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">loop_assignments</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">)):</span>
@@ -225,24 +231,80 @@
     <span class="n">ss_regions</span> <span class="o">=</span> <span class="n">find_ss_regions</span><span class="p">(</span><span class="n">dssp_data</span><span class="p">,</span> <span class="n">loop_assignments</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="n">ss_regions</span><span class="p">:</span>
         <span class="n">chain</span> <span class="o">=</span> <span class="n">region</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
-        <span class="n">ss_type</span> <span class="o">=</span> <span class="n">region</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">ss_type</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span> <span class="k">if</span> <span class="n">region</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">loop_assignments</span> <span class="k">else</span> <span class="n">region</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">first_residue</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">region</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">last_residue</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">region</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;ss_regions&#39;</span> <span class="ow">in</span> <span class="n">assembly</span><span class="p">[</span><span class="n">chain</span><span class="p">]</span><span class="o">.</span><span class="n">tags</span><span class="p">:</span>
             <span class="n">assembly</span><span class="p">[</span><span class="n">chain</span><span class="p">]</span><span class="o">.</span><span class="n">tags</span><span class="p">[</span><span class="s1">&#39;ss_regions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">assembly</span><span class="p">[</span><span class="n">chain</span><span class="p">]</span><span class="o">.</span><span class="n">tags</span><span class="p">[</span><span class="s1">&#39;ss_regions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">first_residue</span><span class="p">,</span> <span class="n">last_residue</span><span class="p">,</span> <span class="n">ss_type</span><span class="p">))</span></div>
-    <span class="k">return</span>
+            <span class="p">(</span><span class="n">first_residue</span><span class="p">,</span> <span class="n">last_residue</span><span class="p">,</span> <span class="n">ss_type</span><span class="p">))</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="get_ss_regions"><a class="viewcode-back" href="../../ampal.html#ampal.dssp.get_ss_regions">[docs]</a><span class="k">def</span> <span class="nf">get_ss_regions</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">ss_types</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns an Assembly containing Polymers for each region of structure.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    assembly : ampal.Assembly</span>
+<span class="sd">        `Assembly` object to be searched secondary structure regions.</span>
+<span class="sd">    ss_types : list</span>
+<span class="sd">        List of secondary structure tags to be separate i.e. [&#39;H&#39;]</span>
+<span class="sd">        would return helices, [&#39;H&#39;, &#39;E&#39;] would return helices</span>
+<span class="sd">        and strands.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    fragments : Assembly</span>
+<span class="sd">        `Assembly` containing a `Polymer` for each region of specified</span>
+<span class="sd">        secondary structure.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;ss_regions&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span> <span class="n">assembly</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s1">&#39;This assembly does not have any tagged secondary structure &#39;</span>
+            <span class="s1">&#39;regions. Use `ampal.dssp.tag_dssp_data` to add the tags.&#39;</span>
+        <span class="p">)</span>
+    <span class="n">fragments</span> <span class="o">=</span> <span class="n">Assembly</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">polypeptide</span> <span class="ow">in</span> <span class="n">assembly</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;ss_regions&#39;</span> <span class="ow">in</span> <span class="n">polypeptide</span><span class="o">.</span><span class="n">tags</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">ss_type</span> <span class="ow">in</span> <span class="n">polypeptide</span><span class="o">.</span><span class="n">tags</span><span class="p">[</span><span class="s1">&#39;ss_regions&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">ss_type</span> <span class="ow">in</span> <span class="n">ss_types</span><span class="p">:</span>
+                    <span class="n">fragment</span> <span class="o">=</span> <span class="n">polypeptide</span><span class="o">.</span><span class="n">get_slice_from_res_id</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+                    <span class="n">fragments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fragment</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">fragments</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No regions matching that secondary structure type&#39;</span>
+                         <span class="s1">&#39; have been found. Use standard DSSP labels.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fragments</span></div>
 
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Christopher W. Wood, Gail J. Bartlett&quot;</span>
 </pre></div>
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">AMPAL</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../AMPAL_Introduction_and_Selections.html">Introduction to AMPAL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Advanced_Selections_and_Analysis.html">Advanced Selections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
@@ -271,8 +333,8 @@
       &copy;2018, Woolfson Group, UoB.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
     </div>
 

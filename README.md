@@ -54,6 +54,12 @@ complex selections and performing analysis. Take a look at the
 
 ## Release Notes
 
+## v1.4.0
+
+* **Adds `get_ss_regions` to `ampal.dssp`.** This function can be used to
+  extract all regions of a protein in a particular secondary structure.
+* **Fixes bug with DSSP `ss_region` tagging.** End residues used to be missed.
+
 ## v1.3.0
 
 * **Adds an interface for NACCESS.** Functions for using NACCESS to calculate
