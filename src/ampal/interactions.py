@@ -2,7 +2,10 @@
 
 import itertools
 import networkx
+from networkx import Graph
+import typing as t
 
+from .base_ampal import Atom, BaseAmpal, Monomer
 from .data import ELEMENT_DATA
 from .geometry import distance, gen_sectors  # pylint: disable=no-name-in-module
 
@@ -31,7 +34,7 @@ core_components = [
 ]
 
 
-class Interaction(object):
+class Interaction:
     """A container for all types of interaction with donor and acceptor.
 
     Parameters
@@ -53,7 +56,7 @@ class Interaction(object):
         The distance between `Atom` `a` and `b`.
     """
 
-    def __init__(self, a, b, dist):
+    def __init__(self, a: Atom, b: Atom, dist: float):
         self._a = a
         self._b = b
         self.dist = dist
@@ -78,12 +81,12 @@ class CovalentBond(Interaction):
     """Defines a covalent bond."""
 
     @property
-    def a(self):
+    def a(self) -> Atom:
         """One `Atom` involved in the covalent bond."""
         return self._a
 
     @property
-    def b(self):
+    def b(self) -> Atom:
         """One `Atom` involved in the covalent bond."""
         return self._b
 
@@ -126,16 +129,16 @@ class NonCovalentInteraction(Interaction):
         The distance between `Atom` `a` and `b`.
     """
 
-    def __init__(self, donor, acceptor, dist):
+    def __init__(self, donor: Atom, acceptor: Atom, dist: float):
         super().__init__(donor, acceptor, dist)
 
     @property
-    def donor(self):
+    def donor(self) -> Atom:
         """The donor `Atom` in the interaction."""
         return self._a
 
     @property
-    def acceptor(self):
+    def acceptor(self) -> Atom:
         """The acceptor in the interaction."""
         return self._b
 
@@ -180,18 +183,20 @@ class HydrogenBond(NonCovalentInteraction):
         Angle between the donor and the interaction vector.
     """
 
-    def __init__(self, donor, acceptor, dist, ang_d, ang_a):
+    def __init__(
+        self, donor: Atom, acceptor: Atom, dist: float, ang_d: float, ang_a: float
+    ):
         super().__init__(donor, acceptor, dist)
         self.ang_d = ang_d
         self.ang_a = ang_a
 
     @property
-    def donor_monomer(self):
+    def donor_monomer(self) -> Monomer:
         """The donor `Monomer` in the interaction."""
         return self._a.parent
 
     @property
-    def acceptor_monomer(self):
+    def acceptor_monomer(self) -> Monomer:
         """The acceptor `Monomer` in the interaction."""
         return self._b.parent
 
@@ -212,42 +217,18 @@ class HydrogenBond(NonCovalentInteraction):
         )
 
 
-def covalent_bonds(atoms, threshold=1.1):
-    """Returns all the covalent bonds in a list of `Atom` pairs.
-
-    Notes
-    -----
-    Uses information `ELEMENT_DATA`, which can be accessed directly
-    through this module i.e. `isambard.ampal.interactions.ELEMENT_DATA`.
-
-    Parameters
-    ----------
-    atoms : [(`Atom`, `Atom`)]
-        List of pairs of `Atoms`.
-    threshold : float, optional
-        Allows deviation from ideal covalent bond distance to be included.
-        For example, a value of 1.1 would allow interactions up to 10% further
-        from the ideal distance to be included.
-    """
-    bonds = []
-    for a, b in atoms:
-        bond_distance = (
-            ELEMENT_DATA[a.element.title()]["atomic radius"]
-            + ELEMENT_DATA[b.element.title()]["atomic radius"]
-        ) / 100
-        dist = distance(a._vector, b._vector)
-        if dist <= bond_distance * threshold:
-            bonds.append(CovalentBond(a, b, dist))
-    return bonds
-
-
-def find_covalent_bonds(ampal, max_range=2.2, threshold=1.1, tag=True):
+def find_covalent_bonds(
+    atoms: t.List[Atom],
+    max_range: float = 2.2,
+    threshold: float = 1.1,
+    tag: bool = True,
+):
     """Finds all covalent bonds in the AMPAL object.
 
     Parameters
     ----------
-    ampal : AMPAL Object
-        Any AMPAL object with a `get_atoms` method.
+    atoms : [Atoms]
+        A list of atoms.
     max_range : float, optional
         Used to define the sector size, so interactions at longer ranges
         will not be found.
@@ -259,15 +240,24 @@ def find_covalent_bonds(ampal, max_range=2.2, threshold=1.1, tag=True):
         If `True`, will add the covalent bond to the tags dictionary of
         each `Atom` involved in the interaction under the `covalent_bonds`
         key.
+
+    Returns
+    -------
+    bonds : [CovalentBond]
+        A list of `CovalentBond` objects.
     """
-    sectors = gen_sectors(ampal.get_atoms(), max_range * 1.1)
+    atom_pairs = itertools.combinations(atoms, 2)
     bonds = []
-    for sector in sectors.values():
-        atoms = itertools.combinations(sector, 2)
-        bonds.extend(covalent_bonds(atoms, threshold=threshold))
-    bond_set = list(set(bonds))
+    for a, b in atom_pairs:
+        bond_distance = (
+            ELEMENT_DATA[a.element.title()]["atomic radius"]
+            + ELEMENT_DATA[b.element.title()]["atomic radius"]
+        ) / 100
+        dist = distance(a._vector, b._vector)
+        if dist <= bond_distance * threshold:
+            bonds.append(CovalentBond(a, b, dist))
     if tag:
-        for bond in bond_set:
+        for bond in bonds:
             a, b = bond.a, bond.b
             if "covalent_bonds" not in a.tags:
                 a.tags["covalent_bonds"] = [b]
@@ -277,7 +267,7 @@ def find_covalent_bonds(ampal, max_range=2.2, threshold=1.1, tag=True):
                 b.tags["covalent_bonds"] = [a]
             else:
                 b.tags["covalent_bonds"].append(a)
-    return bond_set
+    return bonds
 
 
 def generate_covalent_bond_graph(covalent_bonds):
@@ -299,7 +289,7 @@ def generate_covalent_bond_graph(covalent_bonds):
     return bond_graph
 
 
-def generate_bond_subgraphs_from_break(bond_graph, atom1, atom2):
+def generate_bond_subgraphs_from_break(bond_graph: Graph, covalent_bond: CovalentBond):
     """Splits the bond graph between two atoms to producing subgraphs.
 
     Notes
@@ -310,10 +300,8 @@ def generate_bond_subgraphs_from_break(bond_graph, atom1, atom2):
     ----------
     bond_graph: networkx.Graph
         Graph of covalent bond network
-    atom1: isambard.ampal.Atom
-        First atom in the bond.
-    atom2: isambard.ampal.Atom
-        Second atom in the bond.
+    covalent_bond: CovalentBond
+        Covalent bond to break to produce subgraphs.
 
     Returns
     -------
@@ -321,13 +309,13 @@ def generate_bond_subgraphs_from_break(bond_graph, atom1, atom2):
         A list of subgraphs generated when a bond is broken in the covalent
         bond network.
     """
-    bond_graph.remove_edge(atom1, atom2)
+    bond_graph.remove_edge(covalent_bond.a, covalent_bond.b)
     try:
         # pylint: disable=no-member
         subgraphs = list(networkx.connected_component_subgraphs(bond_graph, copy=False))
     finally:
-        # Add edge
-        bond_graph.add_edge(atom1, atom2)
+        # Add edge in order to leave the base graph unchanged
+        bond_graph.add_edge(covalent_bond.a, covalent_bond.b)
     return subgraphs
 
 
