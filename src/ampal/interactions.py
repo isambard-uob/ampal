@@ -107,116 +107,6 @@ class CovalentBond(Interaction):
         )
 
 
-class NonCovalentInteraction(Interaction):
-    """ A container for all non-covalent interaction.
-
-    Parameters
-    ----------
-    donor : ampal.Atom
-        The donor `Atom` in the interaction.
-    acceptor : ampal.Atom
-        The acceptor atom in the interaction.
-    dist : float
-        The distance between `Atom` `a` and `b`.
-
-    Attributes
-    ----------
-    donor : ampal.Atom
-        The donor `Atom` in the interaction.
-    acceptor : ampal.Atom
-        The acceptor atom in the interaction.
-    dist : float
-        The distance between `Atom` `a` and `b`.
-    """
-
-    def __init__(self, donor: Atom, acceptor: Atom, dist: float):
-        super().__init__(donor, acceptor, dist)
-
-    @property
-    def donor(self) -> Atom:
-        """The donor `Atom` in the interaction."""
-        return self._a
-
-    @property
-    def acceptor(self) -> Atom:
-        """The acceptor in the interaction."""
-        return self._b
-
-    def __repr__(self):
-        return "<Interaction between {} {}{} (donor) " "and {} {}{} (acceptor)>".format(
-            self.donor.mol_code,
-            self.donor.id,
-            self.donor.parent.id,
-            self.acceptor.mol_code,
-            self.acceptor.id,
-            self.acceptor.parent.id,
-        )
-
-
-class HydrogenBond(NonCovalentInteraction):
-    """Defines a hydrogen bond in terms of a donor and an acceptor.
-
-    Parameters
-    ----------
-    donor : ampal.Atom
-        The donor `Atom` in the interaction.
-    acceptor : ampal.Atom
-        The acceptor atom in the interaction.
-    dist : float
-        The distance between `Atom` `a` and `b`.
-    ang_a : float
-        Angle between the acceptor and the interaction vector.
-    ang_d : float
-        Angle between the donor and the interaction vector.
-
-    Attributes
-    ----------
-    donor : ampal.Atom
-        The donor `Atom` in the interaction.
-    acceptor : ampal.Atom
-        The acceptor atom in the interaction.
-    dist : float
-        The distance between `Atom` `a` and `b`.
-    ang_a : float
-        Angle between the acceptor and the interaction vector.
-    ang_d : float
-        Angle between the donor and the interaction vector.
-    """
-
-    def __init__(
-        self, donor: Atom, acceptor: Atom, dist: float, ang_d: float, ang_a: float
-    ):
-        super().__init__(donor, acceptor, dist)
-        self.ang_d = ang_d
-        self.ang_a = ang_a
-
-    @property
-    def donor_monomer(self) -> Monomer:
-        """The donor `Monomer` in the interaction."""
-        return self._a.parent
-
-    @property
-    def acceptor_monomer(self) -> Monomer:
-        """The acceptor `Monomer` in the interaction."""
-        return self._b.parent
-
-    def __repr__(self):
-        dm = self.donor.parent
-        dc = dm.parent
-        am = self.acceptor.parent
-        ac = am.parent
-        return "<Hydrogen Bond between ({}{}) {}-{} ||||| {}-{} ({}{})>".format(
-            dm.id,
-            dc.id,
-            dm.mol_code,
-            self.donor.res_label,
-            self.acceptor.res_label,
-            am.mol_code,
-            am.id,
-            ac.id,
-        )
-
-
 def find_covalent_bonds(
     atoms: t.List[Atom],
     max_range: float = 2.2,
@@ -317,6 +207,211 @@ def generate_bond_subgraphs_from_break(bond_graph: Graph, covalent_bond: Covalen
         # Add edge in order to leave the base graph unchanged
         bond_graph.add_edge(covalent_bond.a, covalent_bond.b)
     return subgraphs
+
+
+class NonCovalentInteraction(Interaction):
+    """ A container for all non-covalent interaction.
+
+    Parameters
+    ----------
+    donor : ampal.Atom
+        The donor `Atom` in the interaction.
+    acceptor : ampal.Atom
+        The acceptor atom in the interaction.
+    dist : float
+        The distance between `Atom` `a` and `b`.
+
+    Attributes
+    ----------
+    donor : ampal.Atom
+        The donor `Atom` in the interaction.
+    acceptor : ampal.Atom
+        The acceptor atom in the interaction.
+    dist : float
+        The distance between `Atom` `a` and `b`.
+    """
+
+    def __init__(self, donor: Atom, acceptor: Atom, dist: float):
+        super().__init__(donor, acceptor, dist)
+
+    @property
+    def donor(self) -> Atom:
+        """The donor `Atom` in the interaction."""
+        return self._a
+
+    @property
+    def acceptor(self) -> Atom:
+        """The acceptor in the interaction."""
+        return self._b
+
+    def __repr__(self):
+        return "<Interaction between {} {}{} (donor) and {} {}{} (acceptor)>".format(
+            self.donor.mol_code,
+            self.donor.parent.id,
+            self.donor.id,
+            self.acceptor.mol_code,
+            self.acceptor.parent.id,
+            self.acceptor.id,
+        )
+
+
+class HydrogenBond(NonCovalentInteraction):
+    """Defines a hydrogen bond in terms of a donor and an acceptor.
+
+    Parameters
+    ----------
+    donor : ampal.Atom
+        The donor `Atom` in the interaction.
+    acceptor : ampal.Atom
+        The acceptor atom in the interaction.
+    dist : float
+        The distance between `Atom` `a` and `b`.
+    ang_a : float
+        Angle between the acceptor and the interaction vector.
+    ang_d : float
+        Angle between the donor and the interaction vector.
+
+    Attributes
+    ----------
+    donor : ampal.Atom
+        The donor `Atom` in the interaction.
+    acceptor : ampal.Atom
+        The acceptor atom in the interaction.
+    dist : float
+        The distance between `Atom` `a` and `b`.
+    ang_a : float
+        Angle between the acceptor and the interaction vector.
+    ang_d : float
+        Angle between the donor and the interaction vector.
+    """
+
+    def __init__(
+        self, donor: Atom, acceptor: Atom, dist: float, ang_d: float, ang_a: float
+    ):
+        super().__init__(donor, acceptor, dist)
+        self.ang_d = ang_d
+        self.ang_a = ang_a
+
+    @property
+    def donor_monomer(self) -> Monomer:
+        """The donor `Monomer` in the interaction."""
+        return self._a.parent
+
+    @property
+    def acceptor_monomer(self) -> Monomer:
+        """The acceptor `Monomer` in the interaction."""
+        return self._b.parent
+
+    def __repr__(self):
+        dm = self.donor.parent
+        dc = dm.parent
+        am = self.acceptor.parent
+        ac = am.parent
+        return "<Hydrogen Bond between ({}{}) {}-{} ||||| {}-{} ({}{})>".format(
+            dc.id,
+            dm.id,
+            dm.mol_code,
+            self.donor.res_label,
+            self.acceptor.res_label,
+            am.mol_code,
+            ac.id,
+            am.id,
+        )
+
+
+class SaltBridge(NonCovalentInteraction):
+    """Defines a salt bridge in terms of a negative and positive atom."""
+
+    def __init__(self, donor: Atom, acceptor: Atom, dist: float):
+        super().__init__(donor, acceptor, dist)
+
+    @property
+    def pos_monomer(self) -> Monomer:
+        return self._a.parent
+
+    @property
+    def neg_monomer(self) -> Monomer:
+        return self._b.parent
+
+    def __repr__(self):
+        dm = self.donor.parent
+        dc = dm.parent
+        am = self.acceptor.parent
+        ac = am.parent
+
+        return "<Salt Bridge between ({}{}) {}-{} ||||| {}-{} ({}{})>".format(
+            dc.id,
+            dm.id,
+            dm.mol_code,
+            self.donor.res_label,
+            self.acceptor.res_label,
+            am.mol_code,
+            ac.id,
+            am.id,
+        )
+
+
+PROTEIN_SALT_BRIDGE_POS = {"ARG": ["NH2", "NH1", "NE"], "LYS": ["NZ"]}
+PROTEIN_SALT_BRIDGE_NEG = {"ASP": ["OD1", "OD2"], "GLU": ["OE1", "OE2"]}
+
+
+def find_salt_bridges(
+    atoms: t.List[Atom],
+    positive_labels: t.Optional[t.Dict[str, t.List[str]]] = None,
+    negative_labels: t.Optional[t.Dict[str, t.List[str]]] = None,
+    min_dist: float = 2.5,
+    max_dist: float = 4.0,
+):
+    """Defines salt bridges as between positively and negatively charged residues.
+
+    Parameters
+    ----------
+    atoms : [Atom]
+        A list of Atoms that will be searched for salt bridges.
+    positive_labels : {str: [str]}, optional
+        Labels that define positive atoms. If no labels are provided,
+        `{"ARG": ["NH2", "NH1", "NE"], "LYS": ["NZ"]}` are used.
+    negative_labels : {str: [str]}, optional
+        Labels that define negative atoms. If no labels are provided,
+        `{"ASP": ["OD1", "OD2"], "GLU": ["OE1", "OE2"]}` are used.
+    min_dist : float
+        The minimum distance the interaction will be considered a salt bridge.
+    max_dist : float
+        The maximum distance the interaction will be considered a salt bridge.
+
+    Returns
+    -------
+    salt_bridges : [SaltBridge]
+        A list of SaltBridge objects.
+    """
+
+    pos = []
+    neg = []
+    positive_labels = (
+        PROTEIN_SALT_BRIDGE_POS if positive_labels is None else positive_labels
+    )
+    negative_labels = (
+        PROTEIN_SALT_BRIDGE_NEG if negative_labels is None else negative_labels
+    )
+
+    for atom in atoms:
+        if atom.parent.mol_code in negative_labels:
+            if atom.res_label in negative_labels[atom.parent.mol_code]:
+                neg.append(atom)
+
+        elif atom.parent.mol_code in positive_labels:
+            if atom.res_label in positive_labels[atom.parent.mol_code]:
+                pos.append(atom)
+
+    salt_bridges = []
+    for p in pos:
+        for n in neg:
+            dist = distance(p._vector, n._vector)
+            if min_dist <= dist <= max_dist:
+                sb = SaltBridge(p, n, dist)
+                salt_bridges.append(sb)
+
+    return salt_bridges
 
 
 __author__ = "Kieran L. Hudson, Christopher W. Wood, Gail J. Bartlett"
