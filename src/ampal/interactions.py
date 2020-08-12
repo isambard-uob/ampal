@@ -4,12 +4,31 @@ import itertools
 import networkx
 
 from .data import ELEMENT_DATA
-from .geometry import distance, gen_sectors
+from .geometry import distance, gen_sectors  # pylint: disable=no-name-in-module
 
 core_components = [
-    'ALA', 'ARG', 'ASN', 'ASP', 'CYS', 'GLN', 'GLU', 'GLY', 'HIS', 'ILE',
-    'LEU', 'LYS', 'MET', 'PHE', 'PRO', 'SER', 'THR', 'TRP', 'TYR', 'VAL',
-    'HOH']
+    "ALA",
+    "ARG",
+    "ASN",
+    "ASP",
+    "CYS",
+    "GLN",
+    "GLU",
+    "GLY",
+    "HIS",
+    "ILE",
+    "LEU",
+    "LYS",
+    "MET",
+    "PHE",
+    "PRO",
+    "SER",
+    "THR",
+    "TRP",
+    "TYR",
+    "VAL",
+    "HOH",
+]
 
 
 class Interaction(object):
@@ -50,8 +69,9 @@ class Interaction(object):
         ac = am.parent
         bm = self._b.parent
         bc = bm.parent
-        return '<Interaction between {} {}{} and {} {}{}>'.format(
-            self._a.res_label, am.id, ac.id, self._b.res_label, bm.id, bc.id)
+        return "<Interaction between {} {}{} and {} {}{}>".format(
+            self._a.res_label, am.id, ac.id, self._b.res_label, bm.id, bc.id
+        )
 
 
 class CovalentBond(Interaction):
@@ -72,9 +92,16 @@ class CovalentBond(Interaction):
         ac = am.parent
         bm = self._b.parent
         bc = bm.parent
-        return '<Covalent bond between {}{} {} {} --- {} {} {}{}>'.format(
-            ac.id, am.id, am.mol_code, self._a.res_label, self._b.res_label,
-            bm.mol_code, bc.id, bm.id)
+        return "<Covalent bond between {}{} {} {} --- {} {} {}{}>".format(
+            ac.id,
+            am.id,
+            am.mol_code,
+            self._a.res_label,
+            self._b.res_label,
+            bm.mol_code,
+            bc.id,
+            bm.id,
+        )
 
 
 class NonCovalentInteraction(Interaction):
@@ -113,11 +140,14 @@ class NonCovalentInteraction(Interaction):
         return self._b
 
     def __repr__(self):
-        return ('<Interaction between {} {}{} (donor) '
-                'and {} {}{} (acceptor)>'.format(
-                    self.donor.mol_code, self.donor.id,
-                    self.donor.parent.id, self.acceptor.mol_code,
-                    self.acceptor.id, self.acceptor.parent.id))
+        return "<Interaction between {} {}{} (donor) " "and {} {}{} (acceptor)>".format(
+            self.donor.mol_code,
+            self.donor.id,
+            self.donor.parent.id,
+            self.acceptor.mol_code,
+            self.acceptor.id,
+            self.acceptor.parent.id,
+        )
 
 
 class HydrogenBond(NonCovalentInteraction):
@@ -170,9 +200,16 @@ class HydrogenBond(NonCovalentInteraction):
         dc = dm.parent
         am = self.acceptor.parent
         ac = am.parent
-        return '<Hydrogen Bond between ({}{}) {}-{} ||||| {}-{} ({}{})>'.format(
-            dm.id, dc.id, dm.mol_code, self.donor.res_label,
-            self.acceptor.res_label, am.mol_code, am.id, ac.id)
+        return "<Hydrogen Bond between ({}{}) {}-{} ||||| {}-{} ({}{})>".format(
+            dm.id,
+            dc.id,
+            dm.mol_code,
+            self.donor.res_label,
+            self.acceptor.res_label,
+            am.mol_code,
+            am.id,
+            ac.id,
+        )
 
 
 def covalent_bonds(atoms, threshold=1.1):
@@ -195,8 +232,9 @@ def covalent_bonds(atoms, threshold=1.1):
     bonds = []
     for a, b in atoms:
         bond_distance = (
-            ELEMENT_DATA[a.element.title()]['atomic radius'] + ELEMENT_DATA[
-                b.element.title()]['atomic radius']) / 100
+            ELEMENT_DATA[a.element.title()]["atomic radius"]
+            + ELEMENT_DATA[b.element.title()]["atomic radius"]
+        ) / 100
         dist = distance(a._vector, b._vector)
         if dist <= bond_distance * threshold:
             bonds.append(CovalentBond(a, b, dist))
@@ -231,14 +269,14 @@ def find_covalent_bonds(ampal, max_range=2.2, threshold=1.1, tag=True):
     if tag:
         for bond in bond_set:
             a, b = bond.a, bond.b
-            if 'covalent_bonds' not in a.tags:
-                a.tags['covalent_bonds'] = [b]
+            if "covalent_bonds" not in a.tags:
+                a.tags["covalent_bonds"] = [b]
             else:
-                a.tags['covalent_bonds'].append(b)
-            if 'covalent_bonds' not in b.tags:
-                b.tags['covalent_bonds'] = [a]
+                a.tags["covalent_bonds"].append(b)
+            if "covalent_bonds" not in b.tags:
+                b.tags["covalent_bonds"] = [a]
             else:
-                b.tags['covalent_bonds'].append(a)
+                b.tags["covalent_bonds"].append(a)
     return bond_set
 
 
@@ -285,12 +323,13 @@ def generate_bond_subgraphs_from_break(bond_graph, atom1, atom2):
     """
     bond_graph.remove_edge(atom1, atom2)
     try:
-        subgraphs = list(networkx.connected_component_subgraphs(
-            bond_graph, copy=False))
+        # pylint: disable=no-member
+        subgraphs = list(networkx.connected_component_subgraphs(bond_graph, copy=False))
     finally:
         # Add edge
         bond_graph.add_edge(atom1, atom2)
     return subgraphs
 
 
-__author__ = 'Kieran L. Hudson, Christopher W. Wood, Gail J. Bartlett'
+__author__ = "Kieran L. Hudson, Christopher W. Wood, Gail J. Bartlett"
+
