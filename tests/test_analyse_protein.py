@@ -5,15 +5,14 @@ import ampal
 from ampal import analyse_protein
 
 
-_test_file = pathlib.Path(__file__).parent / 'testing_files' / '2ebo_1.mmol'
+_test_file = pathlib.Path(__file__).parent / "testing_files" / "2ebo_1.mmol"
 _test_polypeptide = ampal.load_pdb(_test_file)[0]
 
 
 class ResiduesPerTurnTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.rpts = list(
-            analyse_protein.residues_per_turn(p=_test_polypeptide))
+        cls.rpts = list(analyse_protein.residues_per_turn(p=_test_polypeptide))
 
     def test_residues_per_turn_length(self):
         self.assertEqual(len(self.rpts), len(_test_polypeptide.primitive))
@@ -68,4 +67,4 @@ class RisePerResidueTestCase(unittest.TestCase):
         self.assertAlmostEqual(self.rprs[13], 1.4341967)
 
 
-__author__ = 'Jack W. Heal'
+__author__ = "Jack W. Heal"

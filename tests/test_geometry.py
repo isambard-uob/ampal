@@ -9,26 +9,37 @@ from ampal import geometry
 
 
 def random_angles(n=1, min_val=0, max_val=180, radians=False):
-    angles = [(random.random() * random.choice(range(abs(max_val - min_val)))
-               ) + min_val for _ in range(n)]
+    angles = [
+        (random.random() * random.choice(range(abs(max_val - min_val)))) + min_val
+        for _ in range(n)
+    ]
     if radians:
         angles = [numpy.rad2deg(x) for x in angles]
     return angles
 
 
 def random_vectors(n=1, min_val=-100, max_val=100, vector_length=3):
-    return [[(random.random() * random.choice(range(abs(max_val - min_val)))) + min_val
-             for _ in range(vector_length)] for _ in range(n)]
+    return [
+        [
+            (random.random() * random.choice(range(abs(max_val - min_val)))) + min_val
+            for _ in range(vector_length)
+        ]
+        for _ in range(n)
+    ]
 
 
 def random_integer_vectors(n=1, min_val=-100, max_val=100, vector_length=3):
-    return [[random.choice(range(min_val, max_val)) for _ in range(vector_length)]
-            for _ in range(n)]
+    return [
+        [random.choice(range(min_val, max_val)) for _ in range(vector_length)]
+        for _ in range(n)
+    ]
 
 
 def random_floats(n=1, min_val=-100, max_val=100):
-    return [(random.random() * random.choice(range(abs(max_val - min_val)))) + min_val
-            for _ in range(n)]
+    return [
+        (random.random() * random.choice(range(abs(max_val - min_val)))) + min_val
+        for _ in range(n)
+    ]
 
 
 class DihedralTestCase(unittest.TestCase):
@@ -49,10 +60,13 @@ class DihedralTestCase(unittest.TestCase):
         self.assertEqual(abs(geometry.dihedral(*test_points_180)), 180.0)
 
     def test_dihedral_floats(self):
-        test_points = [(12.1, 23.5, 3.3), (11.1, 24.5, 2.3),
-                       (8.1, 3.5, 0.2), (19.2, -5.5, -6.3)]
-        self.assertAlmostEqual(
-            geometry.dihedral(*test_points), -68.74, places=2)
+        test_points = [
+            (12.1, 23.5, 3.3),
+            (11.1, 24.5, 2.3),
+            (8.1, 3.5, 0.2),
+            (19.2, -5.5, -6.3),
+        ]
+        self.assertAlmostEqual(geometry.dihedral(*test_points), -68.74, places=2)
 
     def test_dihedral_same_point(self):
         test_points = [(12.1, 23.5, 3.3)] * 4
@@ -65,8 +79,7 @@ class DihedralTestCase(unittest.TestCase):
             # Generate four random points in an array.
             points = numpy.random.rand(4, 3)
             # Multiply them randomly by some integer in the range [-100, 100].
-            choices = numpy.random.choice(
-                range(-100, 101), size=12).reshape(4, 3)
+            choices = numpy.random.choice(range(-100, 101), size=12).reshape(4, 3)
             points = numpy.multiply(points, choices)
             # Calculate dihedral angle using the random points and
             # check it lies in correct range
@@ -80,21 +93,28 @@ class DihedralTestCase(unittest.TestCase):
         self.assertTrue(at)
         return
 
-    @given(tuples(lists(floats(allow_nan=False, allow_infinity=False),
-                        min_size=3, max_size=3),
-                  lists(floats(allow_nan=False, allow_infinity=False),
-                        min_size=3, max_size=3),
-                  lists(floats(allow_nan=False, allow_infinity=False),
-                        min_size=3, max_size=3),
-                  lists(floats(allow_nan=False, allow_infinity=False),
-                        min_size=3, max_size=3)))
+    @given(
+        tuples(
+            lists(
+                floats(allow_nan=False, allow_infinity=False), min_size=3, max_size=3
+            ),
+            lists(
+                floats(allow_nan=False, allow_infinity=False), min_size=3, max_size=3
+            ),
+            lists(
+                floats(allow_nan=False, allow_infinity=False), min_size=3, max_size=3
+            ),
+            lists(
+                floats(allow_nan=False, allow_infinity=False), min_size=3, max_size=3
+            ),
+        )
+    )
     @settings(max_examples=50)
     def test_dihedral_reverves_vectors(self, vectors):
         a, b, c, d = vectors
         angle_1 = geometry.dihedral(a, b, c, d)
         angle_2 = geometry.dihedral(d, c, b, a)
-        at = numpy.isclose(angle_1, angle_2) or numpy.isclose(
-            angle_1, -angle_2)
+        at = numpy.isclose(angle_1, angle_2) or numpy.isclose(angle_1, -angle_2)
         self.assertTrue(at)
 
 
@@ -106,8 +126,11 @@ class DistanceTestCase(unittest.TestCase):
             self.assertEqual(geometry.distance((0, 0, 0), (0, 0, z)), abs(z))
 
     def test_distance_float(self):
-        self.assertAlmostEqual(geometry.distance(
-            (11.43, -12.9, -23.11), (-32.43, 42.9, 33.11)), 90.54, places=2)
+        self.assertAlmostEqual(
+            geometry.distance((11.43, -12.9, -23.11), (-32.43, 42.9, 33.11)),
+            90.54,
+            places=2,
+        )
 
     def test_distance_in_unit_cube(self):
         """Generate pair of random points in unit cube, checks distances."""
@@ -126,10 +149,16 @@ class DistanceTestCase(unittest.TestCase):
         self.assertTrue(at)
         return
 
-    @given(tuples(lists(floats(allow_nan=False, allow_infinity=False),
-                        min_size=3, max_size=3),
-                  lists(floats(allow_nan=False, allow_infinity=False),
-                        min_size=3, max_size=3)))
+    @given(
+        tuples(
+            lists(
+                floats(allow_nan=False, allow_infinity=False), min_size=3, max_size=3
+            ),
+            lists(
+                floats(allow_nan=False, allow_infinity=False), min_size=3, max_size=3
+            ),
+        )
+    )
     @settings(max_examples=50)
     def test_distance_reflexive(self, vectors):
         a, b = vectors
@@ -145,9 +174,14 @@ class UnitVectorTestCase(unittest.TestCase):
         self.assertRaises(ZeroDivisionError, geometry.unit_vector, [0, 0, 0])
 
     @given(
-        lists(floats(min_value=1e-100, max_value=1e100, allow_nan=False,
-                     allow_infinity=False),
-              min_size=3, max_size=3))
+        lists(
+            floats(
+                min_value=1e-100, max_value=1e100, allow_nan=False, allow_infinity=False
+            ),
+            min_size=3,
+            max_size=3,
+        )
+    )
     @settings(max_examples=1000)
     def test_unit_length(self, vector):
         """Check norm of the unit_vector for a random array is 1.0."""
@@ -158,11 +192,31 @@ class UnitVectorTestCase(unittest.TestCase):
 
 class AngleBetweenVectorsTestCase(unittest.TestCase):
     """Tests for tools.geometry.angle_between_vectors"""
-    @given(tuples(
-        lists(floats(min_value=1e-10, max_value=1e-10, allow_nan=False,
-                     allow_infinity=False), min_size=3, max_size=3),
-        lists(floats(min_value=1e-10, max_value=1e-10, allow_nan=False,
-                     allow_infinity=False), min_size=3, max_size=3)))
+
+    @given(
+        tuples(
+            lists(
+                floats(
+                    min_value=1e-10,
+                    max_value=1e-10,
+                    allow_nan=False,
+                    allow_infinity=False,
+                ),
+                min_size=3,
+                max_size=3,
+            ),
+            lists(
+                floats(
+                    min_value=1e-10,
+                    max_value=1e-10,
+                    allow_nan=False,
+                    allow_infinity=False,
+                ),
+                min_size=3,
+                max_size=3,
+            ),
+        )
+    )
     @settings(max_examples=1000)
     def test_angle_range(self, vectors):
         """Test return value is in range [0.0, 180.0] for pairs of vectors."""
@@ -175,13 +229,15 @@ class RadiusCCTestCase(unittest.TestCase):
     """Tests for geometry.radius_of_circumcircle"""
 
     def test_radius_of_circumcircle(self):
-        self.assertAlmostEqual(geometry.radius_of_circumcircle(
-            (-1, 0, 0), (0, 1, 0), (1, 0, 0)), 1.0)
+        self.assertAlmostEqual(
+            geometry.radius_of_circumcircle((-1, 0, 0), (0, 1, 0), (1, 0, 0)), 1.0
+        )
         return
 
     def test_radius_of_circumcircle_floats(self):
-        self.assertAlmostEqual(geometry.radius_of_circumcircle(
-            (-1.5, 0, 0), (0, 1.5, 0), (1.5, 0, 0)), 1.5)
+        self.assertAlmostEqual(
+            geometry.radius_of_circumcircle((-1.5, 0, 0), (0, 1.5, 0), (1.5, 0, 0)), 1.5
+        )
         return
 
 
@@ -190,9 +246,11 @@ class RotationMatrixTestCase(unittest.TestCase):
 
     def test_rotation_90(self):
         r_matrix_90 = geometry.rotation_matrix(
-            numpy.pi / 2, numpy.array([0, 0, 1]), numpy.array([0, 0, 0]))
-        aet = numpy.allclose(numpy.dot(r_matrix_90, numpy.array(
-            [1, 0, 0, 0])), numpy.array([0, 1, 0, 0]))
+            numpy.pi / 2, numpy.array([0, 0, 1]), numpy.array([0, 0, 0])
+        )
+        aet = numpy.allclose(
+            numpy.dot(r_matrix_90, numpy.array([1, 0, 0, 0])), numpy.array([0, 1, 0, 0])
+        )
         self.assertTrue(aet)
 
 
@@ -231,23 +289,25 @@ class MinimalDistanceBetweenLines(unittest.TestCase):
         b = a + numpy.array([2, 3, -1])
         c = numpy.array([1, -1, 2])
         d = c + numpy.array([-1, 2, 4])
-        self.assertTrue(numpy.isclose(
-            geometry.minimal_distance_between_lines(
-                a, b, c, d, segments=False),
-            11.0/numpy.sqrt(6.0)))
+        self.assertTrue(
+            numpy.isclose(
+                geometry.minimal_distance_between_lines(a, b, c, d, segments=False),
+                11.0 / numpy.sqrt(6.0),
+            )
+        )
 
     def test_minimal_line_distance(self):
         for i in range(100):
             a, b, c, d = random.sample(self.vectors, 4)
             segments = random.choice([True, False])
-            d1 = geometry.minimal_distance_between_lines(
-                a, b, c, d, segments=segments)
+            d1 = geometry.minimal_distance_between_lines(a, b, c, d, segments=segments)
             d2 = geometry.distance(a, c)
             d3 = geometry.distance(a, d)
             d4 = geometry.distance(b, c)
             d5 = geometry.distance(b, d)
             at = numpy.isclose(min([d1, d2, d3, d4, d5]), d1) or (
-                numpy.isclose(d1, 0, atol=1e-07))
+                numpy.isclose(d1, 0, atol=1e-07)
+            )
             self.assertTrue(at)
 
 
@@ -255,26 +315,29 @@ class IntersectionStartAndEndTestCase(unittest.TestCase):
     def test_example_in_function_notes(self):
         a = [numpy.array([0, 0, x]) for x in range(11)]
         b = [numpy.array([10, 0, x]) for x in numpy.linspace(7, 12, num=1000)]
-        self.assertEqual(geometry.intersection_start_and_end(
-            subject=a, reference=b), (7, 10))
-        self.assertEqual(geometry.intersection_start_and_end(
-            subject=b, reference=a), (0, 599))
+        self.assertEqual(
+            geometry.intersection_start_and_end(subject=a, reference=b), (7, 10)
+        )
+        self.assertEqual(
+            geometry.intersection_start_and_end(subject=b, reference=a), (0, 599)
+        )
 
 
 class FindTransformationsTestCase(unittest.TestCase):
     """Tests for tools.geometry.find_transformations"""
 
     def setUp(self):
-        self.vectors = [numpy.array([random.randint(-100, 100) * random.random()
-                                     for _ in range(3)]) for _ in range(100)]
+        self.vectors = [
+            numpy.array([random.randint(-100, 100) * random.random() for _ in range(3)])
+            for _ in range(100)
+        ]
 
     def test_translation(self):
         # translating s1 should give s2.
         at = []
         for _ in range(100):
             a, b, c, d = random.sample(self.vectors, 4)
-            translation = geometry.find_transformations(
-                s1=a, e1=b, s2=c, e2=d)[0]
+            translation = geometry.find_transformations(s1=a, e1=b, s2=c, e2=d)[0]
             at.append(numpy.allclose(a + translation, c))
         self.assertTrue(all(at))
 
@@ -324,11 +387,14 @@ class CoordinateSystemTestCase(unittest.TestCase):
 
     def test_spherical_to_cartesian_and_back(self):
         """Convert spherical coordinates to cartesian and back again,
-         check returned values are the same as initial values."""
-        to_cartesian = [geometry.spherical_to_cartesian(r, a, z) for r, a, z in zip(
-            self.radii, self.azimuths, self.zeniths)]
-        back_to_spherical = [geometry.cartesian_to_spherical(
-            x, y, z) for x, y, z in to_cartesian]
+        check returned values are the same as initial values."""
+        to_cartesian = [
+            geometry.spherical_to_cartesian(r, a, z)
+            for r, a, z in zip(self.radii, self.azimuths, self.zeniths)
+        ]
+        back_to_spherical = [
+            geometry.cartesian_to_spherical(x, y, z) for x, y, z in to_cartesian
+        ]
         a1 = numpy.allclose(self.radii, [x[0] for x in back_to_spherical])
         a2 = numpy.allclose(self.azimuths, [x[1] for x in back_to_spherical])
         a3 = numpy.allclose(self.zeniths, [x[2] for x in back_to_spherical])
@@ -336,38 +402,46 @@ class CoordinateSystemTestCase(unittest.TestCase):
         self.assertTrue(at)
 
     def test_cartesian_to_spherical_and_back(self):
-        """ Convert cartesian coordinates to spherical and back again,
-         check returned values are the same as initial values."""
-        to_spherical = [geometry.cartesian_to_spherical(
-            x, y, z) for x, y, z in self.cartesians]
-        back_to_cartesian = [geometry.spherical_to_cartesian(
-            r, a, z) for r, a, z in to_spherical]
+        """Convert cartesian coordinates to spherical and back again,
+        check returned values are the same as initial values."""
+        to_spherical = [
+            geometry.cartesian_to_spherical(x, y, z) for x, y, z in self.cartesians
+        ]
+        back_to_cartesian = [
+            geometry.spherical_to_cartesian(r, a, z) for r, a, z in to_spherical
+        ]
         at = numpy.allclose(self.cartesians, back_to_cartesian)
         self.assertTrue(at)
 
     def test_cylindrical_to_cartesian_and_back(self):
-        """ Convert cylindrical coordinates to cartesian and back again,
-         check returned values are the same as initial values."""
-        to_cartesian = [geometry.cylindrical_to_cartesian(r, a, z)
-                        for r, a, z in zip(
-                            self.radii, self.azimuths,
-                            [v[2] for v in self.cartesians])]
-        back_to_cylindrical = [geometry.cartesian_to_cylindrical(
-            x, y, z) for x, y, z in to_cartesian]
+        """Convert cylindrical coordinates to cartesian and back again,
+        check returned values are the same as initial values."""
+        to_cartesian = [
+            geometry.cylindrical_to_cartesian(r, a, z)
+            for r, a, z in zip(
+                self.radii, self.azimuths, [v[2] for v in self.cartesians]
+            )
+        ]
+        back_to_cylindrical = [
+            geometry.cartesian_to_cylindrical(x, y, z) for x, y, z in to_cartesian
+        ]
         a1 = numpy.allclose(self.radii, [x[0] for x in back_to_cylindrical])
         a2 = numpy.allclose(self.azimuths, [x[1] for x in back_to_cylindrical])
-        a3 = numpy.allclose([v[2] for v in self.cartesians], [
-                            x[2] for x in back_to_cylindrical])
+        a3 = numpy.allclose(
+            [v[2] for v in self.cartesians], [x[2] for x in back_to_cylindrical]
+        )
         at = all([a1, a2, a3])
         self.assertTrue(at)
 
     def test_cartesian_to_cylindrical_and_back(self):
-        """ Convert cartesian coordinates to cylindrical and back again,
-         check returned values are the same as initial values."""
-        to_cylindrical = [geometry.cartesian_to_cylindrical(
-            x, y, z) for x, y, z in self.cartesians]
-        back_to_cartesian = [geometry.cylindrical_to_cartesian(
-            r, a, z) for r, a, z in to_cylindrical]
+        """Convert cartesian coordinates to cylindrical and back again,
+        check returned values are the same as initial values."""
+        to_cylindrical = [
+            geometry.cartesian_to_cylindrical(x, y, z) for x, y, z in self.cartesians
+        ]
+        back_to_cartesian = [
+            geometry.cylindrical_to_cartesian(r, a, z) for r, a, z in to_cylindrical
+        ]
         at = numpy.allclose(self.cartesians, back_to_cartesian)
         self.assertTrue(at)
 
@@ -379,14 +453,14 @@ class QuaternionTestCase(unittest.TestCase):
         """Generate 100 random Quaternions for testing"""
         self.quats = []
         for x in range(100):
-            r, i, j, k = numpy.random.rand(
-                4) * [numpy.random.choice(range(-100, 100)) for _ in range(4)]
+            r, i, j, k = numpy.random.rand(4) * [
+                numpy.random.choice(range(-100, 100)) for _ in range(4)
+            ]
             q = geometry.Quaternion(r=r, i=i, j=j, k=k)
             self.quats.append(q)
 
         # Random angles in range [0, 180]
-        angles = [numpy.rad2deg(numpy.arccos(numpy.cos(q.r)))
-                  for q in self.quats]
+        angles = [numpy.rad2deg(numpy.arccos(numpy.cos(q.r))) for q in self.quats]
         angles = [x for x in angles if (x > 0) and (x < 180)]
         self.angles = angles
 
@@ -429,10 +503,12 @@ class QuaternionTestCase(unittest.TestCase):
         angle = 0
         desired = numpy.array([1, 0, 0, 0])
         vectors = self.vectors
-        q_vectors = [geometry.Quaternion.real_and_vector(
-            angle, v).as_rotation() for v in vectors]
-        actual = [q.apply_conjugation(
-            vq).as_array for q, vq in zip(self.quats, q_vectors)]
+        q_vectors = [
+            geometry.Quaternion.real_and_vector(angle, v).as_rotation() for v in vectors
+        ]
+        actual = [
+            q.apply_conjugation(vq).as_array for q, vq in zip(self.quats, q_vectors)
+        ]
         at = numpy.allclose(actual, desired)
         self.assertTrue(at)
 
@@ -440,11 +516,14 @@ class QuaternionTestCase(unittest.TestCase):
         """ Using q.as_rotation() followed by q.extract_angle_and_axis() should get you back to the start """
         angles = self.angles
         # Random taken from self.quats
-        vectors = [q.vector for q in self.quats[:len(angles)]]
-        qs = [geometry.Quaternion.real_and_vector(
-            angle, v).as_rotation() for angle, v in zip(angles, vectors)]
+        vectors = [q.vector for q in self.quats[: len(angles)]]
+        qs = [
+            geometry.Quaternion.real_and_vector(angle, v).as_rotation()
+            for angle, v in zip(angles, vectors)
+        ]
         r_angles, r_vectors = zip(
-            *[q.extract_angle_and_axis(radians=False) for q in qs])
+            *[q.extract_angle_and_axis(radians=False) for q in qs]
+        )
         # returned vectors should be unit_vectors of initial vectors.
         vectors = [geometry.unit_vector(v) for v in vectors]
         at1 = numpy.allclose(angles, r_angles)
@@ -453,25 +532,29 @@ class QuaternionTestCase(unittest.TestCase):
         self.assertTrue(at)
 
     def test_angle_and_axis(self):
-        desired = [geometry.Quaternion.real_and_vector(a, v).as_rotation().as_array
-                   for a, v in zip(self.angles, self.vectors)]
-        actual = [geometry.Quaternion.angle_and_axis(
-            a, v).as_array for a, v in zip(self.angles, self.vectors)]
+        desired = [
+            geometry.Quaternion.real_and_vector(a, v).as_rotation().as_array
+            for a, v in zip(self.angles, self.vectors)
+        ]
+        actual = [
+            geometry.Quaternion.angle_and_axis(a, v).as_array
+            for a, v in zip(self.angles, self.vectors)
+        ]
         at = numpy.allclose(desired, actual)
         self.assertTrue(at)
 
     def test_apply_conjugation_inputs(self):
-        """ apply_conjugation should work with vectors or quaternions as input
-        """
-        rot_quats = [geometry.Quaternion.angle_and_axis(
-            a, v) for a, v in zip(self.angles, self.vectors)]
+        """apply_conjugation should work with vectors or quaternions as input"""
+        rot_quats = [
+            geometry.Quaternion.angle_and_axis(a, v)
+            for a, v in zip(self.angles, self.vectors)
+        ]
         test_vectors = [numpy.random.rand(3) for _ in range(len(self.angles))]
-        test_quats = [geometry.Quaternion.real_and_vector(
-            0, v) for v in test_vectors]
-        q_results = [r.apply_conjugation(
-            x).vector for r, x in zip(rot_quats, test_quats)]
-        v_results = [r.apply_conjugation(x)
-                     for r, x in zip(rot_quats, test_vectors)]
+        test_quats = [geometry.Quaternion.real_and_vector(0, v) for v in test_vectors]
+        q_results = [
+            r.apply_conjugation(x).vector for r, x in zip(rot_quats, test_quats)
+        ]
+        v_results = [r.apply_conjugation(x) for r, x in zip(rot_quats, test_vectors)]
         at = numpy.allclose(q_results, v_results)
         self.assertTrue(at)
 
@@ -484,17 +567,22 @@ class AxisTestCase(unittest.TestCase):
         n = 100
         starts = random_vectors(n=n)
         ends = random_vectors(n=n)
-        self.axes = [geometry.Axis(start=s, end=e)
-                     for s, e in zip(starts, ends)]
+        self.axes = [geometry.Axis(start=s, end=e) for s, e in zip(starts, ends)]
 
     def test_units_perpendicular(self):
         desired = [90.0] * len(self.axes)
-        unit_to_rad = [geometry.angle_between_vectors(
-            a.unit_tangent, a.unit_normal) for a in self.axes]
-        unit_to_tan = [geometry.angle_between_vectors(
-            a.unit_tangent, a.unit_binormal) for a in self.axes]
-        rad_to_tan = [geometry.angle_between_vectors(
-            a.unit_normal, a.unit_binormal) for a in self.axes]
+        unit_to_rad = [
+            geometry.angle_between_vectors(a.unit_tangent, a.unit_normal)
+            for a in self.axes
+        ]
+        unit_to_tan = [
+            geometry.angle_between_vectors(a.unit_tangent, a.unit_binormal)
+            for a in self.axes
+        ]
+        rad_to_tan = [
+            geometry.angle_between_vectors(a.unit_normal, a.unit_binormal)
+            for a in self.axes
+        ]
         a1 = numpy.allclose(unit_to_rad, desired)
         a2 = numpy.allclose(unit_to_tan, desired)
         a3 = numpy.allclose(rad_to_tan, desired)
@@ -516,46 +604,59 @@ class HelicalCurveTestCase(unittest.TestCase):
         self.alphas = random_angles(n=n, min_val=0, max_val=90)
         self.radii = [random.random() * 100 for _ in range(n)]
         self.pitches = [random.random() * 1000 for _ in range(n)]
-        self.curves = [geometry.HelicalCurve.alpha_and_pitch(
-            alpha=a, pitch=p) for a, p in zip(self.alphas, self.pitches)]
+        self.curves = [
+            geometry.HelicalCurve.alpha_and_pitch(alpha=a, pitch=p)
+            for a, p in zip(self.alphas, self.pitches)
+        ]
         return
 
     def test_instantiation_pitch_and_radius(self):
-        helical_curves = [geometry.HelicalCurve.pitch_and_radius(
-            pitch=p, radius=r) for p, r in zip(self.pitches, self.radii)]
+        helical_curves = [
+            geometry.HelicalCurve.pitch_and_radius(pitch=p, radius=r)
+            for p, r in zip(self.pitches, self.radii)
+        ]
         a1 = numpy.allclose([h.pitch for h in helical_curves], self.pitches)
         a2 = numpy.allclose([h.radius for h in helical_curves], self.radii)
         self.assertTrue(a1 and a2)
 
     def test_instantiation_alpha_and_radius(self):
-        helical_curves = [geometry.HelicalCurve.alpha_and_radius(
-            alpha=a, radius=r) for a, r in zip(self.alphas, self.radii)]
+        helical_curves = [
+            geometry.HelicalCurve.alpha_and_radius(alpha=a, radius=r)
+            for a, r in zip(self.alphas, self.radii)
+        ]
         a1 = numpy.allclose([h.alpha for h in helical_curves], self.alphas)
         a2 = numpy.allclose([h.radius for h in helical_curves], self.radii)
         self.assertTrue(a1 and a2)
 
     def test_instantiation_alpha_and_pitch(self):
-        helical_curves = [geometry.HelicalCurve.alpha_and_pitch(
-            alpha=a, pitch=p) for a, p in zip(self.alphas, self.pitches)]
+        helical_curves = [
+            geometry.HelicalCurve.alpha_and_pitch(alpha=a, pitch=p)
+            for a, p in zip(self.alphas, self.pitches)
+        ]
         a1 = numpy.allclose([h.alpha for h in helical_curves], self.alphas)
         a2 = numpy.allclose([h.pitch for h in helical_curves], self.pitches)
         self.assertTrue(a1 and a2)
 
     def test_t_from_arc_length(self):
         """t_from_arc_length and arc_length should be inverses of each other."""
-        t_values = [random.random() * random.choice(range(-1000, 1000))
-                    for _ in range(len(self.alphas))]
-        calculated_t_values = [hc.t_from_arc_length(hc.arc_length(x))
-                               for hc, x in zip(self.curves, t_values)]
+        t_values = [
+            random.random() * random.choice(range(-1000, 1000))
+            for _ in range(len(self.alphas))
+        ]
+        calculated_t_values = [
+            hc.t_from_arc_length(hc.arc_length(x))
+            for hc, x in zip(self.curves, t_values)
+        ]
         at = numpy.allclose(t_values, calculated_t_values)
         self.assertTrue(at)
 
     def test_get_coords_n_points(self):
         n_point_vals = [random.randint(1, 100) for _ in range(100)]
-        len_coords = [len(hc.get_coords(n_points=x))
-                      for hc, x in zip(self.curves, n_point_vals)]
+        len_coords = [
+            len(hc.get_coords(n_points=x)) for hc, x in zip(self.curves, n_point_vals)
+        ]
         at = numpy.allclose(n_point_vals, len_coords)
         self.assertTrue(at)
 
 
-__author__ = 'Christopher W. Wood, Jack W. Heal'
+__author__ = "Christopher W. Wood, Jack W. Heal"
