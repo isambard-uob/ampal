@@ -20,15 +20,19 @@ class LigandGroup(Polymer):
         backbone primitive.
     """
 
-    def __init__(self, monomers=None, polymer_id=' ', parent=None, sl=2):
+    def __init__(self, monomers=None, polymer_id=" ", parent=None, sl=2):
         super().__init__(
-            monomers=monomers, polymer_id=polymer_id, molecule_type='ligands',
-            parent=parent, sl=sl)
+            monomers=monomers,
+            polymer_id=polymer_id,
+            molecule_type="ligands",
+            parent=parent,
+            sl=sl,
+        )
 
     def __repr__(self):
-        return '<Ligands chain containing {} {}>'.format(
-            len(self._monomers),
-            'Ligand' if len(self._monomers) == 1 else 'Ligands')
+        return "<Ligands chain containing {} {}>".format(
+            len(self._monomers), "Ligand" if len(self._monomers) == 1 else "Ligands"
+        )
 
 
 class Ligand(Monomer):
@@ -80,18 +84,24 @@ class Ligand(Monomer):
         to store any relevant information they have.
     """
 
-    def __init__(self, mol_code, atoms=None, monomer_id=' ', insertion_code=' ',
-                 is_hetero=False, parent=None):
-        super(Ligand, self).__init__(
-            atoms, monomer_id, parent=parent)
+    def __init__(
+        self,
+        mol_code,
+        atoms=None,
+        monomer_id=" ",
+        insertion_code=" ",
+        is_hetero=False,
+        parent=None,
+    ):
+        super(Ligand, self).__init__(atoms, monomer_id, parent=parent)
         self.mol_code = mol_code
         self.insertion_code = insertion_code
         self.is_hetero = is_hetero
 
     def __repr__(self):
-        return '<Ligand containing {} {}. Ligand code: {}>'.format(
-            len(self.atoms), 'Atom' if len(self.atoms) == 1 else 'Atoms',
-            self.mol_code)
+        return "<Ligand containing {} {}. Ligand code: {}>".format(
+            len(self.atoms), "Atom" if len(self.atoms) == 1 else "Atoms", self.mol_code
+        )
 
 
 __author__ = "Christopher W. Wood, Kieran L. Hudson"

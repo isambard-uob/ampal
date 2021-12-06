@@ -6,14 +6,26 @@ import warnings
 import numpy
 
 from .pseudo_atoms import Primitive
-from .geometry import (angle_between_vectors, dihedral, distance,
-                       find_foot, unit_vector, is_acute)
-from .amino_acids import (residue_mwt, water_mass, residue_ext_280,
-                          residue_pka, residue_charge, side_chain_dihedrals)
+from .geometry import (
+    angle_between_vectors,
+    dihedral,
+    distance,
+    find_foot,
+    unit_vector,
+    is_acute,
+)
+from .amino_acids import (
+    residue_mwt,
+    water_mass,
+    residue_ext_280,
+    residue_pka,
+    residue_charge,
+    side_chain_dihedrals,
+)
 from .ampal_warnings import NoncanonicalWarning
 
 
-_nc_warning_str = 'Unnatural amino acid detected, this value may be inaccurate.'
+_nc_warning_str = "Unnatural amino acid detected, this value may be inaccurate."
 
 
 def sequence_molecular_weight(seq):
@@ -28,10 +40,9 @@ def sequence_molecular_weight(seq):
     seq : str
         Sequence of amino acids.
     """
-    if 'X' in seq:
+    if "X" in seq:
         warnings.warn(_nc_warning_str, NoncanonicalWarning)
-    return sum(
-        [residue_mwt[aa] * n for aa, n in Counter(seq).items()]) + water_mass
+    return sum([residue_mwt[aa] * n for aa, n in Counter(seq).items()]) + water_mass
 
 
 # TODO How to account for cystine Vs cysteine.
@@ -48,7 +59,7 @@ def sequence_molar_extinction_280(seq):
     seq : str
         Sequence of amino acids.
     """
-    if 'X' in seq:
+    if "X" in seq:
         warnings.warn(_nc_warning_str, NoncanonicalWarning)
     return sum([residue_ext_280[aa] * n for aa, n in Counter(seq).items()])
 
@@ -80,15 +91,16 @@ def sequence_charge(seq, pH=7.4):
     pH : float
         pH of interest.
     """
-    if 'X' in seq:
+    if "X" in seq:
         warnings.warn(_nc_warning_str, NoncanonicalWarning)
     adj_protein_charge = sum(
-        [partial_charge(aa, pH) * residue_charge[aa] * n
-         for aa, n in Counter(seq).items()])
-    adj_protein_charge += (
-        partial_charge('N-term', pH) * residue_charge['N-term'])
-    adj_protein_charge += (
-        partial_charge('C-term', pH) * residue_charge['C-term'])
+        [
+            partial_charge(aa, pH) * residue_charge[aa] * n
+            for aa, n in Counter(seq).items()
+        ]
+    )
+    adj_protein_charge += partial_charge("N-term", pH) * residue_charge["N-term"]
+    adj_protein_charge += partial_charge("C-term", pH) * residue_charge["C-term"]
     return adj_protein_charge
 
 
@@ -102,7 +114,7 @@ def charge_series(seq, granularity=0.1):
     granularity : float, optional
         Granularity of pH values i.e. if 0.1 pH = [1.0, 1.1, 1.2...]
     """
-    if 'X' in seq:
+    if "X" in seq:
         warnings.warn(_nc_warning_str, NoncanonicalWarning)
     ph_range = numpy.arange(1, 13, granularity)
     charge_at_ph = [sequence_charge(seq, ph) for ph in ph_range]
@@ -119,7 +131,7 @@ def sequence_isoelectric_point(seq, granularity=0.1):
     granularity : float, optional
         Granularity of pH values i.e. if 0.1 pH = [1.0, 1.1, 1.2...]
     """
-    if 'X' in seq:
+    if "X" in seq:
         warnings.warn(_nc_warning_str, NoncanonicalWarning)
     ph_range, charge_at_ph = charge_series(seq, granularity)
     abs_charge_at_ph = [abs(ch) for ch in charge_at_ph]
@@ -161,12 +173,14 @@ def measure_sidechain_torsion_angles(residue, verbose=True):
                     residue[required_for_dihedral[0]]._vector,
                     residue[required_for_dihedral[1]]._vector,
                     residue[required_for_dihedral[2]]._vector,
-                    residue[required_for_dihedral[3]]._vector)
+                    residue[required_for_dihedral[3]]._vector,
+                )
                 chi_angles.append(angle)
             except KeyError as k:
-                print("{0} atom missing from residue {1} {2} "
-                      "- can't assign dihedral".format(
-                          k, residue.mol_code, residue.id))
+                print(
+                    "{0} atom missing from residue {1} {2} "
+                    "- can't assign dihedral".format(k, residue.mol_code, residue.id)
+                )
                 chi_angles.append(None)
     return chi_angles
 
@@ -207,8 +221,11 @@ def measure_torsion_angles(residues):
                 phi = None
                 try:
                     psi = dihedral(
-                        res1['N']._vector, res1['CA']._vector,
-                        res1['C']._vector, res2['N']._vector)
+                        res1["N"]._vector,
+                        res1["CA"]._vector,
+                        res1["C"]._vector,
+                        res2["N"]._vector,
+                    )
                 except KeyError as k:
                     print("{0} atom missing - can't assign psi".format(k))
                     psi = None
@@ -218,15 +235,21 @@ def measure_torsion_angles(residues):
                 res2 = residues[i]
                 try:
                     omega = dihedral(
-                        res1['CA']._vector, res1['C']._vector,
-                        res2['N']._vector, res2['CA']._vector)
+                        res1["CA"]._vector,
+                        res1["C"]._vector,
+                        res2["N"]._vector,
+                        res2["CA"]._vector,
+                    )
                 except KeyError as k:
                     print("{0} atom missing - can't assign omega".format(k))
                     omega = None
                 try:
                     phi = dihedral(
-                        res1['C']._vector, res2['N']._vector,
-                        res2['CA']._vector, res2['C']._vector)
+                        res1["C"]._vector,
+                        res2["N"]._vector,
+                        res2["CA"]._vector,
+                        res2["C"]._vector,
+                    )
                 except KeyError as k:
                     print("{0} atom missing - can't assign phi".format(k))
                     phi = None
@@ -238,22 +261,31 @@ def measure_torsion_angles(residues):
                 res3 = residues[i + 1]
                 try:
                     omega = dihedral(
-                        res1['CA']._vector, res1['C']._vector,
-                        res2['N']._vector, res2['CA']._vector)
+                        res1["CA"]._vector,
+                        res1["C"]._vector,
+                        res2["N"]._vector,
+                        res2["CA"]._vector,
+                    )
                 except KeyError as k:
                     print("{0} atom missing - can't assign omega".format(k))
                     omega = None
                 try:
                     phi = dihedral(
-                        res1['C']._vector, res2['N']._vector,
-                        res2['CA']._vector, res2['C']._vector)
+                        res1["C"]._vector,
+                        res2["N"]._vector,
+                        res2["CA"]._vector,
+                        res2["C"]._vector,
+                    )
                 except KeyError as k:
                     print("{0} atom missing - can't assign phi".format(k))
                     phi = None
                 try:
                     psi = dihedral(
-                        res2['N']._vector, res2['CA']._vector,
-                        res2['C']._vector, res3['N']._vector)
+                        res2["N"]._vector,
+                        res2["CA"]._vector,
+                        res2["C"]._vector,
+                        res3["N"]._vector,
+                    )
                 except KeyError as k:
                     print("{0} atom missing - can't assign psi".format(k))
                     psi = None
@@ -291,7 +323,7 @@ def cc_to_local_params(pitch, radius, oligo):
 
 
 def residues_per_turn(p):
-    """ The number of residues per turn at each Monomer in the Polymer.
+    """The number of residues per turn at each Monomer in the Polymer.
 
     Notes
     -----
@@ -314,14 +346,18 @@ def residues_per_turn(p):
     """
     cas = p.get_reference_coords()
     prim_cas = p.primitive.coordinates
-    dhs = [abs(dihedral(cas[i], prim_cas[i], prim_cas[i + 1], cas[i + 1]))
-           for i in range(len(prim_cas) - 1)]
+    dhs = [
+        abs(dihedral(cas[i], prim_cas[i], prim_cas[i + 1], cas[i + 1]))
+        for i in range(len(prim_cas) - 1)
+    ]
     rpts = [360.0 / dh for dh in dhs]
     rpts.append(None)
     return rpts
 
 
-def polymer_to_reference_axis_distances(p, reference_axis, tag=True, reference_axis_name='ref_axis'):
+def polymer_to_reference_axis_distances(
+    p, reference_axis, tag=True, reference_axis_name="ref_axis"
+):
     """Returns distances between the primitive of a Polymer and a reference_axis.
 
     Notes
@@ -363,20 +399,20 @@ def polymer_to_reference_axis_distances(p, reference_axis, tag=True, reference_a
     if not len(p) == len(reference_axis):
         raise ValueError(
             "The reference axis must contain the same number of points "
-            "as the Polymer primitive.")
+            "as the Polymer primitive."
+        )
     prim_cas = p.primitive.coordinates
     ref_points = reference_axis.coordinates
-    distances = [distance(prim_cas[i], ref_points[i])
-                 for i in range(len(prim_cas))]
+    distances = [distance(prim_cas[i], ref_points[i]) for i in range(len(prim_cas))]
     if tag:
         p.tags[reference_axis_name] = reference_axis
-        monomer_tag_name = 'distance_to_{0}'.format(reference_axis_name)
+        monomer_tag_name = "distance_to_{0}".format(reference_axis_name)
         for m, d in zip(p._monomers, distances):
             m.tags[monomer_tag_name] = d
     return distances
 
 
-def crick_angles(p, reference_axis, tag=True, reference_axis_name='ref_axis'):
+def crick_angles(p, reference_axis, tag=True, reference_axis_name="ref_axis"):
     """Returns the Crick angle for each CA atom in the `Polymer`.
 
     Notes
@@ -412,24 +448,26 @@ def crick_angles(p, reference_axis, tag=True, reference_axis_name='ref_axis'):
     if not len(p) == len(reference_axis):
         raise ValueError(
             "The reference axis must contain the same number of points"
-            " as the Polymer primitive.")
+            " as the Polymer primitive."
+        )
     prim_cas = p.primitive.coordinates
     p_cas = p.get_reference_coords()
     ref_points = reference_axis.coordinates
     cr_angles = [
         dihedral(ref_points[i], prim_cas[i], prim_cas[i + 1], p_cas[i])
-        for i in range(len(prim_cas) - 1)]
+        for i in range(len(prim_cas) - 1)
+    ]
     cr_angles.append(None)
 
     if tag:
         p.tags[reference_axis_name] = reference_axis
-        monomer_tag_name = 'crick_angle_{0}'.format(reference_axis_name)
+        monomer_tag_name = "crick_angle_{0}".format(reference_axis_name)
         for m, c in zip(p._monomers, cr_angles):
             m.tags[monomer_tag_name] = c
     return cr_angles
 
 
-def alpha_angles(p, reference_axis, tag=True, reference_axis_name='ref_axis'):
+def alpha_angles(p, reference_axis, tag=True, reference_axis_name="ref_axis"):
     """Alpha angle calculated using points on the primitive of helix and axis.
 
     Notes
@@ -467,16 +505,19 @@ def alpha_angles(p, reference_axis, tag=True, reference_axis_name='ref_axis'):
     if not len(p) == len(reference_axis):
         raise ValueError(
             "The reference axis must contain the same number of points "
-            "as the Polymer primitive.")
+            "as the Polymer primitive."
+        )
     prim_cas = p.primitive.coordinates
     ref_points = reference_axis.coordinates
-    alphas = [abs(dihedral(ref_points[i + 1], ref_points[i], prim_cas[i], prim_cas[i + 1]))
-              for i in range(len(prim_cas) - 1)]
+    alphas = [
+        abs(dihedral(ref_points[i + 1], ref_points[i], prim_cas[i], prim_cas[i + 1]))
+        for i in range(len(prim_cas) - 1)
+    ]
     alphas.append(None)
 
     if tag:
         p.tags[reference_axis_name] = reference_axis
-        monomer_tag_name = 'alpha_angle_{0}'.format(reference_axis_name)
+        monomer_tag_name = "alpha_angle_{0}".format(reference_axis_name)
         for m, a in zip(p._monomers, alphas):
             m.tags[monomer_tag_name] = a
     return alphas
@@ -509,13 +550,15 @@ def polypeptide_vector(p, start_index=0, end_index=-1, unit=True):
     """
     if len(p) <= 1:
         raise ValueError(
-            "Polymer should have length greater than 1. Polymer length = {0}".format(len(p)))
+            "Polymer should have length greater than 1. Polymer length = {0}".format(
+                len(p)
+            )
+        )
     try:
         prim_cas = p.primitive.coordinates
         direction_vector = prim_cas[end_index] - prim_cas[start_index]
     except ValueError:
-        direction_vector = p[end_index]['CA'].array - \
-            p[start_index]['CA'].array
+        direction_vector = p[end_index]["CA"].array - p[start_index]["CA"].array
     if unit:
         direction_vector = unit_vector(direction_vector)
     return direction_vector
@@ -564,8 +607,7 @@ def reference_axis_from_chains(chains):
     return Primitive.from_coordinates(reference_axis)
 
 
-def flip_reference_axis_if_antiparallel(
-        p, reference_axis, start_index=0, end_index=-1):
+def flip_reference_axis_if_antiparallel(p, reference_axis, start_index=0, end_index=-1):
     """Flips reference axis if direction opposes the direction of the `Polymer`.
 
     Notes
@@ -592,10 +634,8 @@ def flip_reference_axis_if_antiparallel(
     -------
     reference_axis : list(numpy.array or tuple or list)
     """
-    p_vector = polypeptide_vector(
-        p, start_index=start_index, end_index=end_index)
-    if is_acute(p_vector,
-                reference_axis[end_index] - reference_axis[start_index]):
+    p_vector = polypeptide_vector(p, start_index=start_index, end_index=end_index)
+    if is_acute(p_vector, reference_axis[end_index] - reference_axis[start_index]):
         reference_axis = numpy.flipud(reference_axis)
     return reference_axis
 
@@ -624,8 +664,8 @@ def make_primitive(cas_coords, window_length=3):
     if len(cas_coords) >= window_length:
         primitive = []
         count = 0
-        for _ in cas_coords[:-(window_length - 1)]:
-            group = cas_coords[count:count + window_length]
+        for _ in cas_coords[: -(window_length - 1)]:
+            group = cas_coords[count : count + window_length]
             average_x = sum([x[0] for x in group]) / window_length
             average_y = sum([y[1] for y in group]) / window_length
             average_z = sum([z[2] for z in group]) / window_length
@@ -633,14 +673,14 @@ def make_primitive(cas_coords, window_length=3):
             count += 1
     else:
         raise ValueError(
-            'A primitive cannot be generated for {0} atoms using a (too large) '
-            'averaging window_length of {1}.'.format(
-                len(cas_coords), window_length))
+            "A primitive cannot be generated for {0} atoms using a (too large) "
+            "averaging window_length of {1}.".format(len(cas_coords), window_length)
+        )
     return primitive
 
 
 def make_primitive_smoothed(cas_coords, smoothing_level=2):
-    """ Generates smoothed primitive from a list of coordinates.
+    """Generates smoothed primitive from a list of coordinates.
 
     Parameters
     ----------
@@ -666,9 +706,11 @@ def make_primitive_smoothed(cas_coords, smoothing_level=2):
             s_primitive = make_primitive(s_primitive)
     except ValueError:
         raise ValueError(
-            'Smoothing level {0} too high, try reducing the number of rounds'
-            ' or give a longer Chain (curent length = {1}).'.format(
-                smoothing_level, len(cas_coords)))
+            "Smoothing level {0} too high, try reducing the number of rounds"
+            " or give a longer Chain (curent length = {1}).".format(
+                smoothing_level, len(cas_coords)
+            )
+        )
     return s_primitive
 
 
@@ -703,20 +745,24 @@ def make_primitive_extrapolate_ends(cas_coords, smoothing_level=2):
     """
     try:
         smoothed_primitive = make_primitive_smoothed(
-            cas_coords, smoothing_level=smoothing_level)
+            cas_coords, smoothing_level=smoothing_level
+        )
     except ValueError:
         smoothed_primitive = make_primitive_smoothed(
-            cas_coords, smoothing_level=smoothing_level - 1)
+            cas_coords, smoothing_level=smoothing_level - 1
+        )
     # if returned smoothed primitive is too short, lower the smoothing
     # level and try again.
     if len(smoothed_primitive) < 3:
         smoothed_primitive = make_primitive_smoothed(
-            cas_coords, smoothing_level=smoothing_level - 1)
+            cas_coords, smoothing_level=smoothing_level - 1
+        )
     final_primitive = []
     for ca in cas_coords:
         prim_dists = [distance(ca, p) for p in smoothed_primitive]
-        closest_indices = sorted([x[0] for x in sorted(
-            enumerate(prim_dists), key=lambda k: k[1])[:3]])
+        closest_indices = sorted(
+            [x[0] for x in sorted(enumerate(prim_dists), key=lambda k: k[1])[:3]]
+        )
         a, b, c = [smoothed_primitive[x] for x in closest_indices]
         ab_foot = find_foot(a, b, ca)
         bc_foot = find_foot(b, c, ca)
@@ -725,5 +771,7 @@ def make_primitive_extrapolate_ends(cas_coords, smoothing_level=2):
     return final_primitive
 
 
-__author__ = ('Jack W. Heal, Christopher W. Wood, Gail J. Bartlett, '
-              'Derek N. Woolfson, Kieran L. Hudson')
+__author__ = (
+    "Jack W. Heal, Christopher W. Wood, Gail J. Bartlett, "
+    "Derek N. Woolfson, Kieran L. Hudson"
+)
