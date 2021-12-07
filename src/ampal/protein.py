@@ -155,30 +155,6 @@ def align(target, mobile, target_i=0, mobile_i=0):
     return
 
 
-def classify_angle_as_rotamer(angle: float) -> int:
-    """Classifies a chi angle into a rotamer.
-
-    Notes
-    -----
-    This function uses the convention 1:g+ 2:t 3:g- as from 10.1006/jmbi.1993.1170
-    R L Dunbrack Jr, M Karplus (1993) Backbone-dependent rotamer library for proteins.
-    Application to side-chain prediction.
-
-    Parameters
-    ----------
-    angle : float
-        Chi angle to classify.
-    """
-    if 0 < angle < 120:
-        return 1  # g+
-    elif -120 < angle < 0:
-        return 3  # g-
-    elif -120 < angle < -180 or 120 < angle < 180:
-        return 2  # t
-    else:
-        raise ValueError(f"Got angle {angle} which does not fit ")
-
-
 class Polypeptide(Polymer):
     """Container for `Residues`, inherits from `Polymer`.
 
@@ -654,7 +630,7 @@ class Polypeptide(Polymer):
         self.tags["assigned_ff"] = False
         return
 
-    def tag_sidechain_dihedrals(self, force=False, rotamers=False):
+    def tag_sidechain_dihedrals(self, force=False, tag_rotamers=False):
         """Tags each monomer with side-chain dihedral angles
 
         force: bool, optional
@@ -664,15 +640,16 @@ class Polypeptide(Polymer):
             If `True` it will tag rotamers as tags.
         """
         tagged = ["chi_angles" in x.tags.keys() for x in self._monomers]
-        if rotamers:
+        if tag_rotamers:
             tagged = ["rotamers" in x.tags.keys() for x in self._monomers]
         if (not all(tagged)) or force:
             for monomer in self._monomers:
-                chi_angles = measure_sidechain_torsion_angles(monomer, verbose=False)
+                if tag_rotamers:
+                    chi_angles, rotamer = measure_sidechain_torsion_angles(monomer, verbose=False, return_rotamers=True)
+                    monomer.tags["rotamers"] = rotamer
+                else:
+                    chi_angles = measure_sidechain_torsion_angles(monomer, verbose=False)
                 monomer.tags["chi_angles"] = chi_angles
-                if rotamers:
-                    monomer.tags["rotamers"] = classify_angle_as_rotamer(chi_angles)
-
         return
 
     def tag_torsion_angles(self, force=False):
