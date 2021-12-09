@@ -50,15 +50,20 @@ class PseudoGroup(Polymer):
         a `Monomer`.
     """
 
-    def __init__(self, monomers=None, polymer_id=' ', parent=None, sl=2):
+    def __init__(self, monomers=None, polymer_id=" ", parent=None, sl=2):
         super().__init__(
-            monomers=monomers, polymer_id=polymer_id,
-            molecule_type='pseudo_group', parent=parent, sl=sl)
+            monomers=monomers,
+            polymer_id=polymer_id,
+            molecule_type="pseudo_group",
+            parent=parent,
+            sl=sl,
+        )
 
     def __repr__(self):
-        return '<PseudoGroup chain containing {} {}>'.format(
+        return "<PseudoGroup chain containing {} {}>".format(
             len(self._monomers),
-            'PseudoMonomer' if len(self._monomers) == 1 else 'PseudoMonomers')
+            "PseudoMonomer" if len(self._monomers) == 1 else "PseudoMonomers",
+        )
 
 
 class PseudoMonomer(Monomer):
@@ -112,24 +117,34 @@ class PseudoMonomer(Monomer):
         Raised if `mol_code` is not length 1 or 3.
     """
 
-    def __init__(self, pseudo_atoms=None, mol_code='UNK',
-                 monomer_id=' ', insertion_code=' ', parent=None):
+    def __init__(
+        self,
+        pseudo_atoms=None,
+        mol_code="UNK",
+        monomer_id=" ",
+        insertion_code=" ",
+        parent=None,
+    ):
         super(PseudoMonomer, self).__init__(
-            atoms=pseudo_atoms, monomer_id=monomer_id,
-            parent=parent)
+            atoms=pseudo_atoms, monomer_id=monomer_id, parent=parent
+        )
         self.mol_code = mol_code
         self.insertion_code = insertion_code
         self.is_hetero = True
 
     def __repr__(self):
-        return '<PseudoMonomer containing {} {}. PseudoMonomer code: {}>'.format(
-            len(self.atoms), 'PseudoAtom' if len(self.atoms) == 1 else 'PseudoAtoms', self.mol_code)
+        return "<PseudoMonomer containing {} {}. PseudoMonomer code: {}>".format(
+            len(self.atoms),
+            "PseudoAtom" if len(self.atoms) == 1 else "PseudoAtoms",
+            self.mol_code,
+        )
 
     @property
     def pdb(self):
         """Generates a PDB string for the `PseudoMonomer`."""
         pdb_str = write_pdb(
-            [self], ' ' if not self.tags['chain_id'] else self.tags['chain_id'])
+            [self], " " if not self.tags["chain_id"] else self.tags["chain_id"]
+        )
         return pdb_str
 
 
@@ -181,17 +196,26 @@ class PseudoAtom(Atom):
         to store any relevant information they have.
     """
 
-    def __init__(self, coordinates, name='', occupancy=1.0, bfactor=1.0,
-                 charge=' ', parent=None):
-        super().__init__(coordinates, element='C', atom_id=' ',
-                         occupancy=occupancy, bfactor=bfactor,
-                         charge=charge, state='A', parent=parent)
+    def __init__(
+        self, coordinates, name="", occupancy=1.0, bfactor=1.0, charge=" ", parent=None
+    ):
+        super().__init__(
+            coordinates,
+            element="C",
+            atom_id=" ",
+            occupancy=occupancy,
+            bfactor=bfactor,
+            charge=charge,
+            state="A",
+            parent=parent,
+        )
         self.name = name
 
     def __repr__(self):
-        return ("<PseudoAtom. Name: {}. Coordinates: "
-                "({:.3f}, {:.3f}, {:.3f})>".format(
-                    self.name, self.x, self.y, self.z))
+        return (
+            "<PseudoAtom. Name: {}. Coordinates: "
+            "({:.3f}, {:.3f}, {:.3f})>".format(self.name, self.x, self.y, self.z)
+        )
 
 
 class Primitive(PseudoGroup):
@@ -245,15 +269,14 @@ class Primitive(PseudoGroup):
         Raised if `mol_code` is not length 1 or 3.
     """
 
-    def __init__(self, monomers=None, polymer_id=' ', parent=None, sl=2):
-        super().__init__(
-            monomers=monomers, polymer_id=polymer_id,
-            parent=parent, sl=sl)
+    def __init__(self, monomers=None, polymer_id=" ", parent=None, sl=2):
+        super().__init__(monomers=monomers, polymer_id=polymer_id, parent=parent, sl=sl)
 
     def __repr__(self):
-        return '<Primitive chain containing {} {}>'.format(
+        return "<Primitive chain containing {} {}>".format(
             len(self._monomers),
-            'PseudoMonomer' if len(self._monomers) == 1 else 'PseudoMonomers')
+            "PseudoMonomer" if len(self._monomers) == 1 else "PseudoMonomers",
+        )
 
     @classmethod
     def from_coordinates(cls, coordinates):
@@ -262,7 +285,7 @@ class Primitive(PseudoGroup):
         for coord in coordinates:
             pm = PseudoMonomer(parent=prim)
             pa = PseudoAtom(coord, parent=pm)
-            pm.atoms = OrderedDict([('CA', pa)])
+            pm.atoms = OrderedDict([("CA", pa)])
             prim.append(pm)
         prim.relabel_all()
         return prim
@@ -282,8 +305,9 @@ class Primitive(PseudoGroup):
         between primitive[i] and primitive[i + 1]. The final value
         is None.
         """
-        rprs = [distance(self[i]['CA'], self[i + 1]['CA'])
-                for i in range(len(self) - 1)]
+        rprs = [
+            distance(self[i]["CA"], self[i + 1]["CA"]) for i in range(len(self) - 1)
+        ]
         rprs.append(None)
         return rprs
 
@@ -300,11 +324,14 @@ class Primitive(PseudoGroup):
         rocs = []
         for i, _ in enumerate(self):
             if 0 < i < len(self) - 1:
-                rocs.append(radius_of_circumcircle(
-                    self[i - 1]['CA'], self[i]['CA'], self[i + 1]['CA']))
+                rocs.append(
+                    radius_of_circumcircle(
+                        self[i - 1]["CA"], self[i]["CA"], self[i + 1]["CA"]
+                    )
+                )
             else:
                 rocs.append(None)
         return rocs
 
 
-__author__ = 'Jack W. Heal'
+__author__ = "Jack W. Heal"

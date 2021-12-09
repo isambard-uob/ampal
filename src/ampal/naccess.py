@@ -9,18 +9,21 @@ def naccess_available():
     """True if naccess is available on the path."""
     available = False
     try:
-        subprocess.check_output(['naccess'], stderr=subprocess.DEVNULL)
+        subprocess.check_output(["naccess"], stderr=subprocess.DEVNULL)
     except subprocess.CalledProcessError:
         available = True
     except FileNotFoundError:
-        print("naccess has not been found on your path. If you have already "
-              "installed naccess but are unsure how to add it to your path, "
-              "check out this: https://stackoverflow.com/a/14638025")
+        print(
+            "naccess has not been found on your path. If you have already "
+            "installed naccess but are unsure how to add it to your path, "
+            "check out this: https://stackoverflow.com/a/14638025"
+        )
     return available
 
 
-def run_naccess(pdb, mode, path=True, include_hetatms=False, outfile=None,
-                path_to_ex=None):
+def run_naccess(
+    pdb, mode, path=True, include_hetatms=False, outfile=None, path_to_ex=None
+):
     """Uses naccess to run surface accessibility calculations.
 
     Notes
@@ -50,20 +53,20 @@ def run_naccess(pdb, mode, path=True, include_hetatms=False, outfile=None,
     naccess_out : str
         naccess output file for given mode as a string.
     """
-    if mode not in ['asa', 'rsa', 'log']:
+    if mode not in ["asa", "rsa", "log"]:
         raise ValueError(
-            "mode {} not valid. Must be \'asa\', \'rsa\' or \'log\'"
-            .format(mode))
+            "mode {} not valid. Must be 'asa', 'rsa' or 'log'".format(mode)
+        )
     if path_to_ex:
         naccess_exe = path_to_ex
     else:
-        naccess_exe = 'naccess'
+        naccess_exe = "naccess"
 
     if not path:
         if type(pdb) == str:
             pdb = pdb.encode()
     else:
-        with open(pdb, 'r') as inf:
+        with open(pdb, "r") as inf:
             pdb = inf.read().encode()
 
     this_dir = os.getcwd()
@@ -76,17 +79,17 @@ def run_naccess(pdb, mode, path=True, include_hetatms=False, outfile=None,
     os.chdir(temp_dir.name)
 
     if include_hetatms:
-        naccess_args = '-h'
+        naccess_args = "-h"
         subprocess.check_output([naccess_exe, naccess_args, temp_pdb.name])
     else:
         subprocess.check_output([naccess_exe, temp_pdb.name])
     temp_pdb.close()
-    with open('.{}'.format(mode), 'r') as inf:
+    with open(".{}".format(mode), "r") as inf:
         naccess_out = inf.read()
     # navigate back to initial directory and clean up.
     os.chdir(this_dir)
     if outfile:
-        with open(outfile, 'w') as inf:
+        with open(outfile, "w") as inf:
             inf.write(naccess_out)
     temp_dir.cleanup()
 
@@ -115,12 +118,13 @@ def total_accessibility(in_rsa, path=True):
 
     """
     if path:
-        with open(in_rsa, 'r') as inf:
+        with open(in_rsa, "r") as inf:
             rsa = inf.read()
     else:
         rsa = in_rsa[:]
     all_atoms, side_chains, main_chain, non_polar, polar = [
-        float(x) for x in rsa.splitlines()[-1].split()[1:]]
+        float(x) for x in rsa.splitlines()[-1].split()[1:]
+    ]
     return all_atoms, side_chains, main_chain, non_polar, polar
 
 
@@ -147,22 +151,20 @@ def extract_residue_accessibility(in_rsa, path=True, get_total=False):
     """
 
     if path:
-        with open(in_rsa, 'r') as inf:
+        with open(in_rsa, "r") as inf:
             rsa = inf.read()
     else:
         rsa = in_rsa[:]
 
     residue_list = [x for x in rsa.splitlines()]
     rel_solv_acc_all_atoms = [
-        float(x[22:28])
-        for x in residue_list
-        if x[0:3] == "RES" or x[0:3] == "HEM"]
+        float(x[22:28]) for x in residue_list if x[0:3] == "RES" or x[0:3] == "HEM"
+    ]
 
     if get_total:
-        (all_atoms, _, _, _, _) = total_accessibility(
-            rsa, path=False)
+        (all_atoms, _, _, _, _) = total_accessibility(rsa, path=False)
         return rel_solv_acc_all_atoms, all_atoms
     return rel_solv_acc_all_atoms, None
 
 
-__author__ = 'Jack W. Heal, Gail J. Bartlett'
+__author__ = "Jack W. Heal, Gail J. Bartlett"
