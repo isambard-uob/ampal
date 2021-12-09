@@ -555,19 +555,26 @@ class Polypeptide(Polymer):
         self.tags['assigned_ff'] = False
         return
 
-    def tag_sidechain_dihedrals(self, force=False):
+    def tag_sidechain_dihedrals(self, force=False, tag_rotamers=False):
         """Tags each monomer with side-chain dihedral angles
 
         force: bool, optional
             If `True` the tag will be run even if `Residues` are
             already tagged.
+        rotamers: bool, optional
+            If `True` it will tag rotamers as tags.
         """
-        tagged = ['chi_angles' in x.tags.keys() for x in self._monomers]
+        tagged = ["chi_angles" in x.tags.keys() for x in self._monomers]
+        if tag_rotamers:
+            tagged = ["rotamers" in x.tags.keys() for x in self._monomers]
         if (not all(tagged)) or force:
             for monomer in self._monomers:
-                chi_angles = measure_sidechain_torsion_angles(
-                    monomer, verbose=False)
-                monomer.tags['chi_angles'] = chi_angles
+                if tag_rotamers:
+                    chi_angles, rotamer = measure_sidechain_torsion_angles(monomer, verbose=False, return_rotamers=True)
+                    monomer.tags["rotamers"] = rotamer
+                else:
+                    chi_angles = measure_sidechain_torsion_angles(monomer, verbose=False)
+                monomer.tags["chi_angles"] = chi_angles
         return
 
     def tag_torsion_angles(self, force=False):

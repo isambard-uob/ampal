@@ -127,7 +127,32 @@ def sequence_isoelectric_point(seq, granularity=0.1):
     return ph_range[pi_index]
 
 
-def measure_sidechain_torsion_angles(residue, verbose=True):
+def classify_angle_as_rotamer(angle: float) -> int:
+    """Classifies a chi angle into a rotamer.
+
+    Notes
+    -----
+    This function uses the convention 1:g+ 2:t 3:g- as from 10.1006/jmbi.1993.1170
+    R L Dunbrack Jr, M Karplus (1993) Backbone-dependent rotamer library for proteins.
+    Application to side-chain prediction.
+
+    Parameters
+    ----------
+    angle : float
+        Chi angle to classify.
+    """
+    if 0 < angle < 120:
+        return 1  # g+
+    elif -120 < angle < 0:
+        return 3  # g-
+    elif -120 > angle > -180 or 120 < angle < 180:
+        return 2  # t
+    else:
+        print(f"Got angle {angle} which does not between 0 < x < 180 or -180 > x > 0 ")
+        return None
+
+
+def measure_sidechain_torsion_angles(residue, verbose=True, return_rotamers=False):
     """Calculates sidechain dihedral angles for a residue
 
     Parameters
@@ -149,6 +174,8 @@ def measure_sidechain_torsion_angles(residue, verbose=True):
         [3] = chi4 [if applicable]
     """
     chi_angles = []
+    if return_rotamers:
+        rotamers = []
     aa = residue.mol_code
     if aa not in side_chain_dihedrals:
         if verbose:
@@ -161,14 +188,24 @@ def measure_sidechain_torsion_angles(residue, verbose=True):
                     residue[required_for_dihedral[0]]._vector,
                     residue[required_for_dihedral[1]]._vector,
                     residue[required_for_dihedral[2]]._vector,
-                    residue[required_for_dihedral[3]]._vector)
+                    residue[required_for_dihedral[3]]._vector,
+                )
                 chi_angles.append(angle)
+                if return_rotamers:
+                    rot = classify_angle_as_rotamer(angle)
+                    rotamers.append(rot)
             except KeyError as k:
-                print("{0} atom missing from residue {1} {2} "
-                      "- can't assign dihedral".format(
-                          k, residue.mol_code, residue.id))
+                print(
+                    "{0} atom missing from residue {1} {2} "
+                    "- can't assign dihedral".format(k, residue.mol_code, residue.id)
+                )
                 chi_angles.append(None)
-    return chi_angles
+                if return_rotamers:
+                    rotamers.append(None)
+    if return_rotamers:
+        return chi_angles, rotamers
+    else:
+        return chi_angles
 
 
 def measure_torsion_angles(residues):
