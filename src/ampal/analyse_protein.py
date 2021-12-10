@@ -1,6 +1,7 @@
 """Contains various tools for analysing protein structure."""
 
 from collections import Counter
+import typing as t
 import warnings
 
 import numpy
@@ -152,7 +153,7 @@ def classify_angle_as_rotamer(angle: float) -> int:
         return None
 
 
-def measure_sidechain_torsion_angles(residue, verbose=True, return_rotamers=False):
+def measure_sidechain_torsion_angles(residue, verbose=True) -> t.Tuple[t.Tuple[t.List[t.Optional[float]], t.List[t.Optional[int]]]]:
     """Calculates sidechain dihedral angles for a residue
 
     Parameters
@@ -172,10 +173,16 @@ def measure_sidechain_torsion_angles(residue, verbose=True, return_rotamers=Fals
         [1] = chi2 [if applicable]
         [2] = chi3 [if applicable]
         [3] = chi4 [if applicable]
+    rotamers: [int]
+        Rotamer class according to Dunbrack 1993 {1, 2, 3}
+
+        [0] = chi1 [if applicable]
+        [1] = chi2 [if applicable]
+        [2] = chi3 [if applicable]
+        [3] = chi4 [if applicable]
     """
     chi_angles = []
-    if return_rotamers:
-        rotamers = []
+    rotamers = []
     aa = residue.mol_code
     if aa not in side_chain_dihedrals:
         if verbose:
@@ -191,21 +198,16 @@ def measure_sidechain_torsion_angles(residue, verbose=True, return_rotamers=Fals
                     residue[required_for_dihedral[3]]._vector,
                 )
                 chi_angles.append(angle)
-                if return_rotamers:
-                    rot = classify_angle_as_rotamer(angle)
-                    rotamers.append(rot)
+                rot = classify_angle_as_rotamer(angle)
+                rotamers.append(rot)
             except KeyError as k:
                 print(
                     "{0} atom missing from residue {1} {2} "
                     "- can't assign dihedral".format(k, residue.mol_code, residue.id)
                 )
                 chi_angles.append(None)
-                if return_rotamers:
-                    rotamers.append(None)
-    if return_rotamers:
+                rotamers.append(None)
         return chi_angles, rotamers
-    else:
-        return chi_angles
 
 
 def measure_torsion_angles(residues):
