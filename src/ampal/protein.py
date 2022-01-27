@@ -568,17 +568,17 @@ class Polypeptide(Polymer):
         rot_tagged = ["rotamers" in x.tags.keys() for x in self._monomers]
         if (not all(chi_tagged)) or (not all(rot_tagged)) or force:
             for monomer in self._monomers:
-                chi_angles_rotamer = measure_sidechain_torsion_angles(monomer, verbose=False)
-                if chi_angles_rotamer:
-                    chi_angles, rotamer = chi_angles_rotamer
-                    monomer.tags["rotamers"] = rotamer
-                    monomer.tags["chi_angles"] = chi_angles
-                # Rotamer not found: either residue does not have rotamers or
-                # it is not a common residue
+                if monomer.mol_letter == "G" or monomer.mol_letter == "A":
+                    monomer.tags["rotamers"] = [0]
+                    monomer.tags["chi_angles"] = None
                 else:
-                    if monomer.mol_letter == "G" or monomer.mol_letter == "A":
-                        monomer.tags["rotamers"] = [0]
-                        monomer.tags["chi_angles"] = None
+                    chi_angles_rotamer = measure_sidechain_torsion_angles(monomer, verbose=False)
+                    if chi_angles_rotamer:
+                        chi_angles, rotamer = chi_angles_rotamer
+                        monomer.tags["rotamers"] = rotamer
+                        monomer.tags["chi_angles"] = chi_angles
+                    # Rotamer not found: either residue does not have rotamers or
+                    # it is not a common residue
                     else:
                         monomer.tags["rotamers"] = None
                         monomer.tags["chi_angles"] = None
