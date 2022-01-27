@@ -630,30 +630,33 @@ class Polypeptide(Polymer):
         self.tags["assigned_ff"] = False
         return
 
-    def tag_sidechain_dihedrals(self, force=False, tag_rotamers=False):
-        """Tags each monomer with side-chain dihedral angles
+    def tag_sidechain_dihedrals(self, force=False):
+        """Tags each monomer with side-chain dihedral angles. For residues that
+        do not have any rotamers (Alanine and Glycine) the rotamer is tagged as
+        0 and chi_angles as None.
 
         force: bool, optional
             If `True` the tag will be run even if `Residues` are
             already tagged.
-        rotamers: bool, optional
-            If `True` it will tag rotamers as tags.
         """
-        tagged = ["chi_angles" in x.tags.keys() for x in self._monomers]
-        if tag_rotamers:
-            tagged = ["rotamers" in x.tags.keys() for x in self._monomers]
-        if (not all(tagged)) or force:
+        chi_tagged = ["chi_angles" in x.tags.keys() for x in self._monomers]
+        rot_tagged = ["rotamers" in x.tags.keys() for x in self._monomers]
+        if (not all(chi_tagged)) or (not all(rot_tagged)) or force:
             for monomer in self._monomers:
-                if tag_rotamers:
-                    chi_angles, rotamer = measure_sidechain_torsion_angles(
-                        monomer, verbose=False, return_rotamers=True
-                    )
-                    monomer.tags["rotamers"] = rotamer
+                if monomer.mol_letter == "G" or monomer.mol_letter == "A":
+                    monomer.tags["rotamers"] = [0]
+                    monomer.tags["chi_angles"] = None
                 else:
-                    chi_angles = measure_sidechain_torsion_angles(
-                        monomer, verbose=False
-                    )
-                monomer.tags["chi_angles"] = chi_angles
+                    chi_angles_rotamer = measure_sidechain_torsion_angles(monomer, verbose=False)
+                    if chi_angles_rotamer:
+                        chi_angles, rotamer = chi_angles_rotamer
+                        monomer.tags["rotamers"] = rotamer
+                        monomer.tags["chi_angles"] = chi_angles
+                    # Rotamer not found: either residue does not have rotamers or
+                    # it is not a common residue
+                    else:
+                        monomer.tags["rotamers"] = None
+                        monomer.tags["chi_angles"] = None
         return
 
     def tag_torsion_angles(self, force=False):
