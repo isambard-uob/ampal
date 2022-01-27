@@ -6,8 +6,10 @@ import itertools
 from ampal.base_ampal import BaseAmpal, Polymer, find_atoms_within_distance
 from ampal.ligands import LigandGroup, Ligand
 from ampal.analyse_protein import (
-    sequence_molecular_weight, sequence_molar_extinction_280,
-    sequence_isoelectric_point)
+    sequence_molecular_weight,
+    sequence_molar_extinction_280,
+    sequence_isoelectric_point,
+)
 
 
 class AmpalContainer(object):
@@ -34,7 +36,7 @@ class AmpalContainer(object):
     """
 
     def __init__(self, ampal_objects=None, id=None):
-        self.id = 'AMPAL Container' if not id else id
+        self.id = "AMPAL Container" if not id else id
         if ampal_objects:
             self._ampal_objects = ampal_objects
         else:
@@ -51,20 +53,22 @@ class AmpalContainer(object):
             merged_ac = self._ampal_objects[:] + other._ampal_objects[:]
         else:
             raise TypeError(
-                'Only AmpalContainer objects may be merged with an '
-                'AmpalContainer using unary operator "+".')
+                "Only AmpalContainer objects may be merged with an "
+                'AmpalContainer using unary operator "+".'
+            )
         return AmpalContainer(ampal_objects=merged_ac)
 
     def __repr__(self):
         return "<AmpalContainer ({}) containing {} AMPAL Objects>".format(
-            self.id, len(self._ampal_objects))
+            self.id, len(self._ampal_objects)
+        )
 
     def __len__(self):
         return len(self._ampal_objects)
 
     def __getitem__(self, item):
         if isinstance(item, str):
-            id_dict = {p.id.split('_')[-1]: p for p in self._ampal_objects}
+            id_dict = {p.id.split("_")[-1]: p for p in self._ampal_objects}
             return id_dict[item]
         elif isinstance(item, int):
             return self._ampal_objects[item]
@@ -82,15 +86,15 @@ class AmpalContainer(object):
             self._ampal_objects.extend(ampal_container)
         else:
             raise TypeError(
-                'Only AmpalContainer objects may be merged with '
-                'an AmpalContainer.')
+                "Only AmpalContainer objects may be merged with " "an AmpalContainer."
+            )
         return
 
     @property
     def pdb(self):
         """Compiles the PDB strings for each state into a single file."""
-        header_title = '{:<80}\n'.format('HEADER    {}'.format(self.id))
-        data_type = '{:<80}\n'.format('EXPDTA    ISAMBARD Model')
+        header_title = "{:<80}\n".format("HEADER    {}".format(self.id))
+        data_type = "{:<80}\n".format("EXPDTA    ISAMBARD Model")
         pdb_strs = []
         for ampal in self:
             if isinstance(ampal, Assembly):
@@ -98,8 +102,8 @@ class AmpalContainer(object):
             else:
                 pdb_str = ampal.make_pdb()
             pdb_strs.append(pdb_str)
-        merged_strs = 'ENDMDL\n'.join(pdb_strs) + 'ENDMDL\n'
-        merged_pdb = ''.join([header_title, data_type, merged_strs])
+        merged_strs = "ENDMDL\n".join(pdb_strs) + "ENDMDL\n"
+        merged_pdb = "".join([header_title, data_type, merged_strs])
         return merged_pdb
 
     def sort_by_tag(self, tag):
@@ -136,7 +140,7 @@ class Assembly(BaseAmpal):
         or a list of `Polymers`.
     """
 
-    def __init__(self, molecules=None, assembly_id=''):
+    def __init__(self, molecules=None, assembly_id=""):
         if molecules:
             if isinstance(molecules, Polymer):
                 self._molecules = [molecules]
@@ -144,8 +148,9 @@ class Assembly(BaseAmpal):
                 self._molecules = list(molecules)
             else:
                 raise TypeError(
-                    'Assembly objects can only be initialised empty, using '
-                    'a Polymer or a list of Polymers.')
+                    "Assembly objects can only be initialised empty, using "
+                    "a Polymer or a list of Polymers."
+                )
         else:
             self._molecules = []
         self.id = str(assembly_id)
@@ -163,8 +168,9 @@ class Assembly(BaseAmpal):
             merged_assembly = self._molecules[:] + other._molecules[:]
         else:
             raise TypeError(
-                'Only Assembly objects may be merged with an Assembly using '
-                'unary operator "+".')
+                "Only Assembly objects may be merged with an Assembly using "
+                'unary operator "+".'
+            )
         return Assembly(molecules=merged_assembly, assembly_id=self.id)
 
     def __len__(self):
@@ -182,33 +188,50 @@ class Assembly(BaseAmpal):
     def __repr__(self):
         repr_strs = []
         mol_types = Counter([x.molecule_type for x in self._molecules])
-        if 'protein' in mol_types:
-            repr_strs.append('{} {}'.format(
-                mol_types['protein'],
-                'Polypeptide' if len(self._molecules) == 1 else 'Polypeptides'))
-        if 'nucleic_acid' in mol_types:
-            repr_strs.append('{} {}'.format(
-                mol_types['nucleic_acid'],
-                'Polynucleotide' if len(self._molecules) == 1 else 'Polynucleotides'))
+        if "protein" in mol_types:
+            repr_strs.append(
+                "{} {}".format(
+                    mol_types["protein"],
+                    "Polypeptide" if len(self._molecules) == 1 else "Polypeptides",
+                )
+            )
+        if "nucleic_acid" in mol_types:
+            repr_strs.append(
+                "{} {}".format(
+                    mol_types["nucleic_acid"],
+                    "Polynucleotide"
+                    if len(self._molecules) == 1
+                    else "Polynucleotides",
+                )
+            )
         ligand_count = 0
-        if 'ligands' in mol_types:
-            repr_strs.append('{} {}'.format(
-                mol_types['ligands'],
-                'Ligand Group' if len(self._molecules) == 1 else 'Ligand Groups'))
+        if "ligands" in mol_types:
+            repr_strs.append(
+                "{} {}".format(
+                    mol_types["ligands"],
+                    "Ligand Group" if len(self._molecules) == 1 else "Ligand Groups",
+                )
+            )
         for mol in self._molecules:
-            if mol.molecule_type == 'ligands':
+            if mol.molecule_type == "ligands":
                 ligand_count += len(mol)
             else:
                 ligand_count += 0 if not mol.ligands else len(mol.ligands)
         if ligand_count:
-            repr_strs.append('{} {}'.format(
-                ligand_count, 'Ligand' if ligand_count == 1 else 'Ligands'))
-        if 'pseudo_group' in mol_types:
-            repr_strs.append('{} {}'.format(
-                mol_types['pseudo_group'],
-                'Pseudo Group' if len(self._molecules) == 1 else 'Pseudo Groups'))
-        id_str = '' if not self.id else '({}) '.format(self.id)
-        return '<Assembly {}containing {}>'.format(id_str, ', '.join(repr_strs))
+            repr_strs.append(
+                "{} {}".format(
+                    ligand_count, "Ligand" if ligand_count == 1 else "Ligands"
+                )
+            )
+        if "pseudo_group" in mol_types:
+            repr_strs.append(
+                "{} {}".format(
+                    mol_types["pseudo_group"],
+                    "Pseudo Group" if len(self._molecules) == 1 else "Pseudo Groups",
+                )
+            )
+        id_str = "" if not self.id else "({}) ".format(self.id)
+        return "<Assembly {}containing {}>".format(id_str, ", ".join(repr_strs))
 
     def append(self, item):
         """Adds a `Polymer` to the `Assembly`.
@@ -221,8 +244,7 @@ class Assembly(BaseAmpal):
         if isinstance(item, Polymer):
             self._molecules.append(item)
         else:
-            raise TypeError(
-                'Only Polymer objects can be appended to an Assembly.')
+            raise TypeError("Only Polymer objects can be appended to an Assembly.")
         return
 
     def extend(self, assembly):
@@ -236,8 +258,7 @@ class Assembly(BaseAmpal):
         if isinstance(assembly, Assembly):
             self._molecules.extend(assembly)
         else:
-            raise TypeError(
-                'Only Assembly objects may be merged with an Assembly.')
+            raise TypeError("Only Assembly objects may be merged with an Assembly.")
         return
 
     def get_monomers(self, ligands=True, pseudo_group=False):
@@ -254,7 +275,8 @@ class Assembly(BaseAmpal):
         restricted_mol_types = [x[0] for x in base_filters.items() if not x[1]]
         in_groups = [x for x in self.filter_mol_types(restricted_mol_types)]
         monomers = itertools.chain(
-            *(p.get_monomers(ligands=ligands) for p in in_groups))
+            *(p.get_monomers(ligands=ligands) for p in in_groups)
+        )
         return monomers
 
     def get_ligands(self, solvent=True):
@@ -266,15 +288,17 @@ class Assembly(BaseAmpal):
             If `True`, solvent molecules will be included.
         """
         if solvent:
-            ligand_list = [x for x in self.get_monomers()
-                           if isinstance(x, Ligand)]
+            ligand_list = [x for x in self.get_monomers() if isinstance(x, Ligand)]
         else:
-            ligand_list = [x for x in self.get_monomers() if isinstance(
-                x, Ligand) and not x.is_solvent]
+            ligand_list = [
+                x
+                for x in self.get_monomers()
+                if isinstance(x, Ligand) and not x.is_solvent
+            ]
         return LigandGroup(monomers=ligand_list)
 
     def get_atoms(self, ligands=True, pseudo_group=False, inc_alt_states=False):
-        """ Flat list of all the `Atoms` in the `Assembly`.
+        """Flat list of all the `Atoms` in the `Assembly`.
 
         Parameters
         ----------
@@ -291,14 +315,18 @@ class Assembly(BaseAmpal):
             All the `Atoms` as a iterator.
         """
         atoms = itertools.chain(
-            *(list(m.get_atoms(inc_alt_states=inc_alt_states))
-                for m in self.get_monomers(ligands=ligands,
-                                           pseudo_group=pseudo_group)))
+            *(
+                list(m.get_atoms(inc_alt_states=inc_alt_states))
+                for m in self.get_monomers(ligands=ligands, pseudo_group=pseudo_group)
+            )
+        )
         return atoms
 
     def is_within(self, cutoff_dist, point, ligands=True):
         """Returns all atoms in AMPAL object within `cut-off` distance from the `point`."""
-        return find_atoms_within_distance(self.get_atoms(ligands=ligands), cutoff_dist, point)
+        return find_atoms_within_distance(
+            self.get_atoms(ligands=ligands), cutoff_dist, point
+        )
 
     def relabel_all(self):
         """Relabels all Polymers, Monomers and Atoms with default labeling."""
@@ -327,8 +355,11 @@ class Assembly(BaseAmpal):
                 for polymer, label in zip(self._molecules, labels):
                     polymer.id = label
             else:
-                raise ValueError('Number of polymers ({}) and number of labels ({}) must be equal.'.format(
-                    len(self._molecules), len(labels)))
+                raise ValueError(
+                    "Number of polymers ({}) and number of labels ({}) must be equal.".format(
+                        len(self._molecules), len(labels)
+                    )
+                )
         else:
             for i, polymer in enumerate(self._molecules):
                 polymer.id = chr(i + 65)
@@ -359,8 +390,14 @@ class Assembly(BaseAmpal):
         """Runs make_pdb in default mode."""
         return self.make_pdb()
 
-    def make_pdb(self, ligands=True, alt_states=False, pseudo_group=False,
-                 header=True, footer=True):
+    def make_pdb(
+        self,
+        ligands=True,
+        alt_states=False,
+        pseudo_group=False,
+        header=True,
+        footer=True,
+    ):
         """Generates a PDB string for the Assembly.
 
         Parameters
@@ -386,12 +423,20 @@ class Assembly(BaseAmpal):
         restricted_mol_types = [x[0] for x in base_filters.items() if not x[1]]
         in_groups = [x for x in self.filter_mol_types(restricted_mol_types)]
 
-        pdb_header = 'HEADER {:<80}\n'.format(
-            'ISAMBARD Model {}'.format(self.id)) if header else ''
-        pdb_body = ''.join([x.make_pdb(
-            alt_states=alt_states, inc_ligands=ligands) + '{:<80}\n'.format('TER') for x in in_groups])
-        pdb_footer = '{:<80}\n'.format('END') if footer else ''
-        pdb_str = ''.join([pdb_header, pdb_body, pdb_footer])
+        pdb_header = (
+            "HEADER {:<80}\n".format("ISAMBARD Model {}".format(self.id))
+            if header
+            else ""
+        )
+        pdb_body = "".join(
+            [
+                x.make_pdb(alt_states=alt_states, inc_ligands=ligands)
+                + "{:<80}\n".format("TER")
+                for x in in_groups
+            ]
+        )
+        pdb_footer = "{:<80}\n".format("END") if footer else ""
+        pdb_str = "".join([pdb_header, pdb_body, pdb_footer])
         return pdb_str
 
     # Protein specific methods
@@ -411,8 +456,7 @@ class Assembly(BaseAmpal):
             `Assembly` containing only the backbone atoms of the original
             `Assembly`.
         """
-        bb_molecules = [
-            p.backbone for p in self._molecules if hasattr(p, 'backbone')]
+        bb_molecules = [p.backbone for p in self._molecules if hasattr(p, "backbone")]
         bb_assembly = Assembly(bb_molecules, assembly_id=self.id)
         return bb_assembly
 
@@ -431,7 +475,8 @@ class Assembly(BaseAmpal):
             in the original `Assembly`.
         """
         prim_molecules = [
-            p.primitive for p in self._molecules if hasattr(p, 'primitive')]
+            p.primitive for p in self._molecules if hasattr(p, "primitive")
+        ]
         prim_assembly = Assembly(molecules=prim_molecules, assembly_id=self.id)
         return prim_assembly
 
@@ -444,23 +489,23 @@ class Assembly(BaseAmpal):
         sequences : [str]
             List of sequences.
         """
-        seqs = [x.sequence for x in self._molecules if hasattr(x, 'sequence')]
+        seqs = [x.sequence for x in self._molecules if hasattr(x, "sequence")]
         return seqs
 
     @property
     def molecular_weight(self):
         """Returns the molecular weight of the `Assembly` in Daltons."""
-        return sequence_molecular_weight(''.join(self.sequences))
+        return sequence_molecular_weight("".join(self.sequences))
 
     @property
     def molar_extinction_280(self):
         """Returns the extinction co-efficient of the `Assembly` at 280 nm."""
-        return sequence_molar_extinction_280(''.join(self.sequences))
+        return sequence_molar_extinction_280("".join(self.sequences))
 
     @property
     def isoelectric_point(self):
         """Returns the isoelectric point of the `Assembly`."""
-        return sequence_isoelectric_point(''.join(self.sequences))
+        return sequence_isoelectric_point("".join(self.sequences))
 
     @property
     def fasta(self):
@@ -470,8 +515,8 @@ class Assembly(BaseAmpal):
         -----
         Explanation of FASTA format: https://en.wikipedia.org/wiki/FASTA_format
         Recommendation that all lines of text be shorter than 80
-        characters is adhered to. Format of PDBID|CHAIN|SEQUENCE is 
-        consistent with files downloaded from the PDB. Uppercase 
+        characters is adhered to. Format of PDBID|CHAIN|SEQUENCE is
+        consistent with files downloaded from the PDB. Uppercase
         PDBID used for consistency with files downloaded from the PDB.
         Useful for feeding into cdhit and then running sequence clustering.
 
@@ -480,17 +525,20 @@ class Assembly(BaseAmpal):
         fasta_str : str
             String of the fasta file for the `Assembly`.
         """
-        fasta_str = ''
+        fasta_str = ""
         max_line_length = 79
         for p in self._molecules:
-            if hasattr(p, 'sequence'):
-                fasta_str += '>{0}:{1}|PDBID|CHAIN|SEQUENCE\n'.format(
-                    self.id.upper(), p.id)
+            if hasattr(p, "sequence"):
+                fasta_str += ">{0}:{1}|PDBID|CHAIN|SEQUENCE\n".format(
+                    self.id.upper(), p.id
+                )
                 seq = p.sequence
-                split_seq = [seq[i: i + max_line_length]
-                             for i in range(0, len(seq), max_line_length)]
+                split_seq = [
+                    seq[i : i + max_line_length]
+                    for i in range(0, len(seq), max_line_length)
+                ]
                 for seq_part in split_seq:
-                    fasta_str += '{0}\n'.format(seq_part)
+                    fasta_str += "{0}\n".format(seq_part)
         return fasta_str
 
     def tag_torsion_angles(self, force=False):
@@ -503,12 +551,13 @@ class Assembly(BaseAmpal):
             tagged.
         """
         for polymer in self._molecules:
-            if polymer.molecule_type == 'protein':
+            if polymer.molecule_type == "protein":
                 polymer.tag_torsion_angles(force=force)
         return
 
-    def tag_ca_geometry(self, force=False, reference_axis=None,
-                        reference_axis_name='ref_axis'):
+    def tag_ca_geometry(
+        self, force=False, reference_axis=None, reference_axis_name="ref_axis"
+    ):
         """Tags each `Monomer` in the `Assembly` with its helical geometry.
 
         Parameters
@@ -522,14 +571,16 @@ class Assembly(BaseAmpal):
             Used to name the keys in tags at `Chain` and `Residue` level.
         """
         for polymer in self._molecules:
-            if polymer.molecule_type == 'protein':
+            if polymer.molecule_type == "protein":
                 polymer.tag_ca_geometry(
-                    force=force, reference_axis=reference_axis,
-                    reference_axis_name=reference_axis_name)
+                    force=force,
+                    reference_axis=reference_axis,
+                    reference_axis_name=reference_axis_name,
+                )
         return
 
     def tag_atoms_unique_ids(self, force=False):
-        """ Tags each Atom in the Assembly with its unique_id.
+        """Tags each Atom in the Assembly with its unique_id.
 
         Notes
         -----
@@ -545,11 +596,11 @@ class Assembly(BaseAmpal):
                 If False, only runs if at least one Atom is not tagged.
 
         """
-        tagged = ['unique_id' in x.tags.keys() for x in self.get_atoms()]
+        tagged = ["unique_id" in x.tags.keys() for x in self.get_atoms()]
         if (not all(tagged)) or force:
             for m in self.get_monomers():
                 for atom_type, atom in m.atoms.items():
-                    atom.tags['unique_id'] = (m.unique_id, atom_type)
+                    atom.tags["unique_id"] = (m.unique_id, atom_type)
         return
 
     def filter_mol_types(self, mol_types):

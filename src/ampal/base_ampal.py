@@ -36,7 +36,7 @@ def find_atoms_within_distance(atoms, cutoff_distance, point):
 
 
 def centre_of_atoms(atoms, mass_weighted=True):
-    """ Returns centre point of any list of atoms.
+    """Returns centre point of any list of atoms.
 
     Parameters
     ----------
@@ -58,7 +58,7 @@ def centre_of_atoms(atoms, mass_weighted=True):
     return centre_of_mass(points=points, masses=masses)
 
 
-def write_pdb(residues, chain_id=' ', alt_states=False, strip_states=False):
+def write_pdb(residues, chain_id=" ", alt_states=False, strip_states=False):
     """Writes a pdb file for a list of residues.
 
     Parameters
@@ -80,53 +80,53 @@ def write_pdb(residues, chain_id=' ', alt_states=False, strip_states=False):
     pdb_atom_col_dict = PDB_ATOM_COLUMNS
     out_pdb = []
     if len(str(chain_id)) > 1:
-        poly_id = ' '
+        poly_id = " "
     else:
         poly_id = str(chain_id)
     for monomer in residues:
         if (len(monomer.states) > 1) and alt_states and not strip_states:
             atom_list = itertools.chain(
-                *[x[1].items() for x in sorted(monomer.states.items())])
+                *[x[1].items() for x in sorted(monomer.states.items())]
+            )
         else:
             atom_list = monomer.atoms.items()
-        if 'chain_id' in monomer.tags:
-            poly_id = monomer.tags['chain_id']
+        if "chain_id" in monomer.tags:
+            poly_id = monomer.tags["chain_id"]
         for atom_t, atom in atom_list:
             if strip_states:
-                state_label = ' '
-            elif (atom.tags['state'] == 'A') and (len(monomer.states) == 1):
-                state_label = ' '
+                state_label = " "
+            elif (atom.tags["state"] == "A") and (len(monomer.states) == 1):
+                state_label = " "
             else:
-                state_label = atom.tags['state']
+                state_label = atom.tags["state"]
             atom_data = {
-                'atom_number': '{:>5}'.format(cap(atom.id, 5)),
-                'atom_name': '{:<4}'.format(cap(pdb_atom_col_dict[atom_t], 4)),
-                'alt_loc_ind': '{:<1}'.format(cap(state_label, 1)),
-                'residue_type': '{:<3}'.format(cap(monomer.mol_code, 3)),
-                'chain_id': '{:<1}'.format(cap(poly_id, 1)),
-                'res_num': '{:>4}'.format(cap(monomer.id, 4)),
-                'icode': '{:<1}'.format(cap(monomer.insertion_code, 1)),
-                'coord_str': '{0:>8.3f}{1:>8.3f}{2:>8.3f}'.format(
-                    *[x for x in atom]),
-                'occupancy': '{:>6.2f}'.format(atom.tags['occupancy']),
-                'temp_factor': '{:>6.2f}'.format(atom.tags['bfactor']),
-                'element': '{:>2}'.format(cap(atom.element, 2)),
-                'charge': '{:<2}'.format(cap(atom.tags['charge'], 2))
+                "atom_number": "{:>5}".format(cap(atom.id, 5)),
+                "atom_name": "{:<4}".format(cap(pdb_atom_col_dict[atom_t], 4)),
+                "alt_loc_ind": "{:<1}".format(cap(state_label, 1)),
+                "residue_type": "{:<3}".format(cap(monomer.mol_code, 3)),
+                "chain_id": "{:<1}".format(cap(poly_id, 1)),
+                "res_num": "{:>4}".format(cap(monomer.id, 4)),
+                "icode": "{:<1}".format(cap(monomer.insertion_code, 1)),
+                "coord_str": "{0:>8.3f}{1:>8.3f}{2:>8.3f}".format(*[x for x in atom]),
+                "occupancy": "{:>6.2f}".format(atom.tags["occupancy"]),
+                "temp_factor": "{:>6.2f}".format(atom.tags["bfactor"]),
+                "element": "{:>2}".format(cap(atom.element, 2)),
+                "charge": "{:<2}".format(cap(atom.tags["charge"], 2)),
             }
             if monomer.is_hetero:
                 pdb_line_template = (
-                    'HETATM{atom_number} {atom_name}{alt_loc_ind}{residue_type}'
-                    ' {chain_id}{res_num}{icode}   {coord_str}{occupancy}'
-                    '{temp_factor}          {element}{charge}\n'
+                    "HETATM{atom_number} {atom_name}{alt_loc_ind}{residue_type}"
+                    " {chain_id}{res_num}{icode}   {coord_str}{occupancy}"
+                    "{temp_factor}          {element}{charge}\n"
                 )
             else:
                 pdb_line_template = (
-                    'ATOM  {atom_number} {atom_name}{alt_loc_ind}{residue_type}'
-                    ' {chain_id}{res_num}{icode}   {coord_str}{occupancy}'
-                    '{temp_factor}          {element}{charge}\n'
+                    "ATOM  {atom_number} {atom_name}{alt_loc_ind}{residue_type}"
+                    " {chain_id}{res_num}{icode}   {coord_str}{occupancy}"
+                    "{temp_factor}          {element}{charge}\n"
                 )
             out_pdb.append(pdb_line_template.format(**atom_data))
-    return ''.join(out_pdb)
+    return "".join(out_pdb)
 
 
 class BaseAmpal(object):
@@ -161,7 +161,7 @@ class BaseAmpal(object):
             3D coordinate for the centre of mass.
         """
         elts = set([x.element for x in self.get_atoms()])
-        masses_dict = {e: ELEMENT_DATA[e]['atomic mass'] for e in elts}
+        masses_dict = {e: ELEMENT_DATA[e]["atomic mass"] for e in elts}
         points = [x._vector for x in self.get_atoms()]
         masses = [masses_dict[x.element] for x in self.get_atoms()]
         return centre_of_mass(points=points, masses=masses)
@@ -230,7 +230,7 @@ class BaseAmpal(object):
             Calculates RMSD of backbone only.
         """
         assert type(self) is type(other)
-        if backbone and hasattr(self, 'backbone'):
+        if backbone and hasattr(self, "backbone"):
             points1 = self.backbone.get_atoms()
             points2 = other.backbone.get_atoms()
         else:
@@ -293,8 +293,15 @@ class Polymer(BaseAmpal):
         or a list of Monomers.
     """
 
-    def __init__(self, monomers=None, ligands=None, polymer_id=' ',
-                 molecule_type='', parent=None, sl=2):
+    def __init__(
+        self,
+        monomers=None,
+        ligands=None,
+        polymer_id=" ",
+        molecule_type="",
+        parent=None,
+        sl=2,
+    ):
         if monomers:
             if isinstance(monomers, Monomer):
                 self._monomers = [monomers]
@@ -302,8 +309,9 @@ class Polymer(BaseAmpal):
                 self._monomers = list(monomers)
             else:
                 raise TypeError(
-                    'Polymer objects can only be initialised empty, '
-                    'using a Monomer or a list of Monomers.')
+                    "Polymer objects can only be initialised empty, "
+                    "using a Monomer or a list of Monomers."
+                )
         else:
             self._monomers = []
         self.id = str(polymer_id)
@@ -317,8 +325,7 @@ class Polymer(BaseAmpal):
         if isinstance(other, Polymer):
             merged_polymer = self._monomers + other._monomers
         else:
-            raise TypeError(
-                'Only Polymer objects may be merged with a Polymer.')
+            raise TypeError("Only Polymer objects may be merged with a Polymer.")
         return Polymer(monomers=merged_polymer, polymer_id=self.id)
 
     def __len__(self):
@@ -333,8 +340,9 @@ class Polymer(BaseAmpal):
         return Polymer(self._monomers[item], polymer_id=self.id)
 
     def __repr__(self):
-        return '<Polymer containing {} {}>'.format(
-            len(self._monomers), 'Monomer' if len(self._monomers) == 1 else 'Monomers')
+        return "<Polymer containing {} {}>".format(
+            len(self._monomers), "Monomer" if len(self._monomers) == 1 else "Monomers"
+        )
 
     def append(self, item):
         """Appends a `Monomer to the `Polymer`.
@@ -346,8 +354,7 @@ class Polymer(BaseAmpal):
         if isinstance(item, Monomer):
             self._monomers.append(item)
         else:
-            raise TypeError(
-                'Only Monomer objects can be appended to an Polymer.')
+            raise TypeError("Only Monomer objects can be appended to an Polymer.")
         return
 
     def extend(self, polymer):
@@ -361,7 +368,8 @@ class Polymer(BaseAmpal):
             self._monomers.extend(polymer)
         else:
             raise TypeError(
-                'Only Polymer objects may be merged with a Polymer using "+".')
+                'Only Polymer objects may be merged with a Polymer using "+".'
+            )
         return
 
     def get_monomers(self, ligands=True):
@@ -398,7 +406,8 @@ class Polymer(BaseAmpal):
         else:
             monomers = self._monomers
         atoms = itertools.chain(
-            *(list(m.get_atoms(inc_alt_states=inc_alt_states)) for m in monomers))
+            *(list(m.get_atoms(inc_alt_states=inc_alt_states)) for m in monomers)
+        )
         return atoms
 
     def relabel_monomers(self, labels=None):
@@ -421,10 +430,10 @@ class Polymer(BaseAmpal):
                     monomer.id = str(label)
             else:
                 error_string = (
-                    'Number of Monomers ({}) and number of labels '
-                    '({}) must be equal.')
-                raise ValueError(error_string.format(
-                    len(self._monomers), len(labels)))
+                    "Number of Monomers ({}) and number of labels "
+                    "({}) must be equal."
+                )
+                raise ValueError(error_string.format(len(self._monomers), len(labels)))
         else:
             for i, monomer in enumerate(self._monomers):
                 monomer.id = str(i + 1)
@@ -517,17 +526,17 @@ class Monomer(BaseAmpal):
         to store any relevant information they have.
     """
 
-    def __init__(self, atoms=None, monomer_id=' ', parent=None):
+    def __init__(self, atoms=None, monomer_id=" ", parent=None):
         if isinstance(atoms, OrderedDict):
             self.states = dict(A=atoms)
-            self._active_state = 'A'
+            self._active_state = "A"
         elif isinstance(atoms, dict):
             self.states = atoms
             self._active_state = sorted(self.states.keys())[0]
         else:
             # Sets up dummy states which should be filled later
-            self.states = {'A': OrderedDict()}
-            self._active_state = 'A'
+            self.states = {"A": OrderedDict()}
+            self._active_state = "A"
         self.id = str(monomer_id)
         self.parent = parent
         self.tags = {}
@@ -545,8 +554,9 @@ class Monomer(BaseAmpal):
         return len(self.atoms)
 
     def __repr__(self):
-        return '<Monomer containing {} {}>'.format(
-            len(self.atoms), 'Atom' if len(self.atoms) == 1 else 'Atoms')
+        return "<Monomer containing {} {}>".format(
+            len(self.atoms), "Atom" if len(self.atoms) == 1 else "Atoms"
+        )
 
     @property
     def active_state(self):
@@ -559,8 +569,9 @@ class Monomer(BaseAmpal):
             self._active_state = value
         else:
             raise KeyError(
-                'Selected alternate state is not available please use: {}'.format(
-                    list(self.states.keys()))
+                "Selected alternate state is not available please use: {}".format(
+                    list(self.states.keys())
+                )
             )
 
     @property
@@ -571,7 +582,7 @@ class Monomer(BaseAmpal):
     @atoms.setter
     def atoms(self, atom_dict):
         if not isinstance(atom_dict, OrderedDict):
-            raise TypeError('Atoms dict must be of the type OrderedDict.')
+            raise TypeError("Atoms dict must be of the type OrderedDict.")
         if self.states:
             self.states[self.active_state] = atom_dict
 
@@ -593,13 +604,14 @@ class Monomer(BaseAmpal):
             If `True`, will return `Atoms` for alternate states.
         """
         if inc_alt_states:
-            return itertools.chain(*[x[1].values() for x in sorted(list(self.states.items()))])
+            return itertools.chain(
+                *[x[1].values() for x in sorted(list(self.states.items()))]
+            )
         return self.atoms.values()
 
     def make_pdb(self):
         """Generates a PDB string for the `Monomer`."""
-        pdb_str = write_pdb(
-            [self], ' ' if not self.parent else self.parent.id)
+        pdb_str = write_pdb([self], " " if not self.parent else self.parent.id)
         return pdb_str
 
     def close_monomers(self, group, cutoff=4.0):
@@ -673,27 +685,39 @@ class Atom(object):
         to store any relevant information they have.
     """
 
-    def __init__(self, coordinates, element, atom_id=' ', res_label=None,
-                 occupancy=1.0, bfactor=1.0, charge=' ', state='A',
-                 parent=None):
+    def __init__(
+        self,
+        coordinates,
+        element,
+        atom_id=" ",
+        res_label=None,
+        occupancy=1.0,
+        bfactor=1.0,
+        charge=" ",
+        state="A",
+        parent=None,
+    ):
         self._vector = numpy.array(coordinates)
         self.id = atom_id
         self.res_label = res_label
         self.element = element
         self.parent = parent
         self.tags = {
-            'occupancy': occupancy,
-            'bfactor': bfactor,
-            'charge': charge,
-            'state': state
+            "occupancy": occupancy,
+            "bfactor": bfactor,
+            "charge": charge,
+            "state": state,
         }
         self._ff_id = None
 
     def __repr__(self):
         return "<{} Atom{}. Coordinates: ({:.3f}, {:.3f}, {:.3f})>".format(
-            ELEMENT_DATA[self.element.title()]['name'],
-            '' if not self.res_label else ' ({})'.format(self.res_label),
-            self.x, self.y, self.z)
+            ELEMENT_DATA[self.element.title()]["name"],
+            "" if not self.res_label else " ({})".format(self.res_label),
+            self.x,
+            self.y,
+            self.z,
+        )
 
     def __getitem__(self, item):
         return self._vector[item]
@@ -789,4 +813,4 @@ class Atom(object):
         return
 
 
-__author__ = 'Christopher W. Wood, Kieran L. Hudson'
+__author__ = "Christopher W. Wood, Kieran L. Hudson"
