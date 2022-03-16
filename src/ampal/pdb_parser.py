@@ -182,7 +182,11 @@ class PdbParser(object):
         y = float(line[38:46].strip())  # 9
         z = float(line[46:54].strip())  # 10
         occupancy = float(line[54:60].strip())  # 11
-        temp_factor = float(line[60:66].strip())  # 12
+        _temp_factor = line[60:66].strip()
+        if _temp_factor:
+            temp_factor = float(_temp_factor)
+        else:
+            temp_factor = 0.0
         element = line[76:78].strip()  # 13
         charge = line[78:80].strip()  # 14
         if at_name not in PDB_ATOM_COLUMNS:
