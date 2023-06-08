@@ -1,13 +1,10 @@
 # AMPAL
 A simple, intuitive and Pythonic framework for representing biomolecular structure.
 
-[![CircleCI](https://circleci.com/gh/isambard-uob/ampal/tree/master.svg?style=shield)](https://circleci.com/gh/isambard-uob/ampal/tree/master)
-[![Python Version](https://img.shields.io/badge/python-3.6-lightgrey.svg)]()
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/isambard-uob/ampal/blob/master/LICENSE)
-
 ## Installation
 
-You can install AMPAL from pip:
+AMPAL is currently tested with version of Python above 3.8, although it should
+still work with earlier versions. You can install AMPAL from pip:
 
 `pip install ampal`
 
