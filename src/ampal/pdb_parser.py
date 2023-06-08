@@ -13,7 +13,7 @@ from .amino_acids import standard_amino_acids
 from .data import PDB_ATOM_COLUMNS
 
 
-def load_pdb(pdb, path=True, pdb_id='', ignore_end=False):
+def load_pdb(pdb, path=True, pdb_id="", ignore_end=False):
     """Converts a PDB file into an AMPAL object.
 
     Parameters
@@ -83,16 +83,16 @@ class PdbParser(object):
         record is encountered.
     """
 
-    def __init__(self, pdb, path=True, pdb_id='', ignore_end=False):
+    def __init__(self, pdb, path=True, pdb_id="", ignore_end=False):
         self.proc_functions = {
-            'ATOM': self.proc_atom,
-            'HETATM': self.proc_atom,
-            'ENDMDL': self.change_state,
-            'END': self.end
+            "ATOM": self.proc_atom,
+            "HETATM": self.proc_atom,
+            "ENDMDL": self.change_state,
+            "END": self.end,
         }
         if path:
             pdb_path = pathlib.PurePath(pdb)
-            with open(str(pdb_path), 'r') as inf:
+            with open(str(pdb_path), "r") as inf:
                 pdb_str = inf.read()
             self.id = pdb_path.stem
         else:
@@ -108,10 +108,7 @@ class PdbParser(object):
 
     def parse_pdb_file(self):
         """Runs the PDB parser."""
-        self.pdb_parse_tree = {'info': {},
-                               'data': {
-                                   self.state: {}}
-                               }
+        self.pdb_parse_tree = {"info": {}, "data": {self.state: {}}}
         try:
             for line in self.pdb_lines:
                 self.current_line = line
@@ -119,9 +116,9 @@ class PdbParser(object):
                 if record_name in self.proc_functions:
                     self.proc_functions[record_name]()
                 else:
-                    if record_name not in self.pdb_parse_tree['info']:
-                        self.pdb_parse_tree['info'][record_name] = []
-                    self.pdb_parse_tree['info'][record_name].append(line)
+                    if record_name not in self.pdb_parse_tree["info"]:
+                        self.pdb_parse_tree["info"][record_name] = []
+                    self.pdb_parse_tree["info"][record_name].append(line)
         except EOFError:
             # Raised by END record
             pass
@@ -130,25 +127,39 @@ class PdbParser(object):
     def proc_atom(self):
         """Processes an "ATOM" or "HETATM" record."""
         atom_data = self.proc_line_coordinate(self.current_line)
-        (at_type, at_ser, at_name, alt_loc, res_name, chain_id, res_seq,
-         i_code, x, y, z, occupancy, temp_factor, element, charge) = atom_data
+        (
+            at_type,
+            at_ser,
+            _,
+            _,
+            res_name,
+            chain_id,
+            res_seq,
+            i_code,
+            _,
+            _,
+            _,
+            _,
+            _,
+            _,
+            _,
+        ) = atom_data
         # currently active state
-        a_state = self.pdb_parse_tree['data'][self.state]
+        a_state = self.pdb_parse_tree["data"][self.state]
         res_id = (res_seq, i_code)
         if chain_id not in a_state:
             a_state[chain_id] = (set(), OrderedDict())
         if res_id not in a_state[chain_id][1]:
             a_state[chain_id][1][res_id] = (set(), OrderedDict())
-        if at_type == 'ATOM':
+        if at_type == "ATOM":
             if res_name in standard_amino_acids.values():
-                poly = 'P'
+                poly = "P"
             else:
-                poly = 'N'
+                poly = "N"
         else:
-            poly = 'H'
+            poly = "H"
         a_state[chain_id][0].add((chain_id, at_type, poly))
-        a_state[chain_id][1][res_id][0].add(
-            (at_type, res_seq, res_name, i_code))
+        a_state[chain_id][1][res_id][0].add((at_type, res_seq, res_name, i_code))
         if at_ser not in a_state[chain_id][1][res_id][1]:
             a_state[chain_id][1][res_id][1][at_ser] = [atom_data]
         else:
@@ -158,7 +169,7 @@ class PdbParser(object):
     def change_state(self):
         """Increments current state and adds a new dict to the parse tree."""
         self.state += 1
-        self.pdb_parse_tree['data'][self.state] = {}
+        self.pdb_parse_tree["data"][self.state] = {}
         return
 
     def end(self):
@@ -192,8 +203,23 @@ class PdbParser(object):
         if at_name not in PDB_ATOM_COLUMNS:
             PDB_ATOM_COLUMNS[at_name] = line[12:16]
             self.new_labels = True
-        return (at_type, at_ser, at_name, alt_loc, res_name, chain_id, res_seq,
-                i_code, x, y, z, occupancy, temp_factor, element, charge)
+        return (
+            at_type,
+            at_ser,
+            at_name,
+            alt_loc,
+            res_name,
+            chain_id,
+            res_seq,
+            i_code,
+            x,
+            y,
+            z,
+            occupancy,
+            temp_factor,
+            element,
+            charge,
+        )
 
     # Generate PDB from parse tree
     def make_ampal(self):
@@ -204,18 +230,19 @@ class PdbParser(object):
         Will create an `Assembly` if there is a single state in the
         parese tree or an `AmpalContainer` if there is more than one.
         """
-        data = self.pdb_parse_tree['data']
+        data = self.pdb_parse_tree["data"]
         if len(data) > 1:
             ac = AmpalContainer(id=self.id)
             for state, chains in sorted(data.items()):
                 if chains:
-                    ac.append(self.proc_state(chains, self.id +
-                                              '_state_{}'.format(state + 1)))
+                    ac.append(
+                        self.proc_state(chains, self.id + "_state_{}".format(state + 1))
+                    )
             return ac
         elif len(data) == 1:
             return self.proc_state(data[0], self.id)
         else:
-            raise ValueError('Empty parse tree, check input PDB format.')
+            raise ValueError("Empty parse tree, check input PDB format.")
 
     def proc_state(self, state_data, state_id):
         """Processes a state into an `Assembly`.
@@ -229,7 +256,7 @@ class PdbParser(object):
             ID given to `Assembly` that represents the state.
         """
         assembly = Assembly(assembly_id=state_id)
-        for k, chain in sorted(state_data.items()):
+        for _, chain in sorted(state_data.items()):
             assembly._molecules.append(self.proc_chain(chain, assembly))
         return assembly
 
@@ -252,42 +279,38 @@ class PdbParser(object):
         AttributeError
             Raised if unknown `Monomer` type encountered.
         """
-        hetatom_filters = {
-            'nc_aas': self.check_for_non_canonical
-        }
+        hetatom_filters = {"nc_aas": self.check_for_non_canonical}
 
         polymer = False
         chain_labels, chain_data = chain_info
         chain_label = list(chain_labels)[0]
         monomer_types = {x[2] for x in chain_labels if x[2]}
-        if ('P' in monomer_types) and ('N' in monomer_types):
-            raise ValueError(
-                'Malformed PDB, multiple "ATOM" types in a single chain.')
+        if ("P" in monomer_types) and ("N" in monomer_types):
+            raise ValueError('Malformed PDB, multiple "ATOM" types in a single chain.')
         # Changes Polymer type based on chain composition
-        if 'P' in monomer_types:
+        if "P" in monomer_types:
             polymer_class = Polypeptide
             polymer = True
-        elif 'N' in monomer_types:
+        elif "N" in monomer_types:
             polymer_class = Polynucleotide
             polymer = True
-        elif 'H' in monomer_types:
+        elif "H" in monomer_types:
             polymer_class = LigandGroup
         else:
-            raise AttributeError('Malformed parse tree, check inout PDB.')
+            raise AttributeError("Malformed parse tree, check inout PDB.")
         chain = polymer_class(polymer_id=chain_label[0], parent=parent)
         # Changes where the ligands should go based on the chain composition
         if polymer:
-            chain.ligands = LigandGroup(
-                polymer_id=chain_label[0], parent=parent)
+            chain.ligands = LigandGroup(polymer_id=chain_label[0], parent=parent)
             ligands = chain.ligands
         else:
             ligands = chain
 
         for residue in chain_data.values():
             res_info = list(residue[0])[0]
-            if res_info[0] == 'ATOM':
+            if res_info[0] == "ATOM":
                 chain._monomers.append(self.proc_monomer(residue, chain))
-            elif res_info[0] == 'HETATM':
+            elif res_info[0] == "HETATM":
                 mon_cls = None
                 on_chain = False
                 for filt_func in hetatom_filters.values():
@@ -297,13 +320,15 @@ class PdbParser(object):
                         break
                     mon_cls = Ligand
                 if on_chain:
-                    chain._monomers.append(self.proc_monomer(
-                        residue, chain, mon_cls=mon_cls))
+                    chain._monomers.append(
+                        self.proc_monomer(residue, chain, mon_cls=mon_cls)
+                    )
                 else:
-                    ligands._monomers.append(self.proc_monomer(
-                        residue, chain, mon_cls=mon_cls))
+                    ligands._monomers.append(
+                        self.proc_monomer(residue, chain, mon_cls=mon_cls)
+                    )
             else:
-                raise ValueError('Malformed PDB, unknown record type for data')
+                raise ValueError("Malformed PDB, unknown record type for data")
         return chain
 
     def proc_monomer(self, monomer_info, parent, mon_cls=False):
@@ -322,24 +347,29 @@ class PdbParser(object):
         monomer_labels, monomer_data = monomer_info
         if len(monomer_labels) > 1:
             raise ValueError(
-                'Malformed PDB, single monomer id with '
-                'multiple labels. {}'.format(monomer_labels))
+                "Malformed PDB, single monomer id with "
+                "multiple labels. {}".format(monomer_labels)
+            )
         else:
             monomer_label = list(monomer_labels)[0]
         if mon_cls:
             monomer_class = mon_cls
             het = True
-        elif monomer_label[0] == 'ATOM':
+        elif monomer_label[0] == "ATOM":
             if monomer_label[2] in standard_amino_acids.values():
                 monomer_class = Residue
             else:
                 monomer_class = Nucleotide
             het = False
         else:
-            raise ValueError('Unknown Monomer type.')
+            raise ValueError("Unknown Monomer type.")
         monomer = monomer_class(
-            atoms=None, mol_code=monomer_label[2], monomer_id=monomer_label[1],
-            insertion_code=monomer_label[3], is_hetero=het, parent=parent
+            atoms=None,
+            mol_code=monomer_label[2],
+            monomer_id=monomer_label[1],
+            insertion_code=monomer_label[3],
+            is_hetero=het,
+            parent=parent,
         )
         monomer.states = self.gen_states(monomer_data.values(), monomer)
         monomer._active_state = sorted(monomer.states.keys())[0]
@@ -357,13 +387,20 @@ class PdbParser(object):
         states = {}
         for atoms in monomer_data:
             for atom in atoms:
-                state = 'A' if not atom[3] else atom[3]
+                state = "A" if not atom[3] else atom[3]
                 if state not in states:
                     states[state] = OrderedDict()
                 states[state][atom[2]] = Atom(
-                    tuple(atom[8:11]), atom[13], atom_id=atom[1],
-                    res_label=atom[2], occupancy=atom[11], bfactor=atom[12],
-                    charge=atom[14], state=state, parent=parent)
+                    tuple(atom[8:11]),
+                    atom[13],
+                    atom_id=atom[1],
+                    res_label=atom[2],
+                    occupancy=atom[11],
+                    bfactor=atom[12],
+                    charge=atom[14],
+                    state=state,
+                    parent=parent,
+                )
 
         # This code is to check if there are alternate states and populate any
         # both states with the full complement of atoms
@@ -371,15 +408,21 @@ class PdbParser(object):
         if (len(states) > 1) and (len(set([x[1] for x in states_len])) > 1):
             for t_state, t_state_d in states.items():
                 new_s_dict = OrderedDict()
-                for k, v in states[sorted(states_len,
-                                          key=lambda x: x[0])[0][0]].items():
+                for k, v in states[
+                    sorted(states_len, key=lambda x: x[0])[0][0]
+                ].items():
                     if k not in t_state_d:
                         c_atom = Atom(
-                            v._vector, v.element, atom_id=v.id,
+                            v._vector,
+                            v.element,
+                            atom_id=v.id,
                             res_label=v.res_label,
-                            occupancy=v.tags['occupancy'],
-                            bfactor=v.tags['bfactor'], charge=v.tags['charge'],
-                            state=t_state[0], parent=v.parent)
+                            occupancy=v.tags["occupancy"],
+                            bfactor=v.tags["bfactor"],
+                            charge=v.tags["charge"],
+                            state=t_state[0],
+                            parent=v.parent,
+                        )
                         new_s_dict[k] = c_atom
                     else:
                         new_s_dict[k] = t_state_d[k]
@@ -391,10 +434,12 @@ class PdbParser(object):
     def check_for_non_canonical(residue):
         """Checks to see if the residue is non-canonical."""
         res_label = list(residue[0])[0][2]
-        atom_labels = {x[2] for x in itertools.chain(
-            *residue[1].values())}  # Used to find unnatural aas
-        if (all(x in atom_labels for x in ['N', 'CA', 'C', 'O'])) and (
-                len(res_label) == 3):
+        atom_labels = {
+            x[2] for x in itertools.chain(*residue[1].values())
+        }  # Used to find unnatural aas
+        if (all(x in atom_labels for x in ["N", "CA", "C", "O"])) and (
+            len(res_label) == 3
+        ):
             return Residue, True
         return None
 

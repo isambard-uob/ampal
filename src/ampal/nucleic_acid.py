@@ -47,10 +47,14 @@ class Polynucleotide(Polymer):
         a `Monomer`.
     """
 
-    def __init__(self, monomers=None, polymer_id=' ', parent=None, sl=2):
+    def __init__(self, monomers=None, polymer_id=" ", parent=None, sl=2):
         super().__init__(
-            monomers=monomers, polymer_id=polymer_id,
-            molecule_type='nucleic_acid', parent=parent, sl=sl)
+            monomers=monomers,
+            polymer_id=polymer_id,
+            molecule_type="nucleic_acid",
+            parent=parent,
+            sl=sl,
+        )
 
     @property
     def sequence(self):
@@ -62,7 +66,7 @@ class Polynucleotide(Polymer):
             String of the monomer sequence of the `Polynucleotide`.
         """
         seq = [x.mol_code for x in self._monomers]
-        return ' '.join(seq)
+        return " ".join(seq)
 
 
 class Nucleotide(Monomer):
@@ -117,14 +121,20 @@ class Nucleotide(Monomer):
     """
 
     def __init__(
-            self, atoms=None, mol_code='UNK', monomer_id=' ',
-            insertion_code=' ', is_hetero=False, parent=None):
+        self,
+        atoms=None,
+        mol_code="UNK",
+        monomer_id=" ",
+        insertion_code=" ",
+        is_hetero=False,
+        parent=None,
+    ):
         super().__init__(atoms, monomer_id, parent=parent)
         self.mol_code = mol_code
         self.mol_letter = mol_code[-1]
         self.insertion_code = insertion_code
         self.is_hetero = is_hetero
-        self.reference_atom = 'P'
+        self.reference_atom = "P"
 
 
 __author__ = "Christopher W. Wood"
