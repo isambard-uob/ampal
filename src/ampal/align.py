@@ -17,8 +17,9 @@ def align_backbones(reference, mobile, stop_when=None, verbose=False):
     initial_trans = reference.centre_of_mass - mobile.centre_of_mass
     mobile.translate(initial_trans)
     fitter = MMCAlign(_align_eval, [reference], mobile)
-    fitter.start_optimisation(500, 10, 1, temp=100, stop_when=stop_when,
-                              verbose=verbose)
+    fitter.start_optimisation(
+        500, 10, 1, temp=100, stop_when=stop_when, verbose=verbose
+    )
     return fitter.best_energy
 
 
@@ -47,8 +48,9 @@ class MMCAlign:
         An ampal polypeptide containing the model to be aligned.
     """
 
-    def __init__(self, eval_fn, eval_args: Optional[list],
-                 polypeptide: Polypeptide) -> None:
+    def __init__(
+        self, eval_fn, eval_args: Optional[list], polypeptide: Polypeptide
+    ) -> None:
         self.eval_fn = eval_fn
         if eval_args is None:
             self.eval_args: List = []
@@ -59,9 +61,15 @@ class MMCAlign:
         self.best_model = None
         self.polypeptide = polypeptide
 
-    def start_optimisation(self, rounds: int, max_angle: float,
-                           max_distance: float, temp: float=298.15,
-                           stop_when=None, verbose=None):
+    def start_optimisation(
+        self,
+        rounds: int,
+        max_angle: float,
+        max_distance: float,
+        temp: float = 298.15,
+        stop_when=None,
+        verbose=None,
+    ):
         """Starts the loop fitting protocol.
 
         Parameters
@@ -79,8 +87,14 @@ class MMCAlign:
             Stops fitting when energy is less than or equal to this value.
         """
         self._generate_initial_score()
-        self._mmc_loop(rounds, max_angle, max_distance, temp=temp,
-                       stop_when=stop_when, verbose=verbose)
+        self._mmc_loop(
+            rounds,
+            max_angle,
+            max_distance,
+            temp=temp,
+            stop_when=stop_when,
+            verbose=verbose,
+        )
         return
 
     def _generate_initial_score(self):
@@ -90,25 +104,29 @@ class MMCAlign:
         self.best_model = copy.deepcopy(self.polypeptide)
         return
 
-    def _mmc_loop(self, rounds, max_angle, max_distance,
-                  temp=298.15, stop_when=None, verbose=True):
+    def _mmc_loop(
+        self, rounds, max_angle, max_distance, temp=298.15, stop_when=None, verbose=True
+    ):
         """The main Metropolis Monte Carlo loop."""
         current_round = 0
         while current_round < rounds:
             working_model = copy.deepcopy(self.polypeptide)
             random_vector = unit_vector(numpy.random.uniform(-1, 1, size=3))
-            mode = random.choice(['rotate', 'rotate', 'rotate', 'translate'])
-            if mode == 'rotate':
+            mode = random.choice(["rotate", "rotate", "rotate", "translate"])
+            if mode == "rotate":
                 random_angle = numpy.random.rand() * max_angle
-                working_model.rotate(random_angle, random_vector,
-                                     working_model.centre_of_mass)
+                working_model.rotate(
+                    random_angle, random_vector, working_model.centre_of_mass
+                )
             else:
-                random_translation = random_vector * (numpy.random.rand() *
-                                                      max_distance)
+                random_translation = random_vector * (
+                    numpy.random.rand() * max_distance
+                )
                 working_model.translate(random_translation)
             proposed_energy = self.eval_fn(working_model, *self.eval_args)
-            move_accepted = self.check_move(proposed_energy,
-                                            self.current_energy, t=temp)
+            move_accepted = self.check_move(
+                proposed_energy, self.current_energy, t=temp
+            )
             if move_accepted:
                 self.current_energy = proposed_energy
                 if self.current_energy < self.best_energy:
@@ -117,12 +135,14 @@ class MMCAlign:
                     self.best_model = copy.deepcopy(working_model)
             if verbose:
                 sys.stdout.write(
-                    '\rRound: {}, Current RMSD: {}, Proposed RMSD: {} '
-                    '(best {}), {}.       '
-                    .format(current_round, self.float_f(self.current_energy),
-                            self.float_f(proposed_energy), self.float_f(
-                                self.best_energy),
-                            "ACCEPTED" if move_accepted else "DECLINED")
+                    "\rRound: {}, Current RMSD: {}, Proposed RMSD: {} "
+                    "(best {}), {}.       ".format(
+                        current_round,
+                        self.float_f(self.current_energy),
+                        self.float_f(proposed_energy),
+                        self.float_f(self.best_energy),
+                        "ACCEPTED" if move_accepted else "DECLINED",
+                    )
                 )
                 sys.stdout.flush()
             current_round += 1
@@ -134,14 +154,14 @@ class MMCAlign:
     @staticmethod
     def float_f(f):
         """Formats a float for printing to std out."""
-        return '{:.2f}'.format(f)
+        return "{:.2f}".format(f)
 
     @staticmethod
     def check_move(new, old, t):
         """Determines if a model will be accepted."""
         if (t <= 0) or numpy.isclose(t, 0.0):
             return False
-        K_BOLTZ = 1.9872041E-003  # kcal/mol.K
+        K_BOLTZ = 1.9872041e-003  # kcal/mol.K
         if new < old:
             return True
         else:
@@ -151,4 +171,4 @@ class MMCAlign:
         return False
 
 
-__author__ = 'Christopher W. Wood'
+__author__ = "Christopher W. Wood"
