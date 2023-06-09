@@ -1,19 +1,16 @@
+<!DOCTYPE html>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>ampal &#8212; AMPAL 1.4.0 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="ampal package" href="ampal.html" />
@@ -34,33 +31,454 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="ampal">
-<h1>ampal<a class="headerlink" href="#ampal" title="Permalink to this headline">¶</a></h1>
+  <section id="ampal">
+<h1>ampal<a class="headerlink" href="#ampal" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="ampal.html">ampal package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ampal.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.align">ampal.align module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.amino_acids">ampal.amino_acids module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.ampal_warnings">ampal.ampal_warnings module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.analyse_protein">ampal.analyse_protein module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.assembly">ampal.assembly module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.base_ampal">ampal.base_ampal module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.align">ampal.align module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.align.MMCAlign"><code class="docutils literal notranslate"><span class="pre">MMCAlign</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.align.MMCAlign.check_move"><code class="docutils literal notranslate"><span class="pre">MMCAlign.check_move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.align.MMCAlign.float_f"><code class="docutils literal notranslate"><span class="pre">MMCAlign.float_f()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.align.MMCAlign.start_optimisation"><code class="docutils literal notranslate"><span class="pre">MMCAlign.start_optimisation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.align.align_backbones"><code class="docutils literal notranslate"><span class="pre">align_backbones()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.amino_acids">ampal.amino_acids module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.amino_acids.add_amino_acid_to_json"><code class="docutils literal notranslate"><span class="pre">add_amino_acid_to_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.amino_acids.get_aa_code"><code class="docutils literal notranslate"><span class="pre">get_aa_code()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.amino_acids.get_aa_info"><code class="docutils literal notranslate"><span class="pre">get_aa_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.amino_acids.get_aa_letter"><code class="docutils literal notranslate"><span class="pre">get_aa_letter()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.ampal_warnings">ampal.ampal_warnings module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.ampal_warnings.DependencyNotFoundWarning"><code class="docutils literal notranslate"><span class="pre">DependencyNotFoundWarning</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.ampal_warnings.MalformedPDBWarning"><code class="docutils literal notranslate"><span class="pre">MalformedPDBWarning</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.ampal_warnings.NoncanonicalWarning"><code class="docutils literal notranslate"><span class="pre">NoncanonicalWarning</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.ampal_warnings.NotParameterisedWarning"><code class="docutils literal notranslate"><span class="pre">NotParameterisedWarning</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.ampal_warnings.check_availability"><code class="docutils literal notranslate"><span class="pre">check_availability()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.analyse_protein">ampal.analyse_protein module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.alpha_angles"><code class="docutils literal notranslate"><span class="pre">alpha_angles()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.cc_to_local_params"><code class="docutils literal notranslate"><span class="pre">cc_to_local_params()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.charge_series"><code class="docutils literal notranslate"><span class="pre">charge_series()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.classify_angle_as_rotamer"><code class="docutils literal notranslate"><span class="pre">classify_angle_as_rotamer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.crick_angles"><code class="docutils literal notranslate"><span class="pre">crick_angles()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.flip_reference_axis_if_antiparallel"><code class="docutils literal notranslate"><span class="pre">flip_reference_axis_if_antiparallel()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.make_primitive"><code class="docutils literal notranslate"><span class="pre">make_primitive()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.make_primitive_extrapolate_ends"><code class="docutils literal notranslate"><span class="pre">make_primitive_extrapolate_ends()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.make_primitive_smoothed"><code class="docutils literal notranslate"><span class="pre">make_primitive_smoothed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.measure_sidechain_torsion_angles"><code class="docutils literal notranslate"><span class="pre">measure_sidechain_torsion_angles()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.measure_torsion_angles"><code class="docutils literal notranslate"><span class="pre">measure_torsion_angles()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.partial_charge"><code class="docutils literal notranslate"><span class="pre">partial_charge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.polymer_to_reference_axis_distances"><code class="docutils literal notranslate"><span class="pre">polymer_to_reference_axis_distances()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.polypeptide_vector"><code class="docutils literal notranslate"><span class="pre">polypeptide_vector()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.reference_axis_from_chains"><code class="docutils literal notranslate"><span class="pre">reference_axis_from_chains()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.residues_per_turn"><code class="docutils literal notranslate"><span class="pre">residues_per_turn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.sequence_charge"><code class="docutils literal notranslate"><span class="pre">sequence_charge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.sequence_isoelectric_point"><code class="docutils literal notranslate"><span class="pre">sequence_isoelectric_point()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.sequence_molar_extinction_280"><code class="docutils literal notranslate"><span class="pre">sequence_molar_extinction_280()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.analyse_protein.sequence_molecular_weight"><code class="docutils literal notranslate"><span class="pre">sequence_molecular_weight()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.assembly">ampal.assembly module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.assembly.AmpalContainer"><code class="docutils literal notranslate"><span class="pre">AmpalContainer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.AmpalContainer.id"><code class="docutils literal notranslate"><span class="pre">AmpalContainer.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.AmpalContainer.append"><code class="docutils literal notranslate"><span class="pre">AmpalContainer.append()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.AmpalContainer.extend"><code class="docutils literal notranslate"><span class="pre">AmpalContainer.extend()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.AmpalContainer.pdb"><code class="docutils literal notranslate"><span class="pre">AmpalContainer.pdb</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.AmpalContainer.sort_by_tag"><code class="docutils literal notranslate"><span class="pre">AmpalContainer.sort_by_tag()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly"><code class="docutils literal notranslate"><span class="pre">Assembly</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.append"><code class="docutils literal notranslate"><span class="pre">Assembly.append()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.backbone"><code class="docutils literal notranslate"><span class="pre">Assembly.backbone</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.extend"><code class="docutils literal notranslate"><span class="pre">Assembly.extend()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.fasta"><code class="docutils literal notranslate"><span class="pre">Assembly.fasta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.filter_mol_types"><code class="docutils literal notranslate"><span class="pre">Assembly.filter_mol_types()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.get_atoms"><code class="docutils literal notranslate"><span class="pre">Assembly.get_atoms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.get_ligands"><code class="docutils literal notranslate"><span class="pre">Assembly.get_ligands()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.get_monomers"><code class="docutils literal notranslate"><span class="pre">Assembly.get_monomers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.is_within"><code class="docutils literal notranslate"><span class="pre">Assembly.is_within()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.isoelectric_point"><code class="docutils literal notranslate"><span class="pre">Assembly.isoelectric_point</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.make_pdb"><code class="docutils literal notranslate"><span class="pre">Assembly.make_pdb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.molar_extinction_280"><code class="docutils literal notranslate"><span class="pre">Assembly.molar_extinction_280</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.molecular_weight"><code class="docutils literal notranslate"><span class="pre">Assembly.molecular_weight</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.pdb"><code class="docutils literal notranslate"><span class="pre">Assembly.pdb</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.primitives"><code class="docutils literal notranslate"><span class="pre">Assembly.primitives</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.relabel_all"><code class="docutils literal notranslate"><span class="pre">Assembly.relabel_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.relabel_atoms"><code class="docutils literal notranslate"><span class="pre">Assembly.relabel_atoms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.relabel_monomers"><code class="docutils literal notranslate"><span class="pre">Assembly.relabel_monomers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.relabel_polymers"><code class="docutils literal notranslate"><span class="pre">Assembly.relabel_polymers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.sequences"><code class="docutils literal notranslate"><span class="pre">Assembly.sequences</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.tag_ca_geometry"><code class="docutils literal notranslate"><span class="pre">Assembly.tag_ca_geometry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.assembly.Assembly.tag_torsion_angles"><code class="docutils literal notranslate"><span class="pre">Assembly.tag_torsion_angles()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.base_ampal">ampal.base_ampal module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.base_ampal.Atom"><code class="docutils literal notranslate"><span class="pre">Atom</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Atom.id"><code class="docutils literal notranslate"><span class="pre">Atom.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Atom.res_label"><code class="docutils literal notranslate"><span class="pre">Atom.res_label</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Atom.element"><code class="docutils literal notranslate"><span class="pre">Atom.element</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Atom.parent"><code class="docutils literal notranslate"><span class="pre">Atom.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Atom.tags"><code class="docutils literal notranslate"><span class="pre">Atom.tags</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Atom.array"><code class="docutils literal notranslate"><span class="pre">Atom.array</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Atom.rotate"><code class="docutils literal notranslate"><span class="pre">Atom.rotate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Atom.translate"><code class="docutils literal notranslate"><span class="pre">Atom.translate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Atom.unique_id"><code class="docutils literal notranslate"><span class="pre">Atom.unique_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Atom.x"><code class="docutils literal notranslate"><span class="pre">Atom.x</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Atom.y"><code class="docutils literal notranslate"><span class="pre">Atom.y</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Atom.z"><code class="docutils literal notranslate"><span class="pre">Atom.z</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.base_ampal.BaseAmpal"><code class="docutils literal notranslate"><span class="pre">BaseAmpal</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.BaseAmpal.centre_of_mass"><code class="docutils literal notranslate"><span class="pre">BaseAmpal.centre_of_mass</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.BaseAmpal.get_atoms"><code class="docutils literal notranslate"><span class="pre">BaseAmpal.get_atoms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.BaseAmpal.is_within"><code class="docutils literal notranslate"><span class="pre">BaseAmpal.is_within()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.BaseAmpal.make_pdb"><code class="docutils literal notranslate"><span class="pre">BaseAmpal.make_pdb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.BaseAmpal.pdb"><code class="docutils literal notranslate"><span class="pre">BaseAmpal.pdb</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.BaseAmpal.rmsd"><code class="docutils literal notranslate"><span class="pre">BaseAmpal.rmsd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.BaseAmpal.rotate"><code class="docutils literal notranslate"><span class="pre">BaseAmpal.rotate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.BaseAmpal.translate"><code class="docutils literal notranslate"><span class="pre">BaseAmpal.translate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.base_ampal.Monomer"><code class="docutils literal notranslate"><span class="pre">Monomer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Monomer.states"><code class="docutils literal notranslate"><span class="pre">Monomer.states</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Monomer.id"><code class="docutils literal notranslate"><span class="pre">Monomer.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Monomer.parent"><code class="docutils literal notranslate"><span class="pre">Monomer.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Monomer.tags"><code class="docutils literal notranslate"><span class="pre">Monomer.tags</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Monomer.active_state"><code class="docutils literal notranslate"><span class="pre">Monomer.active_state</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Monomer.atoms"><code class="docutils literal notranslate"><span class="pre">Monomer.atoms</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Monomer.close_monomers"><code class="docutils literal notranslate"><span class="pre">Monomer.close_monomers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Monomer.get_atoms"><code class="docutils literal notranslate"><span class="pre">Monomer.get_atoms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Monomer.get_monomers"><code class="docutils literal notranslate"><span class="pre">Monomer.get_monomers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Monomer.make_pdb"><code class="docutils literal notranslate"><span class="pre">Monomer.make_pdb()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer"><code class="docutils literal notranslate"><span class="pre">Polymer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer.id"><code class="docutils literal notranslate"><span class="pre">Polymer.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer.parent"><code class="docutils literal notranslate"><span class="pre">Polymer.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer.molecule_type"><code class="docutils literal notranslate"><span class="pre">Polymer.molecule_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer.ligands"><code class="docutils literal notranslate"><span class="pre">Polymer.ligands</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer.tags"><code class="docutils literal notranslate"><span class="pre">Polymer.tags</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer.sl"><code class="docutils literal notranslate"><span class="pre">Polymer.sl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer.append"><code class="docutils literal notranslate"><span class="pre">Polymer.append()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer.extend"><code class="docutils literal notranslate"><span class="pre">Polymer.extend()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer.get_atoms"><code class="docutils literal notranslate"><span class="pre">Polymer.get_atoms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer.get_monomers"><code class="docutils literal notranslate"><span class="pre">Polymer.get_monomers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer.get_reference_coords"><code class="docutils literal notranslate"><span class="pre">Polymer.get_reference_coords()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer.make_pdb"><code class="docutils literal notranslate"><span class="pre">Polymer.make_pdb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer.relabel_all"><code class="docutils literal notranslate"><span class="pre">Polymer.relabel_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer.relabel_atoms"><code class="docutils literal notranslate"><span class="pre">Polymer.relabel_atoms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.base_ampal.Polymer.relabel_monomers"><code class="docutils literal notranslate"><span class="pre">Polymer.relabel_monomers()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.base_ampal.cap"><code class="docutils literal notranslate"><span class="pre">cap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.base_ampal.centre_of_atoms"><code class="docutils literal notranslate"><span class="pre">centre_of_atoms()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.base_ampal.find_atoms_within_distance"><code class="docutils literal notranslate"><span class="pre">find_atoms_within_distance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.base_ampal.write_pdb"><code class="docutils literal notranslate"><span class="pre">write_pdb()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.data">ampal.data module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.dssp">ampal.dssp module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.geometry">ampal.geometry module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.interactions">ampal.interactions module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.ligands">ampal.ligands module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.nucleic_acid">ampal.nucleic_acid module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.pdb_parser">ampal.pdb_parser module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.protein">ampal.protein module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.pseudo_atoms">ampal.pseudo_atoms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.dssp">ampal.dssp module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.dssp.dssp_available"><code class="docutils literal notranslate"><span class="pre">dssp_available()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.dssp.extract_all_ss_dssp"><code class="docutils literal notranslate"><span class="pre">extract_all_ss_dssp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.dssp.find_ss_regions"><code class="docutils literal notranslate"><span class="pre">find_ss_regions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.dssp.get_ss_regions"><code class="docutils literal notranslate"><span class="pre">get_ss_regions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.dssp.run_dssp"><code class="docutils literal notranslate"><span class="pre">run_dssp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.dssp.tag_dssp_data"><code class="docutils literal notranslate"><span class="pre">tag_dssp_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.geometry">ampal.geometry module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.Axis"><code class="docutils literal notranslate"><span class="pre">Axis</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Axis.arc_length"><code class="docutils literal notranslate"><span class="pre">Axis.arc_length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Axis.direction_vector"><code class="docutils literal notranslate"><span class="pre">Axis.direction_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Axis.distance_to_point"><code class="docutils literal notranslate"><span class="pre">Axis.distance_to_point()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Axis.get_coords"><code class="docutils literal notranslate"><span class="pre">Axis.get_coords()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Axis.length"><code class="docutils literal notranslate"><span class="pre">Axis.length</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Axis.midpoint"><code class="docutils literal notranslate"><span class="pre">Axis.midpoint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Axis.point"><code class="docutils literal notranslate"><span class="pre">Axis.point()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Axis.t_from_arc_length"><code class="docutils literal notranslate"><span class="pre">Axis.t_from_arc_length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Axis.unit_binormal"><code class="docutils literal notranslate"><span class="pre">Axis.unit_binormal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Axis.unit_normal"><code class="docutils literal notranslate"><span class="pre">Axis.unit_normal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Axis.unit_tangent"><code class="docutils literal notranslate"><span class="pre">Axis.unit_tangent</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.Curve"><code class="docutils literal notranslate"><span class="pre">Curve</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Curve.point"><code class="docutils literal notranslate"><span class="pre">Curve.point()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve"><code class="docutils literal notranslate"><span class="pre">HelicalCurve</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.alpha"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.alpha</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.alpha_and_pitch"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.alpha_and_pitch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.alpha_and_radius"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.alpha_and_radius()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.arc_length"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.arc_length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.axis"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.axis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.curvature"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.curvature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.get_coords"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.get_coords()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.pitch"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.pitch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.pitch_and_radius"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.pitch_and_radius()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.point"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.point()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.radius"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.radius</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.t_from_arc_length"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.t_from_arc_length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.torsion"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.torsion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.unit_binormal"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.unit_binormal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.unit_normal"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.unit_normal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.unit_tangent"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.unit_tangent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.x"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.x()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.y"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.y()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.HelicalCurve.z"><code class="docutils literal notranslate"><span class="pre">HelicalCurve.z()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.Quaternion"><code class="docutils literal notranslate"><span class="pre">Quaternion</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Quaternion.angle_and_axis"><code class="docutils literal notranslate"><span class="pre">Quaternion.angle_and_axis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Quaternion.apply_conjugation"><code class="docutils literal notranslate"><span class="pre">Quaternion.apply_conjugation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Quaternion.as_array"><code class="docutils literal notranslate"><span class="pre">Quaternion.as_array</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Quaternion.as_rotation"><code class="docutils literal notranslate"><span class="pre">Quaternion.as_rotation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Quaternion.conjugate"><code class="docutils literal notranslate"><span class="pre">Quaternion.conjugate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Quaternion.distance"><code class="docutils literal notranslate"><span class="pre">Quaternion.distance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Quaternion.extract_angle_and_axis"><code class="docutils literal notranslate"><span class="pre">Quaternion.extract_angle_and_axis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Quaternion.norm"><code class="docutils literal notranslate"><span class="pre">Quaternion.norm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Quaternion.real_and_vector"><code class="docutils literal notranslate"><span class="pre">Quaternion.real_and_vector()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Quaternion.rotate_vector"><code class="docutils literal notranslate"><span class="pre">Quaternion.rotate_vector()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.geometry.Quaternion.vector"><code class="docutils literal notranslate"><span class="pre">Quaternion.vector</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.angle_between_vectors"><code class="docutils literal notranslate"><span class="pre">angle_between_vectors()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.apply_unit_quaternion"><code class="docutils literal notranslate"><span class="pre">apply_unit_quaternion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.cartesian_to_cylindrical"><code class="docutils literal notranslate"><span class="pre">cartesian_to_cylindrical()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.cartesian_to_spherical"><code class="docutils literal notranslate"><span class="pre">cartesian_to_spherical()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.centre_of_mass"><code class="docutils literal notranslate"><span class="pre">centre_of_mass()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.closest_distance"><code class="docutils literal notranslate"><span class="pre">closest_distance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.closest_points_on_lines"><code class="docutils literal notranslate"><span class="pre">closest_points_on_lines()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.cylindrical_to_cartesian"><code class="docutils literal notranslate"><span class="pre">cylindrical_to_cartesian()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.dihedral"><code class="docutils literal notranslate"><span class="pre">dihedral()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.distance"><code class="docutils literal notranslate"><span class="pre">distance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.find_foot"><code class="docutils literal notranslate"><span class="pre">find_foot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.find_foot_on_plane"><code class="docutils literal notranslate"><span class="pre">find_foot_on_plane()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.find_limits"><code class="docutils literal notranslate"><span class="pre">find_limits()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.find_transformations"><code class="docutils literal notranslate"><span class="pre">find_transformations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.gen_sectors"><code class="docutils literal notranslate"><span class="pre">gen_sectors()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.intersection_start_and_end"><code class="docutils literal notranslate"><span class="pre">intersection_start_and_end()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.is_acute"><code class="docutils literal notranslate"><span class="pre">is_acute()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.minimal_distance_between_lines"><code class="docutils literal notranslate"><span class="pre">minimal_distance_between_lines()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.points_on_a_circle"><code class="docutils literal notranslate"><span class="pre">points_on_a_circle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.radius_of_circumcircle"><code class="docutils literal notranslate"><span class="pre">radius_of_circumcircle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.rmsd"><code class="docutils literal notranslate"><span class="pre">rmsd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.rotation_matrix"><code class="docutils literal notranslate"><span class="pre">rotation_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.spherical_to_cartesian"><code class="docutils literal notranslate"><span class="pre">spherical_to_cartesian()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.geometry.unit_vector"><code class="docutils literal notranslate"><span class="pre">unit_vector()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.interactions">ampal.interactions module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.interactions.CovalentBond"><code class="docutils literal notranslate"><span class="pre">CovalentBond</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.interactions.CovalentBond.a"><code class="docutils literal notranslate"><span class="pre">CovalentBond.a</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.interactions.CovalentBond.b"><code class="docutils literal notranslate"><span class="pre">CovalentBond.b</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.interactions.HydrogenBond"><code class="docutils literal notranslate"><span class="pre">HydrogenBond</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.interactions.HydrogenBond.donor"><code class="docutils literal notranslate"><span class="pre">HydrogenBond.donor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.interactions.HydrogenBond.acceptor"><code class="docutils literal notranslate"><span class="pre">HydrogenBond.acceptor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.interactions.HydrogenBond.dist"><code class="docutils literal notranslate"><span class="pre">HydrogenBond.dist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.interactions.HydrogenBond.ang_a"><code class="docutils literal notranslate"><span class="pre">HydrogenBond.ang_a</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.interactions.HydrogenBond.ang_d"><code class="docutils literal notranslate"><span class="pre">HydrogenBond.ang_d</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.interactions.HydrogenBond.acceptor_monomer"><code class="docutils literal notranslate"><span class="pre">HydrogenBond.acceptor_monomer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.interactions.HydrogenBond.donor_monomer"><code class="docutils literal notranslate"><span class="pre">HydrogenBond.donor_monomer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.interactions.Interaction"><code class="docutils literal notranslate"><span class="pre">Interaction</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.interactions.Interaction.a"><code class="docutils literal notranslate"><span class="pre">Interaction.a</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.interactions.Interaction.b"><code class="docutils literal notranslate"><span class="pre">Interaction.b</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.interactions.Interaction.dist"><code class="docutils literal notranslate"><span class="pre">Interaction.dist</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.interactions.NonCovalentInteraction"><code class="docutils literal notranslate"><span class="pre">NonCovalentInteraction</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.interactions.NonCovalentInteraction.donor"><code class="docutils literal notranslate"><span class="pre">NonCovalentInteraction.donor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.interactions.NonCovalentInteraction.acceptor"><code class="docutils literal notranslate"><span class="pre">NonCovalentInteraction.acceptor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.interactions.NonCovalentInteraction.dist"><code class="docutils literal notranslate"><span class="pre">NonCovalentInteraction.dist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#id0"><code class="docutils literal notranslate"><span class="pre">NonCovalentInteraction.acceptor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#id7"><code class="docutils literal notranslate"><span class="pre">NonCovalentInteraction.donor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.interactions.covalent_bonds"><code class="docutils literal notranslate"><span class="pre">covalent_bonds()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.interactions.find_covalent_bonds"><code class="docutils literal notranslate"><span class="pre">find_covalent_bonds()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.interactions.generate_bond_subgraphs_from_break"><code class="docutils literal notranslate"><span class="pre">generate_bond_subgraphs_from_break()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.interactions.generate_covalent_bond_graph"><code class="docutils literal notranslate"><span class="pre">generate_covalent_bond_graph()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.ligands">ampal.ligands module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.ligands.Ligand"><code class="docutils literal notranslate"><span class="pre">Ligand</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.ligands.Ligand.atoms"><code class="docutils literal notranslate"><span class="pre">Ligand.atoms</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.ligands.Ligand.mol_code"><code class="docutils literal notranslate"><span class="pre">Ligand.mol_code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.ligands.Ligand.insertion_code"><code class="docutils literal notranslate"><span class="pre">Ligand.insertion_code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.ligands.Ligand.is_hetero"><code class="docutils literal notranslate"><span class="pre">Ligand.is_hetero</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.ligands.Ligand.id"><code class="docutils literal notranslate"><span class="pre">Ligand.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.ligands.Ligand.parent"><code class="docutils literal notranslate"><span class="pre">Ligand.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.ligands.Ligand.tags"><code class="docutils literal notranslate"><span class="pre">Ligand.tags</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.ligands.Ligand.self.states"><code class="docutils literal notranslate"><span class="pre">Ligand.self.states</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.ligands.LigandGroup"><code class="docutils literal notranslate"><span class="pre">LigandGroup</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.nucleic_acid">ampal.nucleic_acid module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Nucleotide"><code class="docutils literal notranslate"><span class="pre">Nucleotide</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Nucleotide.mol_code"><code class="docutils literal notranslate"><span class="pre">Nucleotide.mol_code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Nucleotide.insertion_code"><code class="docutils literal notranslate"><span class="pre">Nucleotide.insertion_code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Nucleotide.is_hetero"><code class="docutils literal notranslate"><span class="pre">Nucleotide.is_hetero</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Nucleotide.states"><code class="docutils literal notranslate"><span class="pre">Nucleotide.states</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Nucleotide.id"><code class="docutils literal notranslate"><span class="pre">Nucleotide.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Nucleotide.reference_atom"><code class="docutils literal notranslate"><span class="pre">Nucleotide.reference_atom</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Nucleotide.parent"><code class="docutils literal notranslate"><span class="pre">Nucleotide.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Nucleotide.tags"><code class="docutils literal notranslate"><span class="pre">Nucleotide.tags</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Polynucleotide"><code class="docutils literal notranslate"><span class="pre">Polynucleotide</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Polynucleotide.id"><code class="docutils literal notranslate"><span class="pre">Polynucleotide.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Polynucleotide.parent"><code class="docutils literal notranslate"><span class="pre">Polynucleotide.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Polynucleotide.molecule_type"><code class="docutils literal notranslate"><span class="pre">Polynucleotide.molecule_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Polynucleotide.ligands"><code class="docutils literal notranslate"><span class="pre">Polynucleotide.ligands</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Polynucleotide.tags"><code class="docutils literal notranslate"><span class="pre">Polynucleotide.tags</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Polynucleotide.sl"><code class="docutils literal notranslate"><span class="pre">Polynucleotide.sl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.nucleic_acid.Polynucleotide.sequence"><code class="docutils literal notranslate"><span class="pre">Polynucleotide.sequence</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.pdb_parser">ampal.pdb_parser module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser"><code class="docutils literal notranslate"><span class="pre">PdbParser</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.proc_functions"><code class="docutils literal notranslate"><span class="pre">PdbParser.proc_functions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.id"><code class="docutils literal notranslate"><span class="pre">PdbParser.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.pdb_lines"><code class="docutils literal notranslate"><span class="pre">PdbParser.pdb_lines</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.new_labels"><code class="docutils literal notranslate"><span class="pre">PdbParser.new_labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.state"><code class="docutils literal notranslate"><span class="pre">PdbParser.state</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.pdb_parse_tree"><code class="docutils literal notranslate"><span class="pre">PdbParser.pdb_parse_tree</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.current_line"><code class="docutils literal notranslate"><span class="pre">PdbParser.current_line</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.ignore_end"><code class="docutils literal notranslate"><span class="pre">PdbParser.ignore_end</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.change_state"><code class="docutils literal notranslate"><span class="pre">PdbParser.change_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.check_for_non_canonical"><code class="docutils literal notranslate"><span class="pre">PdbParser.check_for_non_canonical()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.end"><code class="docutils literal notranslate"><span class="pre">PdbParser.end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.gen_states"><code class="docutils literal notranslate"><span class="pre">PdbParser.gen_states()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.make_ampal"><code class="docutils literal notranslate"><span class="pre">PdbParser.make_ampal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.parse_pdb_file"><code class="docutils literal notranslate"><span class="pre">PdbParser.parse_pdb_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.proc_atom"><code class="docutils literal notranslate"><span class="pre">PdbParser.proc_atom()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.proc_chain"><code class="docutils literal notranslate"><span class="pre">PdbParser.proc_chain()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.proc_line_coordinate"><code class="docutils literal notranslate"><span class="pre">PdbParser.proc_line_coordinate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.proc_monomer"><code class="docutils literal notranslate"><span class="pre">PdbParser.proc_monomer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pdb_parser.PdbParser.proc_state"><code class="docutils literal notranslate"><span class="pre">PdbParser.proc_state()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.pdb_parser.load_pdb"><code class="docutils literal notranslate"><span class="pre">load_pdb()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.protein">ampal.protein module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide"><code class="docutils literal notranslate"><span class="pre">Polypeptide</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.id"><code class="docutils literal notranslate"><span class="pre">Polypeptide.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.parent"><code class="docutils literal notranslate"><span class="pre">Polypeptide.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.molecule_type"><code class="docutils literal notranslate"><span class="pre">Polypeptide.molecule_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.ligands"><code class="docutils literal notranslate"><span class="pre">Polypeptide.ligands</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.tags"><code class="docutils literal notranslate"><span class="pre">Polypeptide.tags</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.sl"><code class="docutils literal notranslate"><span class="pre">Polypeptide.sl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.backbone"><code class="docutils literal notranslate"><span class="pre">Polypeptide.backbone</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.backbone_bond_angles"><code class="docutils literal notranslate"><span class="pre">Polypeptide.backbone_bond_angles</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.backbone_bond_lengths"><code class="docutils literal notranslate"><span class="pre">Polypeptide.backbone_bond_lengths</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.c_join"><code class="docutils literal notranslate"><span class="pre">Polypeptide.c_join()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.fasta"><code class="docutils literal notranslate"><span class="pre">Polypeptide.fasta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.get_slice_from_res_id"><code class="docutils literal notranslate"><span class="pre">Polypeptide.get_slice_from_res_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.isoelectric_point"><code class="docutils literal notranslate"><span class="pre">Polypeptide.isoelectric_point</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.molar_extinction_280"><code class="docutils literal notranslate"><span class="pre">Polypeptide.molar_extinction_280</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.molecular_weight"><code class="docutils literal notranslate"><span class="pre">Polypeptide.molecular_weight</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.n_join"><code class="docutils literal notranslate"><span class="pre">Polypeptide.n_join()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.primitive"><code class="docutils literal notranslate"><span class="pre">Polypeptide.primitive</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.radii_of_curvature"><code class="docutils literal notranslate"><span class="pre">Polypeptide.radii_of_curvature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.rise_per_residue"><code class="docutils literal notranslate"><span class="pre">Polypeptide.rise_per_residue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.sequence"><code class="docutils literal notranslate"><span class="pre">Polypeptide.sequence</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.tag_ca_geometry"><code class="docutils literal notranslate"><span class="pre">Polypeptide.tag_ca_geometry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.tag_sidechain_dihedrals"><code class="docutils literal notranslate"><span class="pre">Polypeptide.tag_sidechain_dihedrals()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.tag_torsion_angles"><code class="docutils literal notranslate"><span class="pre">Polypeptide.tag_torsion_angles()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.valid_backbone_bond_angles"><code class="docutils literal notranslate"><span class="pre">Polypeptide.valid_backbone_bond_angles()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Polypeptide.valid_backbone_bond_lengths"><code class="docutils literal notranslate"><span class="pre">Polypeptide.valid_backbone_bond_lengths()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.protein.Residue"><code class="docutils literal notranslate"><span class="pre">Residue</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Residue.mol_code"><code class="docutils literal notranslate"><span class="pre">Residue.mol_code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Residue.insertion_code"><code class="docutils literal notranslate"><span class="pre">Residue.insertion_code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Residue.is_hetero"><code class="docutils literal notranslate"><span class="pre">Residue.is_hetero</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Residue.states"><code class="docutils literal notranslate"><span class="pre">Residue.states</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Residue.id"><code class="docutils literal notranslate"><span class="pre">Residue.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Residue.reference_atom"><code class="docutils literal notranslate"><span class="pre">Residue.reference_atom</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Residue.parent"><code class="docutils literal notranslate"><span class="pre">Residue.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Residue.tags"><code class="docutils literal notranslate"><span class="pre">Residue.tags</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Residue.backbone"><code class="docutils literal notranslate"><span class="pre">Residue.backbone</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Residue.centroid"><code class="docutils literal notranslate"><span class="pre">Residue.centroid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Residue.side_chain"><code class="docutils literal notranslate"><span class="pre">Residue.side_chain</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.protein.Residue.unique_id"><code class="docutils literal notranslate"><span class="pre">Residue.unique_id</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.protein.align"><code class="docutils literal notranslate"><span class="pre">align()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.protein.flat_list_to_dummy_chain"><code class="docutils literal notranslate"><span class="pre">flat_list_to_dummy_chain()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.protein.flat_list_to_polymer"><code class="docutils literal notranslate"><span class="pre">flat_list_to_polymer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal.pseudo_atoms">ampal.pseudo_atoms module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.Primitive"><code class="docutils literal notranslate"><span class="pre">Primitive</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.Primitive.mol_code"><code class="docutils literal notranslate"><span class="pre">Primitive.mol_code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.Primitive.insertion_code"><code class="docutils literal notranslate"><span class="pre">Primitive.insertion_code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.Primitive.is_hetero"><code class="docutils literal notranslate"><span class="pre">Primitive.is_hetero</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.Primitive.states"><code class="docutils literal notranslate"><span class="pre">Primitive.states</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.Primitive.id"><code class="docutils literal notranslate"><span class="pre">Primitive.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.Primitive.reference_atom"><code class="docutils literal notranslate"><span class="pre">Primitive.reference_atom</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.Primitive.parent"><code class="docutils literal notranslate"><span class="pre">Primitive.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.Primitive.tags"><code class="docutils literal notranslate"><span class="pre">Primitive.tags</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.Primitive.coordinates"><code class="docutils literal notranslate"><span class="pre">Primitive.coordinates</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.Primitive.from_coordinates"><code class="docutils literal notranslate"><span class="pre">Primitive.from_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.Primitive.radii_of_curvature"><code class="docutils literal notranslate"><span class="pre">Primitive.radii_of_curvature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.Primitive.rise_per_residue"><code class="docutils literal notranslate"><span class="pre">Primitive.rise_per_residue()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoAtom"><code class="docutils literal notranslate"><span class="pre">PseudoAtom</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoAtom.id"><code class="docutils literal notranslate"><span class="pre">PseudoAtom.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoAtom.res_label"><code class="docutils literal notranslate"><span class="pre">PseudoAtom.res_label</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoAtom.element"><code class="docutils literal notranslate"><span class="pre">PseudoAtom.element</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoAtom.parent"><code class="docutils literal notranslate"><span class="pre">PseudoAtom.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoAtom.tags"><code class="docutils literal notranslate"><span class="pre">PseudoAtom.tags</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoGroup"><code class="docutils literal notranslate"><span class="pre">PseudoGroup</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoGroup.id"><code class="docutils literal notranslate"><span class="pre">PseudoGroup.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoGroup.parent"><code class="docutils literal notranslate"><span class="pre">PseudoGroup.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoGroup.molecule_type"><code class="docutils literal notranslate"><span class="pre">PseudoGroup.molecule_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoGroup.ligands"><code class="docutils literal notranslate"><span class="pre">PseudoGroup.ligands</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoGroup.tags"><code class="docutils literal notranslate"><span class="pre">PseudoGroup.tags</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoGroup.sl"><code class="docutils literal notranslate"><span class="pre">PseudoGroup.sl</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoMonomer"><code class="docutils literal notranslate"><span class="pre">PseudoMonomer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoMonomer.mol_code"><code class="docutils literal notranslate"><span class="pre">PseudoMonomer.mol_code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoMonomer.insertion_code"><code class="docutils literal notranslate"><span class="pre">PseudoMonomer.insertion_code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoMonomer.is_hetero"><code class="docutils literal notranslate"><span class="pre">PseudoMonomer.is_hetero</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoMonomer.states"><code class="docutils literal notranslate"><span class="pre">PseudoMonomer.states</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoMonomer.id"><code class="docutils literal notranslate"><span class="pre">PseudoMonomer.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoMonomer.reference_atom"><code class="docutils literal notranslate"><span class="pre">PseudoMonomer.reference_atom</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoMonomer.parent"><code class="docutils literal notranslate"><span class="pre">PseudoMonomer.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoMonomer.tags"><code class="docutils literal notranslate"><span class="pre">PseudoMonomer.tags</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="ampal.html#ampal.pseudo_atoms.PseudoMonomer.pdb"><code class="docutils literal notranslate"><span class="pre">PseudoMonomer.pdb</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="ampal.html#module-ampal">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </div>
-</div>
+</section>
 
 
           </div>
@@ -79,7 +497,7 @@
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="AMPAL_Introduction_and_Selections.html">Introduction to AMPAL</a></li>
@@ -100,17 +518,23 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
@@ -119,8 +543,8 @@
       &copy;2018, Woolfson Group, UoB.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="_sources/modules.rst.txt"

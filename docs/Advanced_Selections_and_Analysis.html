@@ -1,19 +1,17 @@
+<!DOCTYPE html>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Advanced Selections and Analysis &#8212; AMPAL 1.4.0 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="ampal" href="modules.html" />
@@ -34,20 +32,20 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="advanced-selections-and-analysis">
-<h1>Advanced Selections and Analysis<a class="headerlink" href="#advanced-selections-and-analysis" title="Permalink to this headline">¶</a></h1>
+  <section id="advanced-selections-and-analysis">
+<h1>Advanced Selections and Analysis<a class="headerlink" href="#advanced-selections-and-analysis" title="Permalink to this heading">¶</a></h1>
 <p>There are lots of tools in <code class="docutils literal notranslate"><span class="pre">ampal</span></code> for analysing protein structure,
 most of them are baked into the AMPAL objects themselves.</p>
 <p>Let’s load-up a PDB file:</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ampal</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ampal</span>
 <span class="n">my_protein_3qy1</span> <span class="o">=</span> <span class="n">ampal</span><span class="o">.</span><span class="n">load_pdb</span><span class="p">(</span><span class="s1">&#39;3qy1.pdb&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="section" id="selecting-all-residues-or-atoms">
-<h2>1. Selecting All Residues or Atoms<a class="headerlink" href="#selecting-all-residues-or-atoms" title="Permalink to this headline">¶</a></h2>
+<section id="selecting-all-residues-or-atoms">
+<h2>1. Selecting All Residues or Atoms<a class="headerlink" href="#selecting-all-residues-or-atoms" title="Permalink to this heading">¶</a></h2>
 <p>Sometimes it’s convinient to select all of the <code class="docutils literal notranslate"><span class="pre">Residues</span></code> or <code class="docutils literal notranslate"><span class="pre">Atoms</span></code>
 in an <code class="docutils literal notranslate"><span class="pre">Assembly</span></code> or <code class="docutils literal notranslate"><span class="pre">Polypeptide</span></code> object:</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_protein_3qy1</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_protein_3qy1</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span> <span class="n">at</span> <span class="mh">0x7fbf649db588</span><span class="o">&gt;</span>
@@ -64,7 +62,7 @@ as well as related objects called <code class="docutils literal notranslate"><sp
 (this is quite advanced Python and is not essential for using any of the
 AMPAL framework: <a class="reference external" href="http://anandology.com/python-practice-book/iterators.html">Iterators and
 Generators</a>.</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">my_protein_3qy1</span><span class="o">.</span><span class="n">get_atoms</span><span class="p">())[:</span><span class="mi">20</span><span class="p">]</span>  <span class="c1"># Showing the first 20 elements for clarity</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">my_protein_3qy1</span><span class="o">.</span><span class="n">get_atoms</span><span class="p">())[:</span><span class="mi">20</span><span class="p">]</span>  <span class="c1"># Showing the first 20 elements for clarity</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">Nitrogen</span> <span class="n">Atom</span> <span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="o">.</span> <span class="n">Coordinates</span><span class="p">:</span> <span class="p">(</span><span class="mf">14.714</span><span class="p">,</span> <span class="o">-</span><span class="mf">30.168</span><span class="p">,</span> <span class="o">-</span><span class="mf">26.423</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
@@ -89,7 +87,7 @@ Generators</a>.</p>
  <span class="o">&lt;</span><span class="n">Oxygen</span> <span class="n">Atom</span> <span class="p">(</span><span class="n">O</span><span class="p">)</span><span class="o">.</span> <span class="n">Coordinates</span><span class="p">:</span> <span class="p">(</span><span class="mf">20.438</span><span class="p">,</span> <span class="o">-</span><span class="mf">25.781</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.539</span><span class="p">)</span><span class="o">&gt;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">my_protein_3qy1</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">())[:</span><span class="mi">20</span><span class="p">]</span>  <span class="c1"># Showing the first 20 elements for clarity</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">my_protein_3qy1</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">())[:</span><span class="mi">20</span><span class="p">]</span>  <span class="c1"># Showing the first 20 elements for clarity</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">Residue</span> <span class="n">containing</span> <span class="mi">8</span> <span class="n">Atoms</span><span class="o">.</span> <span class="n">Residue</span> <span class="n">code</span><span class="p">:</span> <span class="n">ASP</span><span class="o">&gt;</span><span class="p">,</span>
@@ -114,24 +112,24 @@ Generators</a>.</p>
  <span class="o">&lt;</span><span class="n">Residue</span> <span class="n">containing</span> <span class="mi">8</span> <span class="n">Atoms</span><span class="o">.</span> <span class="n">Residue</span> <span class="n">code</span><span class="p">:</span> <span class="n">ASP</span><span class="o">&gt;</span><span class="p">]</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="analysing-composition">
-<h2>2. Analysing Composition<a class="headerlink" href="#analysing-composition" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="analysing-composition">
+<h2>2. Analysing Composition<a class="headerlink" href="#analysing-composition" title="Permalink to this heading">¶</a></h2>
 <p>We can easily look at the composition of sequences and structures using
 a <code class="docutils literal notranslate"><span class="pre">Counter</span></code> object. <code class="docutils literal notranslate"><span class="pre">Counter</span></code> can be fed any iterable (<code class="docutils literal notranslate"><span class="pre">lists</span></code> and
 <code class="docutils literal notranslate"><span class="pre">strings</span></code> are the most commonly used) and will count the occurence of
 each element inside. We can start by looking at the composition of amino
 acids in a sequence:</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_protein_3qy1</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sequence</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_protein_3qy1</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sequence</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;DIDTLISNNALWSKMLVEEDPGFFEKLAQAQKPRFLWIGCSDSRVPAERLTGLEPGELFVHRNVANLVIHTDLNCLSVVQYAVDVLEVEHIIICGHSGCGGIKAAVENPELGLINNWLLHIRDIWLKHSSLLGKMPEEQRLDALYELNVMEQVYNLGHSTIMQSAWKRGQNVTIHGWAYSINDGLLRDLDVTATNRETLENGYHKGISALSLKYI&#39;</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Counter</span><span class="p">(</span><span class="n">my_protein_3qy1</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sequence</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Counter</span><span class="p">(</span><span class="n">my_protein_3qy1</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sequence</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Counter</span><span class="p">({</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
@@ -158,16 +156,16 @@ acids in a sequence:</p>
 </div>
 <p>But as stated before, you can use Counters on any iterable, not just
 strings. Let’s make a list of all the pdb molecule codes of the ligands:</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_ligands</span> <span class="o">=</span> <span class="n">my_protein_3qy1</span><span class="o">.</span><span class="n">get_ligands</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_ligands</span> <span class="o">=</span> <span class="n">my_protein_3qy1</span><span class="o">.</span><span class="n">get_ligands</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_ligands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_ligands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Ligand</span> <span class="n">containing</span> <span class="mi">1</span> <span class="n">Atom</span><span class="o">.</span> <span class="n">Ligand</span> <span class="n">code</span><span class="p">:</span> <span class="n">ZN</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_ligands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mol_code</span>  <span class="c1"># This can be used to find the pdb molecule code of any residue</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_ligands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mol_code</span>  <span class="c1"># This can be used to find the pdb molecule code of any residue</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;ZN&#39;</span>
@@ -180,23 +178,23 @@ following link (this is relatively advanced Python but while not
 essential for using any of the AMPAL framework, it is very useful: <a class="reference external" href="https://docs.python.org/3.5/tutorial/datastructures.html">List
 Comprehensions</a>
 (scroll down to the relevant section).</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># With a for loop</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># With a for loop</span>
 <span class="n">mol_codes_1</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">lig</span> <span class="ow">in</span> <span class="n">my_ligands</span><span class="p">:</span>
     <span class="n">mol_codes_1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lig</span><span class="o">.</span><span class="n">mol_code</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mol_codes_1</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>  <span class="c1"># The first 5 elements</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mol_codes_1</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>  <span class="c1"># The first 5 elements</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">,</span> <span class="s1">&#39;HOH&#39;</span><span class="p">,</span> <span class="s1">&#39;HOH&#39;</span><span class="p">,</span> <span class="s1">&#39;HOH&#39;</span><span class="p">,</span> <span class="s1">&#39;HOH&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># A list comprehension</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A list comprehension</span>
 <span class="n">mol_codes_2</span> <span class="o">=</span> <span class="p">[</span><span class="n">lig</span><span class="o">.</span><span class="n">mol_code</span> <span class="k">for</span> <span class="n">lig</span> <span class="ow">in</span> <span class="n">my_ligands</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mol_codes_2</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>  <span class="c1"># Showing the first 5 elements for clarity</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mol_codes_2</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>  <span class="c1"># Showing the first 5 elements for clarity</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">,</span> <span class="s1">&#39;HOH&#39;</span><span class="p">,</span> <span class="s1">&#39;HOH&#39;</span><span class="p">,</span> <span class="s1">&#39;HOH&#39;</span><span class="p">,</span> <span class="s1">&#39;HOH&#39;</span><span class="p">]</span>
@@ -204,30 +202,30 @@ Comprehensions</a>
 </div>
 <p>You can use either of these methods, use whichever one you’re more
 comfortable with.</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mol_codes_1</span> <span class="o">==</span> <span class="n">mol_codes_2</span>  <span class="c1"># The lists that re produced are exactly the same</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mol_codes_1</span> <span class="o">==</span> <span class="n">mol_codes_2</span>  <span class="c1"># The lists that re produced are exactly the same</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
 </pre></div>
 </div>
 <p>Now the <code class="docutils literal notranslate"><span class="pre">list</span></code> of mol codes can be used to make a <code class="docutils literal notranslate"><span class="pre">Counter</span></code> object:</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Counter</span><span class="p">(</span><span class="n">mol_codes_1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Counter</span><span class="p">(</span><span class="n">mol_codes_1</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Counter</span><span class="p">({</span><span class="s1">&#39;ZN&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;HOH&#39;</span><span class="p">:</span> <span class="mi">447</span><span class="p">})</span>
 </pre></div>
 </div>
 <p>As you can see, there are 447 water molecules and 2 zinc ions.</p>
-</div>
-<div class="section" id="distance-analysis">
-<h2>3. Distance Analysis<a class="headerlink" href="#distance-analysis" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="distance-analysis">
+<h2>3. Distance Analysis<a class="headerlink" href="#distance-analysis" title="Permalink to this heading">¶</a></h2>
 <p>Now we can select all atoms in the protein and understand the structures
 composition, we can perform some simple analysis. Let’s try and find all
 the residues that are close to the zinc ions.</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">zinc_1</span> <span class="o">=</span> <span class="n">my_ligands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zinc_1</span> <span class="o">=</span> <span class="n">my_ligands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">zinc_1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zinc_1</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Ligand</span> <span class="n">containing</span> <span class="mi">1</span> <span class="n">Atom</span><span class="o">.</span> <span class="n">Ligand</span> <span class="n">code</span><span class="p">:</span> <span class="n">ZN</span><span class="o">&gt;</span>
@@ -236,7 +234,7 @@ the residues that are close to the zinc ions.</p>
 <p>All <code class="docutils literal notranslate"><span class="pre">Ligand</span></code> objects are <code class="docutils literal notranslate"><span class="pre">Monomers</span></code>, even if they only contain a
 single atom. So we use the zinc <code class="docutils literal notranslate"><span class="pre">Atom</span></code> itself when measuring
 distances:</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">zinc_1</span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zinc_1</span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Zinc</span> <span class="n">Atom</span> <span class="p">(</span><span class="n">ZN</span><span class="p">)</span><span class="o">.</span> <span class="n">Coordinates</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">5.817</span><span class="p">,</span> <span class="o">-</span><span class="mf">20.172</span><span class="p">,</span> <span class="o">-</span><span class="mf">18.798</span><span class="p">)</span><span class="o">&gt;</span>
@@ -245,22 +243,22 @@ distances:</p>
 <p>Measuring distances is simple, you can use the
 <code class="docutils literal notranslate"><span class="pre">ampal.geometry.distance</span></code> function. It takes two 3D vectors as an
 input, these can be in list form, tuples, or even <code class="docutils literal notranslate"><span class="pre">Atom</span></code> objects:</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">zinc_1</span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">],</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># Distance from the origin</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">zinc_1</span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">],</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># Distance from the origin</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">28.179990720367528</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">first_ca</span> <span class="o">=</span> <span class="n">my_protein_3qy1</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;CA&#39;</span><span class="p">]</span>  <span class="c1"># CA of the first residue in chain A</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">first_ca</span> <span class="o">=</span> <span class="n">my_protein_3qy1</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;CA&#39;</span><span class="p">]</span>  <span class="c1"># CA of the first residue in chain A</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">first_ca</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">first_ca</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Carbon</span> <span class="n">Atom</span> <span class="p">(</span><span class="n">CA</span><span class="p">)</span><span class="o">.</span> <span class="n">Coordinates</span><span class="p">:</span> <span class="p">(</span><span class="mf">15.518</span><span class="p">,</span> <span class="o">-</span><span class="mf">30.153</span><span class="p">,</span> <span class="o">-</span><span class="mf">25.207</span><span class="p">)</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">zinc_1</span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">],</span> <span class="n">first_ca</span><span class="p">)</span>  <span class="c1"># Distance in angstroms</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">zinc_1</span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">],</span> <span class="n">first_ca</span><span class="p">)</span>  <span class="c1"># Distance in angstroms</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">24.41060972200408</span>
@@ -268,13 +266,13 @@ input, these can be in list form, tuples, or even <code class="docutils literal 
 </div>
 <p>Now we need to loop over all the atoms and find which are close (&lt;= 3 Å)
 to the zinc. We can use the distance function in geometry to do this:</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">atoms_close_to_zinc</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">atoms_close_to_zinc</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">at</span> <span class="ow">in</span> <span class="n">my_protein_3qy1</span><span class="o">.</span><span class="n">get_atoms</span><span class="p">():</span>
     <span class="k">if</span> <span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">zinc_1</span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">],</span> <span class="n">at</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mf">3.0</span><span class="p">:</span>
         <span class="n">atoms_close_to_zinc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">at</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">atoms_close_to_zinc</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">atoms_close_to_zinc</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">Sulfur</span> <span class="n">Atom</span> <span class="p">(</span><span class="n">SG</span><span class="p">)</span><span class="o">.</span> <span class="n">Coordinates</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">4.322</span><span class="p">,</span> <span class="o">-</span><span class="mf">18.933</span><span class="p">,</span> <span class="o">-</span><span class="mf">17.640</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
@@ -287,13 +285,13 @@ to the zinc. We can use the distance function in geometry to do this:</p>
 <p>There are 5 atoms within 3 Å of the zinc, <em>including</em> the zinc atom
 itself. One way to get ignore this atom in the above block of code is to
 use the <code class="docutils literal notranslate"><span class="pre">ligands=False</span></code> flag in <code class="docutils literal notranslate"><span class="pre">get_atoms()</span></code>:</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">atoms_close_to_zinc</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">atoms_close_to_zinc</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">at</span> <span class="ow">in</span> <span class="n">my_protein_3qy1</span><span class="o">.</span><span class="n">get_atoms</span><span class="p">(</span><span class="n">ligands</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">zinc_1</span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">],</span> <span class="n">at</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mf">3.0</span><span class="p">:</span>
         <span class="n">atoms_close_to_zinc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">at</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">atoms_close_to_zinc</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">atoms_close_to_zinc</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">Sulfur</span> <span class="n">Atom</span> <span class="p">(</span><span class="n">SG</span><span class="p">)</span><span class="o">.</span> <span class="n">Coordinates</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">4.322</span><span class="p">,</span> <span class="o">-</span><span class="mf">18.933</span><span class="p">,</span> <span class="o">-</span><span class="mf">17.640</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
@@ -304,25 +302,25 @@ use the <code class="docutils literal notranslate"><span class="pre">ligands=Fal
 </div>
 <p>Now there are 4 atoms within 3 Å of the zinc, 2 sulphur atoms, an oxygen
 and a nitrogen. Let’s find the residues that are coordinating the zinc:</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">atoms_close_to_zinc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">atoms_close_to_zinc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Sulfur</span> <span class="n">Atom</span> <span class="p">(</span><span class="n">SG</span><span class="p">)</span><span class="o">.</span> <span class="n">Coordinates</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">4.322</span><span class="p">,</span> <span class="o">-</span><span class="mf">18.933</span><span class="p">,</span> <span class="o">-</span><span class="mf">17.640</span><span class="p">)</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">atoms_close_to_zinc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">atoms_close_to_zinc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Residue</span> <span class="n">containing</span> <span class="mi">6</span> <span class="n">Atoms</span><span class="o">.</span> <span class="n">Residue</span> <span class="n">code</span><span class="p">:</span> <span class="n">CYS</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>We can get all the residues using a for loop or a list comprehension:</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">residues_close_to_zinc</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">residues_close_to_zinc</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">at</span> <span class="ow">in</span> <span class="n">atoms_close_to_zinc</span><span class="p">:</span>
     <span class="n">residues_close_to_zinc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">at</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">residues_close_to_zinc</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">residues_close_to_zinc</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">Residue</span> <span class="n">containing</span> <span class="mi">6</span> <span class="n">Atoms</span><span class="o">.</span> <span class="n">Residue</span> <span class="n">code</span><span class="p">:</span> <span class="n">CYS</span><span class="o">&gt;</span><span class="p">,</span>
@@ -331,11 +329,11 @@ and a nitrogen. Let’s find the residues that are coordinating the zinc:</p>
  <span class="o">&lt;</span><span class="n">Residue</span> <span class="n">containing</span> <span class="mi">6</span> <span class="n">Atoms</span><span class="o">.</span> <span class="n">Residue</span> <span class="n">code</span><span class="p">:</span> <span class="n">CYS</span><span class="o">&gt;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># The list comprehension is much more concise</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The list comprehension is much more concise</span>
 <span class="n">residues_close_to_zinc_2</span> <span class="o">=</span> <span class="p">[</span><span class="n">at</span><span class="o">.</span><span class="n">parent</span> <span class="k">for</span> <span class="n">at</span> <span class="ow">in</span> <span class="n">atoms_close_to_zinc</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">residues_close_to_zinc_2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">residues_close_to_zinc_2</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">Residue</span> <span class="n">containing</span> <span class="mi">6</span> <span class="n">Atoms</span><span class="o">.</span> <span class="n">Residue</span> <span class="n">code</span><span class="p">:</span> <span class="n">CYS</span><span class="o">&gt;</span><span class="p">,</span>
@@ -346,13 +344,13 @@ and a nitrogen. Let’s find the residues that are coordinating the zinc:</p>
 </div>
 <p>It looks like the zinc is coordinated by two cysteines, an aspartate and
 a histidine residue.</p>
-</div>
-<div class="section" id="is-within">
-<h2>4. Is Within<a class="headerlink" href="#is-within" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="is-within">
+<h2>4. Is Within<a class="headerlink" href="#is-within" title="Permalink to this heading">¶</a></h2>
 <p>This kind of operation is very common when analysing proteins. So we
 have some built-in methods for handling this on <code class="docutils literal notranslate"><span class="pre">Assembly</span></code> and
 <code class="docutils literal notranslate"><span class="pre">Polymer</span></code> objects:</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_protein_3qy1</span><span class="o">.</span><span class="n">is_within</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">zinc_1</span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">])</span>  <span class="c1"># It takes a distance and a point</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_protein_3qy1</span><span class="o">.</span><span class="n">is_within</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">zinc_1</span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">])</span>  <span class="c1"># It takes a distance and a point</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">Sulfur</span> <span class="n">Atom</span> <span class="p">(</span><span class="n">SG</span><span class="p">)</span><span class="o">.</span> <span class="n">Coordinates</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">4.322</span><span class="p">,</span> <span class="o">-</span><span class="mf">18.933</span><span class="p">,</span> <span class="o">-</span><span class="mf">17.640</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
@@ -362,7 +360,7 @@ have some built-in methods for handling this on <code class="docutils literal no
  <span class="o">&lt;</span><span class="n">Zinc</span> <span class="n">Atom</span> <span class="p">(</span><span class="n">ZN</span><span class="p">)</span><span class="o">.</span> <span class="n">Coordinates</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">5.817</span><span class="p">,</span> <span class="o">-</span><span class="mf">20.172</span><span class="p">,</span> <span class="o">-</span><span class="mf">18.798</span><span class="p">)</span><span class="o">&gt;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_protein_3qy1</span><span class="o">.</span><span class="n">is_within</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_protein_3qy1</span><span class="o">.</span><span class="n">is_within</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">Nitrogen</span> <span class="n">Atom</span> <span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="o">.</span> <span class="n">Coordinates</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">7.278</span><span class="p">,</span> <span class="o">-</span><span class="mf">11.112</span><span class="p">,</span> <span class="o">-</span><span class="mf">10.445</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
@@ -375,7 +373,7 @@ have some built-in methods for handling this on <code class="docutils literal no
  <span class="o">&lt;</span><span class="n">Nitrogen</span> <span class="n">Atom</span> <span class="p">(</span><span class="n">ND2</span><span class="p">)</span><span class="o">.</span> <span class="n">Coordinates</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">11.667</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.798</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.931</span><span class="p">)</span><span class="o">&gt;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_protein_3qy1</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">is_within</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">zinc_1</span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_protein_3qy1</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">is_within</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">zinc_1</span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">Sulfur</span> <span class="n">Atom</span> <span class="p">(</span><span class="n">SG</span><span class="p">)</span><span class="o">.</span> <span class="n">Coordinates</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">4.322</span><span class="p">,</span> <span class="o">-</span><span class="mf">18.933</span><span class="p">,</span> <span class="o">-</span><span class="mf">17.640</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
@@ -385,7 +383,7 @@ have some built-in methods for handling this on <code class="docutils literal no
  <span class="o">&lt;</span><span class="n">Zinc</span> <span class="n">Atom</span> <span class="p">(</span><span class="n">ZN</span><span class="p">)</span><span class="o">.</span> <span class="n">Coordinates</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">5.817</span><span class="p">,</span> <span class="o">-</span><span class="mf">20.172</span><span class="p">,</span> <span class="o">-</span><span class="mf">18.798</span><span class="p">)</span><span class="o">&gt;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_protein_3qy1</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">is_within</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">zinc_1</span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_protein_3qy1</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">is_within</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">zinc_1</span><span class="p">[</span><span class="s1">&#39;ZN&#39;</span><span class="p">])</span>
 <span class="c1"># This list is empty as nothing on chain B is close to the zinc</span>
 </pre></div>
 </div>
@@ -395,7 +393,7 @@ have some built-in methods for handling this on <code class="docutils literal no
 <p>There is a partner method to is <code class="docutils literal notranslate"><span class="pre">is_within</span></code>, every <code class="docutils literal notranslate"><span class="pre">Monomer</span></code> (this
 includes <code class="docutils literal notranslate"><span class="pre">Residues</span></code> and <code class="docutils literal notranslate"><span class="pre">Ligands</span></code>) has an <code class="docutils literal notranslate"><span class="pre">close_monomers</span></code> method.
 This returns all <code class="docutils literal notranslate"><span class="pre">Monomers</span></code> within a given cutoff value.</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">zinc_1</span><span class="o">.</span><span class="n">close_monomers</span><span class="p">(</span><span class="n">my_protein_3qy1</span><span class="p">)</span> <span class="c1"># default cutoff is 4.0 Å</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zinc_1</span><span class="o">.</span><span class="n">close_monomers</span><span class="p">(</span><span class="n">my_protein_3qy1</span><span class="p">)</span> <span class="c1"># default cutoff is 4.0 Å</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">Residue</span> <span class="n">containing</span> <span class="mi">6</span> <span class="n">Atoms</span><span class="o">.</span> <span class="n">Residue</span> <span class="n">code</span><span class="p">:</span> <span class="n">CYS</span><span class="o">&gt;</span><span class="p">,</span>
@@ -405,7 +403,7 @@ This returns all <code class="docutils literal notranslate"><span class="pre">Mo
  <span class="o">&lt;</span><span class="n">Ligand</span> <span class="n">containing</span> <span class="mi">1</span> <span class="n">Atom</span><span class="o">.</span> <span class="n">Ligand</span> <span class="n">code</span><span class="p">:</span> <span class="n">ZN</span><span class="o">&gt;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">zinc_1</span><span class="o">.</span><span class="n">close_monomers</span><span class="p">(</span><span class="n">my_protein_3qy1</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zinc_1</span><span class="o">.</span><span class="n">close_monomers</span><span class="p">(</span><span class="n">my_protein_3qy1</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">Residue</span> <span class="n">containing</span> <span class="mi">6</span> <span class="n">Atoms</span><span class="o">.</span> <span class="n">Residue</span> <span class="n">code</span><span class="p">:</span> <span class="n">CYS</span><span class="o">&gt;</span><span class="p">,</span>
@@ -429,9 +427,9 @@ This returns all <code class="docutils literal notranslate"><span class="pre">Mo
  <span class="o">&lt;</span><span class="n">Ligand</span> <span class="n">containing</span> <span class="mi">1</span> <span class="n">Atom</span><span class="o">.</span> <span class="n">Ligand</span> <span class="n">code</span><span class="p">:</span> <span class="n">HOH</span><span class="o">&gt;</span><span class="p">]</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="geometry-in-ampal">
-<h2>5. Geometry in AMPAL<a class="headerlink" href="#geometry-in-ampal" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="geometry-in-ampal">
+<h2>5. Geometry in AMPAL<a class="headerlink" href="#geometry-in-ampal" title="Permalink to this heading">¶</a></h2>
 <p>There are a range of tools in AMPAL for performing geometric operations.
 We’ve already covered distance, but other commonly used functions
 include <code class="docutils literal notranslate"><span class="pre">angle_between_vectors</span></code>, <code class="docutils literal notranslate"><span class="pre">dihedral</span></code>, <code class="docutils literal notranslate"><span class="pre">unit_vector</span></code>,
@@ -444,21 +442,21 @@ requires 4 3D vectors to calculate the dihedral, again these can be
 <code class="docutils literal notranslate"><span class="pre">lists</span></code>, <code class="docutils literal notranslate"><span class="pre">tuples</span></code>, <code class="docutils literal notranslate"><span class="pre">numpy.arrays</span></code> or <code class="docutils literal notranslate"><span class="pre">Atoms</span></code>. <strong>Note:</strong> This
 method of calculating torsion angles is only as an example, see the
 Tagging tutorial for the proper, low-effort method!</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">r1</span> <span class="o">=</span> <span class="n">my_protein_3qy1</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r1</span> <span class="o">=</span> <span class="n">my_protein_3qy1</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span>
 <span class="n">r2</span> <span class="o">=</span> <span class="n">my_protein_3qy1</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span>
 <span class="n">r3</span> <span class="o">=</span> <span class="n">my_protein_3qy1</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">][</span><span class="mi">6</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">omega</span> <span class="o">=</span> <span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">dihedral</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s1">&#39;CA&#39;</span><span class="p">],</span> <span class="n">r1</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CA&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">omega</span> <span class="o">=</span> <span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">dihedral</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s1">&#39;CA&#39;</span><span class="p">],</span> <span class="n">r1</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CA&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">phi</span> <span class="o">=</span> <span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">dihedral</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CA&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phi</span> <span class="o">=</span> <span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">dihedral</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CA&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">psi</span> <span class="o">=</span> <span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">dihedral</span><span class="p">(</span><span class="n">r2</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CA&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">],</span> <span class="n">r3</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psi</span> <span class="o">=</span> <span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">dihedral</span><span class="p">(</span><span class="n">r2</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CA&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">],</span> <span class="n">r3</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">psi</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">psi</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="mf">179.8002001034783</span> <span class="o">-</span><span class="mf">64.10861163046212</span> <span class="o">-</span><span class="mf">45.84373968479124</span>
@@ -467,7 +465,7 @@ Tagging tutorial for the proper, low-effort method!</p>
 <p>We can use it to calculate the <span class="math notranslate nohighlight">\(\chi\)</span> torsion angles too. R2 is
 leucine, so we can calculate the <span class="math notranslate nohighlight">\(\chi_1\)</span> and <span class="math notranslate nohighlight">\(\chi_2\)</span>
 angles:</p>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">r2</span><span class="o">.</span><span class="n">atoms</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r2</span><span class="o">.</span><span class="n">atoms</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OrderedDict</span><span class="p">([(</span><span class="s1">&#39;N&#39;</span><span class="p">,</span>
@@ -486,13 +484,13 @@ angles:</p>
               <span class="o">&lt;</span><span class="n">Carbon</span> <span class="n">Atom</span> <span class="p">(</span><span class="n">CD2</span><span class="p">)</span><span class="o">.</span> <span class="n">Coordinates</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">2.478</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.359</span><span class="p">,</span> <span class="o">-</span><span class="mf">29.736</span><span class="p">)</span><span class="o">&gt;</span><span class="p">)])</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chi1</span> <span class="o">=</span> <span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">dihedral</span><span class="p">(</span><span class="n">r2</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CA&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CB&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CG&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chi1</span> <span class="o">=</span> <span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">dihedral</span><span class="p">(</span><span class="n">r2</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CA&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CB&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CG&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chi2</span> <span class="o">=</span> <span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">dihedral</span><span class="p">(</span><span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CA&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CB&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CG&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CD1&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chi2</span> <span class="o">=</span> <span class="n">ampal</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">dihedral</span><span class="p">(</span><span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CA&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CB&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CG&#39;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s1">&#39;CD1&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">chi1</span><span class="p">,</span> <span class="n">chi2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">chi1</span><span class="p">,</span> <span class="n">chi2</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="mf">51.38040366349739</span> <span class="o">-</span><span class="mf">168.70006206564494</span>
@@ -500,23 +498,24 @@ angles:</p>
 </div>
 <p>Our simple analysis shows that the leucine residue is in the
 gauche-/trans conformation.</p>
-</div>
-<div class="section" id="summary-and-activities">
-<h2>6. Summary and activities<a class="headerlink" href="#summary-and-activities" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="summary-and-activities">
+<h2>6. Summary and activities<a class="headerlink" href="#summary-and-activities" title="Permalink to this heading">¶</a></h2>
 <p>There are lots of tools for making complex selections in ampal. Combined
 with the tools for geometry, detailed analysis can be performed on these
 selections.</p>
 <ol class="arabic simple">
-<li>Find all the residues that are:<ol class="arabic">
-<li>within 5 Å of crystal water.</li>
-<li><em>not</em> within 5 Å of crystal water.</li>
+<li><p>Find all the residues that are:</p>
+<ol class="arabic simple">
+<li><p>within 5 Å of crystal water.</p></li>
+<li><p><em>not</em> within 5 Å of crystal water.</p></li>
 </ol>
 </li>
-<li>Find how many cis-peptide bonds there are in this structure.</li>
-<li>Perform these activities on another PDB file.</li>
+<li><p>Find how many cis-peptide bonds there are in this structure.</p></li>
+<li><p>Perform these activities on another PDB file.</p></li>
 </ol>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -535,7 +534,7 @@ selections.</p>
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="AMPAL_Introduction_and_Selections.html">Introduction to AMPAL</a></li>
@@ -561,17 +560,23 @@ selections.</p>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
@@ -580,8 +585,8 @@ selections.</p>
       &copy;2018, Woolfson Group, UoB.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="_sources/Advanced_Selections_and_Analysis.rst.txt"

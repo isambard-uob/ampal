@@ -1,19 +1,15 @@
+<!DOCTYPE html>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ampal.assembly &#8212; AMPAL 1.4.0 documentation</title>
-    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -35,18 +31,20 @@
   <h1>Source code for ampal.assembly</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Defines various containers for AMPAL objects.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
 
-<span class="kn">from</span> <span class="nn">ampal.base_ampal</span> <span class="k">import</span> <span class="n">BaseAmpal</span><span class="p">,</span> <span class="n">Polymer</span><span class="p">,</span> <span class="n">find_atoms_within_distance</span>
-<span class="kn">from</span> <span class="nn">ampal.ligands</span> <span class="k">import</span> <span class="n">LigandGroup</span><span class="p">,</span> <span class="n">Ligand</span>
-<span class="kn">from</span> <span class="nn">ampal.analyse_protein</span> <span class="k">import</span> <span class="p">(</span>
-    <span class="n">sequence_molecular_weight</span><span class="p">,</span> <span class="n">sequence_molar_extinction_280</span><span class="p">,</span>
-    <span class="n">sequence_isoelectric_point</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">ampal.base_ampal</span> <span class="kn">import</span> <span class="n">BaseAmpal</span><span class="p">,</span> <span class="n">Polymer</span><span class="p">,</span> <span class="n">find_atoms_within_distance</span>
+<span class="kn">from</span> <span class="nn">ampal.ligands</span> <span class="kn">import</span> <span class="n">LigandGroup</span><span class="p">,</span> <span class="n">Ligand</span>
+<span class="kn">from</span> <span class="nn">ampal.analyse_protein</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">sequence_molecular_weight</span><span class="p">,</span>
+    <span class="n">sequence_molar_extinction_280</span><span class="p">,</span>
+    <span class="n">sequence_isoelectric_point</span><span class="p">,</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="AmpalContainer"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.AmpalContainer">[docs]</a><span class="k">class</span> <span class="nc">AmpalContainer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Custom list type class that holds multiple model states.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom list type class that holds multiple model states.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -68,15 +66,15 @@
 <span class="sd">        Identifier for the AMPAL container.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ampal_objects</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="s1">&#39;AMPAL Container&#39;</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">id</span> <span class="k">else</span> <span class="nb">id</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ampal_objects</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="s2">&quot;AMPAL Container&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">id</span> <span class="k">else</span> <span class="nb">id</span>
         <span class="k">if</span> <span class="n">ampal_objects</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_ampal_objects</span> <span class="o">=</span> <span class="n">ampal_objects</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_ampal_objects</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Merges two `AmpalContainers`.</span>
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Merges two `AmpalContainers`.</span>
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
@@ -86,20 +84,22 @@
             <span class="n">merged_ac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ampal_objects</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">_ampal_objects</span><span class="p">[:]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="s1">&#39;Only AmpalContainer objects may be merged with an &#39;</span>
-                <span class="s1">&#39;AmpalContainer using unary operator &quot;+&quot;.&#39;</span><span class="p">)</span>
+                <span class="s2">&quot;Only AmpalContainer objects may be merged with an &quot;</span>
+                <span class="s1">&#39;AmpalContainer using unary operator &quot;+&quot;.&#39;</span>
+            <span class="p">)</span>
         <span class="k">return</span> <span class="n">AmpalContainer</span><span class="p">(</span><span class="n">ampal_objects</span><span class="o">=</span><span class="n">merged_ac</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;&lt;AmpalContainer (</span><span class="si">{}</span><span class="s2">) containing </span><span class="si">{}</span><span class="s2"> AMPAL Objects&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ampal_objects</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ampal_objects</span><span class="p">)</span>
+        <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ampal_objects</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">id_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span> <span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ampal_objects</span><span class="p">}</span>
+            <span class="n">id_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span> <span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ampal_objects</span><span class="p">}</span>
             <span class="k">return</span> <span class="n">id_dict</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ampal_objects</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
@@ -107,49 +107,49 @@
             <span class="k">return</span> <span class="n">AmpalContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ampal_objects</span><span class="p">[</span><span class="n">item</span><span class="p">])</span>
 
 <div class="viewcode-block" id="AmpalContainer.append"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.AmpalContainer.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Adds an AMPAL object to the `AmpalContainer`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds an AMPAL object to the `AmpalContainer`.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ampal_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="AmpalContainer.extend"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.AmpalContainer.extend">[docs]</a>    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ampal_container</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Extends an `AmpalContainer` with another `AmpalContainer`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extends an `AmpalContainer` with another `AmpalContainer`.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ampal_container</span><span class="p">,</span> <span class="n">AmpalContainer</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_ampal_objects</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">ampal_container</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ampal_objects</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">ampal_container</span><span class="o">.</span><span class="n">_ampal_objects</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="s1">&#39;Only AmpalContainer objects may be merged with &#39;</span>
-                <span class="s1">&#39;an AmpalContainer.&#39;</span><span class="p">)</span>
+                <span class="s2">&quot;Only AmpalContainer objects may be merged with &quot;</span> <span class="s2">&quot;an AmpalContainer.&quot;</span>
+            <span class="p">)</span>
         <span class="k">return</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">pdb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compiles the PDB strings for each state into a single file.&quot;&quot;&quot;</span>
-        <span class="n">header_title</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:&lt;80}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;HEADER    </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
-        <span class="n">data_type</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:&lt;80}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;EXPDTA    ISAMBARD Model&#39;</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compiles the PDB strings for each state into a single file.&quot;&quot;&quot;</span>
+        <span class="n">header_title</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:&lt;80}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;HEADER    </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+        <span class="n">data_type</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:&lt;80}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;EXPDTA    ISAMBARD Model&quot;</span><span class="p">)</span>
         <span class="n">pdb_strs</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">ampal</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ampal</span><span class="p">,</span> <span class="n">Assembly</span><span class="p">):</span>
                 <span class="n">pdb_str</span> <span class="o">=</span> <span class="n">ampal</span><span class="o">.</span><span class="n">make_pdb</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">footer</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">pdb_str</span> <span class="o">=</span> <span class="n">ampal</span><span class="o">.</span><span class="n">make_pdb</span><span class="p">()</span>
+                <span class="n">pdb_str</span> <span class="o">=</span> <span class="n">ampal</span><span class="o">.</span><span class="n">pdb</span>
             <span class="n">pdb_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pdb_str</span><span class="p">)</span>
-        <span class="n">merged_strs</span> <span class="o">=</span> <span class="s1">&#39;ENDMDL</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pdb_strs</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;ENDMDL</span><span class="se">\n</span><span class="s1">&#39;</span>
-        <span class="n">merged_pdb</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">header_title</span><span class="p">,</span> <span class="n">data_type</span><span class="p">,</span> <span class="n">merged_strs</span><span class="p">])</span>
+        <span class="n">merged_strs</span> <span class="o">=</span> <span class="s2">&quot;ENDMDL</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pdb_strs</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;ENDMDL</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">merged_pdb</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">header_title</span><span class="p">,</span> <span class="n">data_type</span><span class="p">,</span> <span class="n">merged_strs</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">merged_pdb</span>
 
 <div class="viewcode-block" id="AmpalContainer.sort_by_tag"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.AmpalContainer.sort_by_tag">[docs]</a>    <span class="k">def</span> <span class="nf">sort_by_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Sorts the `AmpalContainer` by a tag on the component objects.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sorts the `AmpalContainer` by a tag on the component objects.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        tag : str</span>
 <span class="sd">            Key of tag used for sorting.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">AmpalContainer</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">tags</span><span class="p">[</span><span class="n">tag</span><span class="p">]))</span></div></div>
+        <span class="k">return</span> <span class="n">AmpalContainer</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ampal_objects</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">tags</span><span class="p">[</span><span class="n">tag</span><span class="p">]))</span></div></div>
 
 
 <div class="viewcode-block" id="Assembly"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly">[docs]</a><span class="k">class</span> <span class="nc">Assembly</span><span class="p">(</span><span class="n">BaseAmpal</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A container that holds `Polymer` type objects.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A container that holds `Polymer` type objects.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -171,7 +171,7 @@
 <span class="sd">        or a list of `Polymers`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecules</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">assembly_id</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecules</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">assembly_id</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">molecules</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">molecules</span><span class="p">,</span> <span class="n">Polymer</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span> <span class="o">=</span> <span class="p">[</span><span class="n">molecules</span><span class="p">]</span>
@@ -179,15 +179,16 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">molecules</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                    <span class="s1">&#39;Assembly objects can only be initialised empty, using &#39;</span>
-                    <span class="s1">&#39;a Polymer or a list of Polymers.&#39;</span><span class="p">)</span>
+                    <span class="s2">&quot;Assembly objects can only be initialised empty, using &quot;</span>
+                    <span class="s2">&quot;a Polymer or a list of Polymers.&quot;</span>
+                <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">assembly_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tags</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Merges together two `Assemblies`.</span>
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Merges together two `Assemblies`.</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
@@ -198,14 +199,15 @@
             <span class="n">merged_assembly</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">_molecules</span><span class="p">[:]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="s1">&#39;Only Assembly objects may be merged with an Assembly using &#39;</span>
-                <span class="s1">&#39;unary operator &quot;+&quot;.&#39;</span><span class="p">)</span>
+                <span class="s2">&quot;Only Assembly objects may be merged with an Assembly using &quot;</span>
+                <span class="s1">&#39;unary operator &quot;+&quot;.&#39;</span>
+            <span class="p">)</span>
         <span class="k">return</span> <span class="n">Assembly</span><span class="p">(</span><span class="n">molecules</span><span class="o">=</span><span class="n">merged_assembly</span><span class="p">,</span> <span class="n">assembly_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">id_dict</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">id</span><span class="p">):</span> <span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">}</span>
             <span class="k">return</span> <span class="n">id_dict</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
@@ -214,39 +216,56 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Assembly</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">[</span><span class="n">item</span><span class="p">],</span> <span class="n">assembly_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">repr_strs</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">mol_types</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">molecule_type</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">])</span>
-        <span class="k">if</span> <span class="s1">&#39;protein&#39;</span> <span class="ow">in</span> <span class="n">mol_types</span><span class="p">:</span>
-            <span class="n">repr_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">mol_types</span><span class="p">[</span><span class="s1">&#39;protein&#39;</span><span class="p">],</span>
-                <span class="s1">&#39;Polypeptide&#39;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;Polypeptides&#39;</span><span class="p">))</span>
-        <span class="k">if</span> <span class="s1">&#39;nucleic_acid&#39;</span> <span class="ow">in</span> <span class="n">mol_types</span><span class="p">:</span>
-            <span class="n">repr_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">mol_types</span><span class="p">[</span><span class="s1">&#39;nucleic_acid&#39;</span><span class="p">],</span>
-                <span class="s1">&#39;Polynucleotide&#39;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;Polynucleotides&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="s2">&quot;protein&quot;</span> <span class="ow">in</span> <span class="n">mol_types</span><span class="p">:</span>
+            <span class="n">repr_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">mol_types</span><span class="p">[</span><span class="s2">&quot;protein&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;Polypeptide&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;Polypeptides&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;nucleic_acid&quot;</span> <span class="ow">in</span> <span class="n">mol_types</span><span class="p">:</span>
+            <span class="n">repr_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">mol_types</span><span class="p">[</span><span class="s2">&quot;nucleic_acid&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;Polynucleotide&quot;</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+                    <span class="k">else</span> <span class="s2">&quot;Polynucleotides&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
         <span class="n">ligand_count</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">if</span> <span class="s1">&#39;ligands&#39;</span> <span class="ow">in</span> <span class="n">mol_types</span><span class="p">:</span>
-            <span class="n">repr_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">mol_types</span><span class="p">[</span><span class="s1">&#39;ligands&#39;</span><span class="p">],</span>
-                <span class="s1">&#39;Ligand Group&#39;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;Ligand Groups&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="s2">&quot;ligands&quot;</span> <span class="ow">in</span> <span class="n">mol_types</span><span class="p">:</span>
+            <span class="n">repr_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">mol_types</span><span class="p">[</span><span class="s2">&quot;ligands&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;Ligand Group&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;Ligand Groups&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">for</span> <span class="n">mol</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">mol</span><span class="o">.</span><span class="n">molecule_type</span> <span class="o">==</span> <span class="s1">&#39;ligands&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mol</span><span class="o">.</span><span class="n">molecule_type</span> <span class="o">==</span> <span class="s2">&quot;ligands&quot;</span><span class="p">:</span>
                 <span class="n">ligand_count</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">ligand_count</span> <span class="o">+=</span> <span class="mi">0</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">mol</span><span class="o">.</span><span class="n">ligands</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">mol</span><span class="o">.</span><span class="n">ligands</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ligand_count</span><span class="p">:</span>
-            <span class="n">repr_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">ligand_count</span><span class="p">,</span> <span class="s1">&#39;Ligand&#39;</span> <span class="k">if</span> <span class="n">ligand_count</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;Ligands&#39;</span><span class="p">))</span>
-        <span class="k">if</span> <span class="s1">&#39;pseudo_group&#39;</span> <span class="ow">in</span> <span class="n">mol_types</span><span class="p">:</span>
-            <span class="n">repr_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">mol_types</span><span class="p">[</span><span class="s1">&#39;pseudo_group&#39;</span><span class="p">],</span>
-                <span class="s1">&#39;Pseudo Group&#39;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;Pseudo Groups&#39;</span><span class="p">))</span>
-        <span class="n">id_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="k">else</span> <span class="s1">&#39;(</span><span class="si">{}</span><span class="s1">) &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s1">&#39;&lt;Assembly </span><span class="si">{}</span><span class="s1">containing </span><span class="si">{}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">id_str</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repr_strs</span><span class="p">))</span>
+            <span class="n">repr_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">ligand_count</span><span class="p">,</span> <span class="s2">&quot;Ligand&quot;</span> <span class="k">if</span> <span class="n">ligand_count</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;Ligands&quot;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;pseudo_group&quot;</span> <span class="ow">in</span> <span class="n">mol_types</span><span class="p">:</span>
+            <span class="n">repr_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">mol_types</span><span class="p">[</span><span class="s2">&quot;pseudo_group&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;Pseudo Group&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;Pseudo Groups&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">id_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="k">else</span> <span class="s2">&quot;(</span><span class="si">{}</span><span class="s2">) &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;Assembly </span><span class="si">{}</span><span class="s2">containing </span><span class="si">{}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">id_str</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repr_strs</span><span class="p">))</span>
 
 <div class="viewcode-block" id="Assembly.append"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Adds a `Polymer` to the `Assembly`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds a `Polymer` to the `Assembly`.</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
@@ -256,12 +275,11 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">Polymer</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="s1">&#39;Only Polymer objects can be appended to an Assembly.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Only Polymer objects can be appended to an Assembly.&quot;</span><span class="p">)</span>
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="Assembly.extend"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.extend">[docs]</a>    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">assembly</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Extends the `Assembly` with the contents of another `Assembly`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extends the `Assembly` with the contents of another `Assembly`.</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
@@ -269,14 +287,13 @@
 <span class="sd">            Raised if other is any type other than `Assembly`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">Assembly</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">assembly</span><span class="o">.</span><span class="n">_molecules</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="s1">&#39;Only Assembly objects may be merged with an Assembly.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Only Assembly objects may be merged with an Assembly.&quot;</span><span class="p">)</span>
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="Assembly.get_monomers"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.get_monomers">[docs]</a>    <span class="k">def</span> <span class="nf">get_monomers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ligands</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pseudo_group</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Retrieves all the `Monomers` from the `Assembly` object.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieves all the `Monomers` from the `Assembly` object.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -289,11 +306,12 @@
         <span class="n">restricted_mol_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">base_filters</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
         <span class="n">in_groups</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_mol_types</span><span class="p">(</span><span class="n">restricted_mol_types</span><span class="p">)]</span>
         <span class="n">monomers</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
-            <span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">(</span><span class="n">ligands</span><span class="o">=</span><span class="n">ligands</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">in_groups</span><span class="p">))</span>
+            <span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">(</span><span class="n">ligands</span><span class="o">=</span><span class="n">ligands</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">in_groups</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">monomers</span></div>
 
 <div class="viewcode-block" id="Assembly.get_ligands"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.get_ligands">[docs]</a>    <span class="k">def</span> <span class="nf">get_ligands</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solvent</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Retrieves all ligands from the `Assembly`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieves all ligands from the `Assembly`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -301,15 +319,17 @@
 <span class="sd">            If `True`, solvent molecules will be included.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">solvent</span><span class="p">:</span>
-            <span class="n">ligand_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">()</span>
-                           <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Ligand</span><span class="p">)]</span>
+            <span class="n">ligand_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Ligand</span><span class="p">)]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">ligand_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
-                <span class="n">x</span><span class="p">,</span> <span class="n">Ligand</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">is_solvent</span><span class="p">]</span>
+            <span class="n">ligand_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">x</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">()</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Ligand</span><span class="p">)</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">mol_code</span> <span class="o">!=</span> <span class="s2">&quot;HOH&quot;</span>
+            <span class="p">]</span>
         <span class="k">return</span> <span class="n">LigandGroup</span><span class="p">(</span><span class="n">monomers</span><span class="o">=</span><span class="n">ligand_list</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Assembly.get_atoms"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.get_atoms">[docs]</a>    <span class="k">def</span> <span class="nf">get_atoms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ligands</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pseudo_group</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inc_alt_states</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Flat list of all the `Atoms` in the `Assembly`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Flat list of all the `Atoms` in the `Assembly`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -326,24 +346,28 @@
 <span class="sd">            All the `Atoms` as a iterator.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">atoms</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
-            <span class="o">*</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">get_atoms</span><span class="p">(</span><span class="n">inc_alt_states</span><span class="o">=</span><span class="n">inc_alt_states</span><span class="p">))</span>
-                <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">(</span><span class="n">ligands</span><span class="o">=</span><span class="n">ligands</span><span class="p">,</span>
-                                           <span class="n">pseudo_group</span><span class="o">=</span><span class="n">pseudo_group</span><span class="p">)))</span>
+            <span class="o">*</span><span class="p">(</span>
+                <span class="nb">list</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">get_atoms</span><span class="p">(</span><span class="n">inc_alt_states</span><span class="o">=</span><span class="n">inc_alt_states</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">(</span><span class="n">ligands</span><span class="o">=</span><span class="n">ligands</span><span class="p">,</span> <span class="n">pseudo_group</span><span class="o">=</span><span class="n">pseudo_group</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">atoms</span></div>
 
 <div class="viewcode-block" id="Assembly.is_within"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.is_within">[docs]</a>    <span class="k">def</span> <span class="nf">is_within</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cutoff_dist</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">ligands</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns all atoms in AMPAL object within `cut-off` distance from the `point`.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">find_atoms_within_distance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_atoms</span><span class="p">(</span><span class="n">ligands</span><span class="o">=</span><span class="n">ligands</span><span class="p">),</span> <span class="n">cutoff_dist</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span></div>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns all atoms in AMPAL object within `cut-off` distance from the `point`.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">find_atoms_within_distance</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_atoms</span><span class="p">(</span><span class="n">ligands</span><span class="o">=</span><span class="n">ligands</span><span class="p">),</span> <span class="n">cutoff_dist</span><span class="p">,</span> <span class="n">point</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Assembly.relabel_all"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.relabel_all">[docs]</a>    <span class="k">def</span> <span class="nf">relabel_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Relabels all Polymers, Monomers and Atoms with default labeling.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Relabels all Polymers, Monomers and Atoms with default labeling.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">relabel_polymers</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">relabel_monomers</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">relabel_atoms</span><span class="p">()</span>
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="Assembly.relabel_polymers"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.relabel_polymers">[docs]</a>    <span class="k">def</span> <span class="nf">relabel_polymers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Relabels the component Polymers either in alphabetical order or</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Relabels the component Polymers either in alphabetical order or</span>
 <span class="sd">           using a list of labels.</span>
 
 <span class="sd">        Parameters</span>
@@ -362,21 +386,24 @@
                 <span class="k">for</span> <span class="n">polymer</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
                     <span class="n">polymer</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">label</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Number of polymers (</span><span class="si">{}</span><span class="s1">) and number of labels (</span><span class="si">{}</span><span class="s1">) must be equal.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)))</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Number of polymers (</span><span class="si">{}</span><span class="s2">) and number of labels (</span><span class="si">{}</span><span class="s2">) must be equal.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">polymer</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">):</span>
                 <span class="n">polymer</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">65</span><span class="p">)</span>
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="Assembly.relabel_monomers"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.relabel_monomers">[docs]</a>    <span class="k">def</span> <span class="nf">relabel_monomers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Relabels all Monomers in the component Polymers in numerical order.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Relabels all Monomers in the component Polymers in numerical order.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">polymer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">:</span>
             <span class="n">polymer</span><span class="o">.</span><span class="n">relabel_monomers</span><span class="p">()</span>
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="Assembly.relabel_atoms"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.relabel_atoms">[docs]</a>    <span class="k">def</span> <span class="nf">relabel_atoms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Relabels all Atoms in numerical order, offset by the start parameter.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Relabels all Atoms in numerical order, offset by the start parameter.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -391,12 +418,18 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">pdb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Runs make_pdb in default mode.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Runs make_pdb in default mode.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_pdb</span><span class="p">()</span>
 
-<div class="viewcode-block" id="Assembly.make_pdb"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.make_pdb">[docs]</a>    <span class="k">def</span> <span class="nf">make_pdb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ligands</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alt_states</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pseudo_group</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                 <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">footer</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Generates a PDB string for the Assembly.</span>
+<div class="viewcode-block" id="Assembly.make_pdb"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.make_pdb">[docs]</a>    <span class="k">def</span> <span class="nf">make_pdb</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">ligands</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">alt_states</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">pseudo_group</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">footer</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a PDB string for the Assembly.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -421,18 +454,26 @@
         <span class="n">restricted_mol_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">base_filters</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
         <span class="n">in_groups</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_mol_types</span><span class="p">(</span><span class="n">restricted_mol_types</span><span class="p">)]</span>
 
-        <span class="n">pdb_header</span> <span class="o">=</span> <span class="s1">&#39;HEADER </span><span class="si">{:&lt;80}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="s1">&#39;ISAMBARD Model </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span> <span class="k">if</span> <span class="n">header</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
-        <span class="n">pdb_body</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">make_pdb</span><span class="p">(</span>
-            <span class="n">alt_states</span><span class="o">=</span><span class="n">alt_states</span><span class="p">,</span> <span class="n">inc_ligands</span><span class="o">=</span><span class="n">ligands</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="si">{:&lt;80}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;TER&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">in_groups</span><span class="p">])</span>
-        <span class="n">pdb_footer</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:&lt;80}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;END&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">footer</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
-        <span class="n">pdb_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">pdb_header</span><span class="p">,</span> <span class="n">pdb_body</span><span class="p">,</span> <span class="n">pdb_footer</span><span class="p">])</span>
+        <span class="n">pdb_header</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;HEADER </span><span class="si">{:&lt;80}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;ISAMBARD Model </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">header</span>
+            <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">)</span>
+        <span class="n">pdb_body</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">x</span><span class="o">.</span><span class="n">make_pdb</span><span class="p">(</span><span class="n">alt_states</span><span class="o">=</span><span class="n">alt_states</span><span class="p">,</span> <span class="n">inc_ligands</span><span class="o">=</span><span class="n">ligands</span><span class="p">)</span>
+                <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{:&lt;80}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;TER&quot;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">in_groups</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">pdb_footer</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:&lt;80}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;END&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">footer</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">pdb_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">pdb_header</span><span class="p">,</span> <span class="n">pdb_body</span><span class="p">,</span> <span class="n">pdb_footer</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">pdb_str</span></div>
 
     <span class="c1"># Protein specific methods</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">backbone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Generates a new `Assembly` containing only the backbone atoms.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a new `Assembly` containing only the backbone atoms.</span>
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
@@ -446,14 +487,13 @@
 <span class="sd">            `Assembly` containing only the backbone atoms of the original</span>
 <span class="sd">            `Assembly`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">bb_molecules</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">p</span><span class="o">.</span><span class="n">backbone</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;backbone&#39;</span><span class="p">)]</span>
+        <span class="n">bb_molecules</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">backbone</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;backbone&quot;</span><span class="p">)]</span>
         <span class="n">bb_assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="p">(</span><span class="n">bb_molecules</span><span class="p">,</span> <span class="n">assembly_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">bb_assembly</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">primitives</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Generates a new `Assembly` containing the primitives of each Polymer.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a new `Assembly` containing the primitives of each Polymer.</span>
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
@@ -466,47 +506,48 @@
 <span class="sd">            in the original `Assembly`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">prim_molecules</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">p</span><span class="o">.</span><span class="n">primitive</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;primitive&#39;</span><span class="p">)]</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">primitive</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;primitive&quot;</span><span class="p">)</span>
+        <span class="p">]</span>
         <span class="n">prim_assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="p">(</span><span class="n">molecules</span><span class="o">=</span><span class="n">prim_molecules</span><span class="p">,</span> <span class="n">assembly_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">prim_assembly</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">sequences</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the sequence of each `Polymer` in the `Assembly` as a list.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the sequence of each `Polymer` in the `Assembly` as a list.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        sequences : [str]</span>
 <span class="sd">            List of sequences.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">seqs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">sequence</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;sequence&#39;</span><span class="p">)]</span>
+        <span class="n">seqs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">sequence</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;sequence&quot;</span><span class="p">)]</span>
         <span class="k">return</span> <span class="n">seqs</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">molecular_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the molecular weight of the `Assembly` in Daltons.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">sequence_molecular_weight</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sequences</span><span class="p">))</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the molecular weight of the `Assembly` in Daltons.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">sequence_molecular_weight</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sequences</span><span class="p">))</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">molar_extinction_280</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the extinction co-efficient of the `Assembly` at 280 nm.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">sequence_molar_extinction_280</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sequences</span><span class="p">))</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the extinction co-efficient of the `Assembly` at 280 nm.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">sequence_molar_extinction_280</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sequences</span><span class="p">))</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">isoelectric_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the isoelectric point of the `Assembly`.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">sequence_isoelectric_point</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sequences</span><span class="p">))</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the isoelectric point of the `Assembly`.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">sequence_isoelectric_point</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sequences</span><span class="p">))</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">fasta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Generates a FASTA string for the `Assembly`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a FASTA string for the `Assembly`.</span>
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
 <span class="sd">        Explanation of FASTA format: https://en.wikipedia.org/wiki/FASTA_format</span>
 <span class="sd">        Recommendation that all lines of text be shorter than 80</span>
-<span class="sd">        characters is adhered to. Format of PDBID|CHAIN|SEQUENCE is </span>
-<span class="sd">        consistent with files downloaded from the PDB. Uppercase </span>
+<span class="sd">        characters is adhered to. Format of PDBID|CHAIN|SEQUENCE is</span>
+<span class="sd">        consistent with files downloaded from the PDB. Uppercase</span>
 <span class="sd">        PDBID used for consistency with files downloaded from the PDB.</span>
 <span class="sd">        Useful for feeding into cdhit and then running sequence clustering.</span>
 
@@ -515,21 +556,24 @@
 <span class="sd">        fasta_str : str</span>
 <span class="sd">            String of the fasta file for the `Assembly`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">fasta_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">fasta_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="n">max_line_length</span> <span class="o">=</span> <span class="mi">79</span>
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;sequence&#39;</span><span class="p">):</span>
-                <span class="n">fasta_str</span> <span class="o">+=</span> <span class="s1">&#39;&gt;</span><span class="si">{0}</span><span class="s1">:</span><span class="si">{1}</span><span class="s1">|PDBID|CHAIN|SEQUENCE</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">p</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;sequence&quot;</span><span class="p">):</span>
+                <span class="n">fasta_str</span> <span class="o">+=</span> <span class="s2">&quot;&gt;</span><span class="si">{0}</span><span class="s2">:</span><span class="si">{1}</span><span class="s2">|PDBID|CHAIN|SEQUENCE</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">p</span><span class="o">.</span><span class="n">id</span>
+                <span class="p">)</span>
                 <span class="n">seq</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">sequence</span>
-                <span class="n">split_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">seq</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">max_line_length</span><span class="p">]</span>
-                             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">),</span> <span class="n">max_line_length</span><span class="p">)]</span>
+                <span class="n">split_seq</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">seq</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">max_line_length</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">),</span> <span class="n">max_line_length</span><span class="p">)</span>
+                <span class="p">]</span>
                 <span class="k">for</span> <span class="n">seq_part</span> <span class="ow">in</span> <span class="n">split_seq</span><span class="p">:</span>
-                    <span class="n">fasta_str</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">seq_part</span><span class="p">)</span>
+                    <span class="n">fasta_str</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">seq_part</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">fasta_str</span>
 
 <div class="viewcode-block" id="Assembly.tag_torsion_angles"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.tag_torsion_angles">[docs]</a>    <span class="k">def</span> <span class="nf">tag_torsion_angles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Tags each `Monomer` in the `Assembly` with its torsion angles.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Tags each `Monomer` in the `Assembly` with its torsion angles.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -538,13 +582,14 @@
 <span class="sd">            tagged.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">polymer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">polymer</span><span class="o">.</span><span class="n">molecule_type</span> <span class="o">==</span> <span class="s1">&#39;protein&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">polymer</span><span class="o">.</span><span class="n">molecule_type</span> <span class="o">==</span> <span class="s2">&quot;protein&quot;</span><span class="p">:</span>
                 <span class="n">polymer</span><span class="o">.</span><span class="n">tag_torsion_angles</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">)</span>
         <span class="k">return</span></div>
 
-<div class="viewcode-block" id="Assembly.tag_ca_geometry"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.tag_ca_geometry">[docs]</a>    <span class="k">def</span> <span class="nf">tag_ca_geometry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">reference_axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                        <span class="n">reference_axis_name</span><span class="o">=</span><span class="s1">&#39;ref_axis&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Tags each `Monomer` in the `Assembly` with its helical geometry.</span>
+<div class="viewcode-block" id="Assembly.tag_ca_geometry"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.tag_ca_geometry">[docs]</a>    <span class="k">def</span> <span class="nf">tag_ca_geometry</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">reference_axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reference_axis_name</span><span class="o">=</span><span class="s2">&quot;ref_axis&quot;</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Tags each `Monomer` in the `Assembly` with its helical geometry.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -557,34 +602,12 @@
 <span class="sd">            Used to name the keys in tags at `Chain` and `Residue` level.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">polymer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecules</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">polymer</span><span class="o">.</span><span class="n">molecule_type</span> <span class="o">==</span> <span class="s1">&#39;protein&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">polymer</span><span class="o">.</span><span class="n">molecule_type</span> <span class="o">==</span> <span class="s2">&quot;protein&quot;</span><span class="p">:</span>
                 <span class="n">polymer</span><span class="o">.</span><span class="n">tag_ca_geometry</span><span class="p">(</span>
-                    <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">reference_axis</span><span class="o">=</span><span class="n">reference_axis</span><span class="p">,</span>
-                    <span class="n">reference_axis_name</span><span class="o">=</span><span class="n">reference_axis_name</span><span class="p">)</span>
-        <span class="k">return</span></div>
-
-<div class="viewcode-block" id="Assembly.tag_atoms_unique_ids"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.tag_atoms_unique_ids">[docs]</a>    <span class="k">def</span> <span class="nf">tag_atoms_unique_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Tags each Atom in the Assembly with its unique_id.</span>
-
-<span class="sd">        Notes</span>
-<span class="sd">        -----</span>
-<span class="sd">        The unique_id for each atom is a tuple (a double). `unique_id[0]`</span>
-<span class="sd">        is the unique_id for its parent `Monomer` (see `Monomer.unique_id`</span>
-<span class="sd">        for more information). `unique_id[1]` is the atom_type in the</span>
-<span class="sd">        `Assembly` as a string, e.g. &#39;CA&#39;, &#39;CD2&#39;.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        force : bool, optional</span>
-<span class="sd">                If True the tag will be run even if Atoms are already tagged.</span>
-<span class="sd">                If False, only runs if at least one Atom is not tagged.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">tagged</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;unique_id&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_atoms</span><span class="p">()]</span>
-        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">tagged</span><span class="p">))</span> <span class="ow">or</span> <span class="n">force</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">():</span>
-                <span class="k">for</span> <span class="n">atom_type</span><span class="p">,</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="n">atom</span><span class="o">.</span><span class="n">tags</span><span class="p">[</span><span class="s1">&#39;unique_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">unique_id</span><span class="p">,</span> <span class="n">atom_type</span><span class="p">)</span>
+                    <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
+                    <span class="n">reference_axis</span><span class="o">=</span><span class="n">reference_axis</span><span class="p">,</span>
+                    <span class="n">reference_axis_name</span><span class="o">=</span><span class="n">reference_axis_name</span><span class="p">,</span>
+                <span class="p">)</span>
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="Assembly.filter_mol_types"><a class="viewcode-back" href="../../ampal.html#ampal.assembly.Assembly.filter_mol_types">[docs]</a>    <span class="k">def</span> <span class="nf">filter_mol_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mol_types</span><span class="p">):</span>
@@ -610,7 +633,7 @@
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../AMPAL_Introduction_and_Selections.html">Introduction to AMPAL</a></li>
@@ -628,17 +651,23 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
@@ -647,8 +676,8 @@
       &copy;2018, Woolfson Group, UoB.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
     </div>
 
