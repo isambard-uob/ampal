@@ -51,6 +51,12 @@ complex selections and performing analysis. Take a look at the
 
 ## Release Notes
 
+## v1.5.0
+
+* Adds rotamer classification with the `classify_angle_as_rotamer` in
+  the `analyse_protein` module. 
+* Fixes a bug with parsing structure files
+
 ## v1.4.0
 
 * **Adds `get_ss_regions` to `ampal.dssp`.** This function can be used to
