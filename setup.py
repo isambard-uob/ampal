@@ -31,6 +31,9 @@ setup(
     packages=find_packages("src"),
     package_dir={"": "src"},
     include_package_data=True,
+    setup_requires=[
+        "Cython",
+    ],
     # This code automatically builds the Cython extensions.
     ext_modules=cythonize(
         [
