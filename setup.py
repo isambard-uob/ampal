@@ -40,6 +40,6 @@ setup(
             Extension("ampal.geometry", ["src/ampal/geometry.pyx"]),
         ]
     ),
-    install_requires=["Cython", "networkx", "numpy==1.22", "requests"],
+    install_requires=["Cython", "networkx==3.1", "numpy==1.22", "requests"],
     zip_safe=False,
 )
