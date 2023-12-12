@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools", "wheel", "Cython"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "AMPAL"
+version = "1.5.1"
+requires-python = ">= 3.8"
+readme = "README.md"
+dependencies = [
+  "Cython",
+  "networkx==3.1",
+  "numpy==1.22",
+  "requests",
+]

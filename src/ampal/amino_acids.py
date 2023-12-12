@@ -763,7 +763,6 @@ def get_aa_letter(aa_code):
 
     return aa_letter
 
-
 def get_aa_info(code):
     """Get dictionary of information relating to a new amino acid code not currently in the database.
 
@@ -795,7 +794,7 @@ def get_aa_info(code):
     )
     r = requests.get(url_string)
     # Raise error if content not obtained.
-    if not r.ok:
+    if not r.ok or "does not exist" in r.text:
         raise IOError("Could not get to url {0}".format(url_string))
 
     # Parse r.text in an ugly way to get the required information.
@@ -813,7 +812,6 @@ def get_aa_info(code):
         "letter": letter,
     }
     return aa_dict
-
 
 def add_amino_acid_to_json(
     code, description, letter="X", modified=None, force_add=False

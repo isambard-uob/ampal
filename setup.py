@@ -13,7 +13,7 @@ def readme():
 
 setup(
     name="AMPAL",
-    version="1.5.0",
+    version="1.5.1",
     description="A simple framework for representing biomolecular structure.",
     long_description=readme(),
     long_description_content_type="text/markdown; charset=UTF-8; variant=GFM",
@@ -31,12 +31,15 @@ setup(
     packages=find_packages("src"),
     package_dir={"": "src"},
     include_package_data=True,
+    setup_requires=[
+        "Cython",
+    ],
     # This code automatically builds the Cython extensions.
     ext_modules=cythonize(
         [
             Extension("ampal.geometry", ["src/ampal/geometry.pyx"]),
         ]
     ),
-    install_requires=["Cython", "networkx", "numpy==1.22", "requests"],
+    install_requires=["Cython", "networkx==3.1", "numpy==1.22", "requests"],
     zip_safe=False,
 )
