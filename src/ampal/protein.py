@@ -249,12 +249,25 @@ class Polypeptide(Polymer):
         slice_polymer : Polymer
             Polymer containing the residue range specified by start-end
         """
+        # Create a dictionary mapping residue IDs to their positions.
+        id_to_position = {residue.id: i for i, residue in enumerate(self._monomers)}
+        # Create a list of all residue IDs to maintain the order.
+        ordered_ids = [residue.id for residue in self._monomers]
 
-        id_dict = {str(m.id): m for m in self._monomers}
-        slice_polymer = Polypeptide(
-            [id_dict[str(x)] for x in range(int(start), int(end) + 1)], self.id
-        )
-        return slice_polymer
+        # Get the position of the start and end IDs.
+        start_pos = id_to_position.get(start)
+        end_pos = id_to_position.get(end) + 1
+
+        # Check if both start and end IDs are valid.
+        if start_pos is None or end_pos is None:
+            raise ValueError("Start or end ID not found.")
+
+        # Slice the ordered_ids list to get the IDs in the range and then select the corresponding monomers.
+        selected_ids = ordered_ids[start_pos:end_pos]
+        selected_monomers = [self._monomers[id_to_position[id]] for id in selected_ids]
+
+        # Create and return a new Polypeptide from the selected monomers.
+        return Polypeptide(selected_monomers, self.id)
 
     @property
     def backbone(self):
