@@ -51,6 +51,10 @@ complex selections and performing analysis. Take a look at the
 
 ## Release Notes
 
+## v1.5.2
+* Fixes bug with `get_slice_from_res_id` to enable non-continuous sequences to
+  be selected.
+
 ## v1.5.0
 
 * Adds rotamer classification with the `classify_angle_as_rotamer` in
