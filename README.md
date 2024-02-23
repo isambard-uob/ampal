@@ -51,7 +51,7 @@ complex selections and performing analysis. Take a look at the
 
 ## Release Notes
 
-## v1.5.2
+## v1.5.3
 * Fixes bug with `get_slice_from_res_id` to enable non-continuous sequences to
   be selected.
 
