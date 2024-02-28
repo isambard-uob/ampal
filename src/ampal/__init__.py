@@ -9,4 +9,4 @@ from .pseudo_atoms import PseudoGroup, PseudoMonomer, PseudoAtom, Primitive
 from .dssp import tag_dssp_data
 
 
-__version__ = "1.5.3"
+__version__ = "1.5.4"
