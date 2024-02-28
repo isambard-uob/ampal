@@ -265,7 +265,7 @@ def measure_torsion_angles(residues):
                         res2["N"]._vector,
                     )
                 except KeyError as k:
-                    print("{0} atom missing - can't assign psi".format(k))
+                    warnings.warn("{0} atom missing - can't assign psi".format(k))
                     psi = None
                 torsion_angles.append((omega, phi, psi))
             elif i == len(residues) - 1:
@@ -279,7 +279,7 @@ def measure_torsion_angles(residues):
                         res2["CA"]._vector,
                     )
                 except KeyError as k:
-                    print("{0} atom missing - can't assign omega".format(k))
+                    warnings.warn("{0} atom missing - can't assign omega".format(k))
                     omega = None
                 try:
                     phi = dihedral(
@@ -289,7 +289,7 @@ def measure_torsion_angles(residues):
                         res2["C"]._vector,
                     )
                 except KeyError as k:
-                    print("{0} atom missing - can't assign phi".format(k))
+                    warnings.warn("{0} atom missing - can't assign phi".format(k))
                     phi = None
                 psi = None
                 torsion_angles.append((omega, phi, psi))
@@ -305,7 +305,7 @@ def measure_torsion_angles(residues):
                         res2["CA"]._vector,
                     )
                 except KeyError as k:
-                    print("{0} atom missing - can't assign omega".format(k))
+                    warnings.warn("{0} atom missing - can't assign omega".format(k))
                     omega = None
                 try:
                     phi = dihedral(
@@ -315,7 +315,7 @@ def measure_torsion_angles(residues):
                         res2["C"]._vector,
                     )
                 except KeyError as k:
-                    print("{0} atom missing - can't assign phi".format(k))
+                    warnings.warn("{0} atom missing - can't assign phi".format(k))
                     phi = None
                 try:
                     psi = dihedral(
@@ -325,7 +325,7 @@ def measure_torsion_angles(residues):
                         res3["N"]._vector,
                     )
                 except KeyError as k:
-                    print("{0} atom missing - can't assign psi".format(k))
+                    warnings.warn("{0} atom missing - can't assign psi".format(k))
                     psi = None
                 torsion_angles.append((omega, phi, psi))
     return torsion_angles
