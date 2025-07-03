@@ -9,7 +9,7 @@ from .assembly import AmpalContainer, Assembly
 from .protein import Polypeptide, Residue
 from .nucleic_acid import Polynucleotide, Nucleotide
 from .ligands import Ligand, LigandGroup
-from .amino_acids import standard_amino_acids
+from .amino_acids import standard_amino_acids, reslabel_to_atom
 from .data import PDB_ATOM_COLUMNS
 
 
@@ -389,11 +389,19 @@ class PdbParser(object):
         for atoms in monomer_data:
             for atom in atoms:
                 state = "A" if not atom[3] else atom[3]
+                element = atom[13].strip()
+                if not element:
+                    # Use res_label to guess: 'CA' -> 'C', 'O' -> 'O'
+                    if atom[2] in reslabel_to_atom:
+                        element = reslabel_to_atom[atom[2]]
+                    else:
+                        raise ValueError(f"PDB does not contain an element column. Tried to guess element based on residue label {atom[2]}, but was not found in the {reslabel_to_atom.keys()}")
+
                 if state not in states:
                     states[state] = OrderedDict()
                 states[state][atom[2]] = Atom(
                     tuple(atom[8:11]),
-                    atom[13],
+                    element,
                     atom_id=atom[1],
                     res_label=atom[2],
                     occupancy=atom[11],

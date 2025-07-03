@@ -209,6 +209,46 @@ side_chain_dihedrals = {
     "VAL": [["N", "CA", "CB", "CG1", "CG2"]],
 }
 
+reslabel_to_atom = {
+    "N": "N",
+    "C": "C",
+    "O": "O",
+    "S": "S",
+    "CA": "C",
+    "CB": "C",
+    "CG": "C",
+    "CD": "C",
+    "NE": "N",
+    "CZ": "C",
+    "NH1": "N",
+    "NH2": "N",
+    "OD1": "O",
+    "ND2": "N",
+    "OD2": "O",
+    "SG": "S",
+    "OE1": "O",
+    "NE2": "N",
+    "OE2": "O",
+    "ND1": "N",
+    "CE1": "C",
+    "CG1": "C",
+    "CG2": "C",
+    "CD1": "C",
+    "CD2": "C",
+    "CE": "C",
+    "NZ": "N",
+    "SD": "S",
+    "CE2": "C",
+    "OG": "O",
+    "OG1": "O",
+    "CE3": "C",
+    "NE1": "N",
+    "CZ2": "C",
+    "CZ3": "C",
+    "CH2": "C",
+    "OH": "O",
+}
+
 # Data taken from http://web.expasy.org/protscale/ unless otherwise stated. Original reference also given.
 # Levitt M. Biochemistry 17:4277-4285(1978)
 a_helix_Levitt = {
